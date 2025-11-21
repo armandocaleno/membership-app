@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('suscriptions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('ruc')->unique()->nullable();
-            $table->string('address')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('email')->nullable();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->unsignedBigInteger('regime_id')->nullable();
-            $table->foreign('regime_id')->references('id')->on('regimes');
+            $table->enum('payment_status', ['paid', 'pending', 'partial'])->default('pending');
+            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('plan_id')->constrained();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('suscriptions');
     }
 };

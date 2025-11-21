@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Regime;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,14 @@ class CustomerFactory extends Factory
      */
     public function definition(): array
     {
+        $regime = Regime::inRandomOrder()->first()->id;
         return [
-            //
+            'name' => fake()->company(),
+            'ruc' => fake()->numerify('#############'),
+            'address' => fake()->address(),
+            'phone' => fake()->phoneNumber(),
+            'email' => fake()->email(),
+            'regime_id' => $regime
         ];
     }
 }

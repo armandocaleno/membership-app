@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regimes', function (Blueprint $table) {
+        Schema::create('devices', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('serial')->nullable();
+            $table->string('connection_id')->nullable();
+            $table->foreignId('device_type_id')->constrained();
+            $table->foreignId('establishment_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('regimes');
+        Schema::dropIfExists('devices');
     }
 };
