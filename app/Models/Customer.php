@@ -19,7 +19,7 @@ class Customer extends Model
         return $this->belongsTo(Regime::class);
     }
 
-    public function establilshments() : HasMany {
+    public function establishments() : HasMany {
         return $this->hasMany(Establishment::class);
     }
 

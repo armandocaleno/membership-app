@@ -22,8 +22,7 @@ class PaymentMethodResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CreditCard;
 
     protected static ?string $recordTitleAttribute = 'PaymentMethod';
-    protected static ?string $navigationLabel = 'Formas de pago';
-    protected static ?string $breadcrumb = 'Formas de pago';
+    protected static ?string $pluralModelLabel = 'Formas de pago';
     protected static string|UnitEnum|null $navigationGroup = 'Opciones';
 
     public static function form(Schema $schema): Schema

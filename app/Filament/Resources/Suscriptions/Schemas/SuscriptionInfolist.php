@@ -51,7 +51,6 @@ class SuscriptionInfolist
                         'partial' => 'info',
                     }),
                 TextEntry::make('customer.name')
-                    ->numeric()
                     ->label('Cliente'),
                 TextEntry::make('plan.name')
                     ->label('Plan'),

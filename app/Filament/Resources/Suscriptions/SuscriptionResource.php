@@ -23,8 +23,7 @@ class SuscriptionResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDateRange;
 
     protected static ?string $recordTitleAttribute = 'Suscription';
-    protected static ?string $navigationLabel = 'Suscripciones';
-    protected static ?string $breadcrumb = 'Suscripciones';
+    protected static ?string $pluralModelLabel = 'Suscripciones';
 
     public static function form(Schema $schema): Schema
     {

@@ -25,8 +25,7 @@ class PlanResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Plan';
     protected static string|UnitEnum|null $navigationGroup = 'Opciones';
-    protected static ?string $navigationLabel = 'Planes';
-    protected static ?string $breadcrumb = 'Planes';
+    protected static ?string $pluralModelLabel = 'Planes';
 
     public static function form(Schema $schema): Schema
     {
