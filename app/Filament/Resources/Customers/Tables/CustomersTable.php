@@ -2,13 +2,9 @@
 
 namespace App\Filament\Resources\Customers\Tables;
 
-use App\Filament\Resources\Customers\Pages\ViewCustomer;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\Filter;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
