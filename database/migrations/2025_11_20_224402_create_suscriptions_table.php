@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('suscriptions', function (Blueprint $table) {
             $table->id();
+            $table->string('number')->unique();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->enum('status', ['active', 'inactive'])->default('active');

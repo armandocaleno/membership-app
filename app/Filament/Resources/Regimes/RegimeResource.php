@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class RegimeResource extends Resource
 {
@@ -20,9 +21,10 @@ class RegimeResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    // protected static ?string $recordTitleAttribute = 'Regime';
+    protected static ?string $recordTitleAttribute = 'Regime';
     protected static ?string $navigationLabel = 'Regímenes';
     protected static ?string $breadcrumb = 'Regímenes';
+    protected static string|UnitEnum|null $navigationGroup = 'Opciones';
 
     public static function form(Schema $schema): Schema
     {

@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\Customers\Tables;
 
-use Filament\Support\Enums\TextSize;
+use App\Filament\Resources\Customers\Pages\ViewCustomer;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\Filter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -45,6 +48,13 @@ class CustomersTable
                     ->color(fn (string $state): string => match ($state) {
                         'active' => 'success',
                         'inactive' => 'danger',
+                    })
+                    ->formatStateUsing(function ($state) {
+                        if ($state == 'active') {
+                            return 'Activo';
+                        }else {
+                            return 'Inactivo';
+                        }
                     }),
                 // TextColumn::make('created_at')
                 //     ->dateTime()
@@ -56,7 +66,10 @@ class CustomersTable
                 //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('Activos')
+                ->query(fn (Builder $query): Builder => $query->where('status', 'active')),
+                Filter::make('Inactivos')
+                ->query(fn (Builder $query): Builder => $query->where('status', 'inactive')),
             ])
             ->recordActions([
                 EditAction::make(),
@@ -68,5 +81,8 @@ class CustomersTable
                 //     DeleteBulkAction::make(),
                 // ]),
             ]);
+            // ->recordUrl(
+            //     fn (Model $record): string => ViewCustomer::getUrl([$record->id])
+            // );
     }
 }
