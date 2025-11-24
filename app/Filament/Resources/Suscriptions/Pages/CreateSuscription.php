@@ -59,10 +59,43 @@ class CreateSuscription extends CreateRecord
 
         $recipient = auth()->user();
         Notification::make()
-            ->title('Nueva suscripción creada correctamente!')
+            ->title('Nueva suscripción!')
             ->body("Fue creada la suscripcion No. {$suscription->number}")
+            ->icon('heroicon-o-calendar-date-range')
             ->sendToDatabase($recipient);
-        
-        Mail::to('test@test.com')->send(new SuscriptionActivated($suscription));
+
+        //envio de email 
+        $customer_mail = "";
+        if ($suscription->customer->email !== null) {
+            if (filter_var($suscription->customer->email, FILTER_VALIDATE_EMAIL)) {
+                $customer_mail = $suscription->customer->email;
+
+                $email = Mail::to($customer_mail)->send(new SuscriptionActivated($suscription));
+                if ($email) {
+                    Notification::make()
+                    ->title("Email enviado!")
+                    ->success()
+                    ->send();
+                }else {
+                    Notification::make()
+                    ->title("Error al enviar email")
+                    ->body('Hubo un error al enviar el email.')
+                    ->error()
+                    ->send();
+                }
+            }else {
+                Notification::make()
+                ->title("Error al enviar email")
+                ->body('Email no válido o inexistente.')
+                ->error()
+                ->send();
+            }
+        }else {
+                Notification::make()
+                ->title("Error al enviar email")
+                ->body('Email no válido o inexistente.')
+                ->error()
+                ->send();
+            }
     }
 }
