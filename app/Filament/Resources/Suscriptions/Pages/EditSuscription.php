@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use App\Filament\Resources\Suscriptions\SuscriptionResource;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 
 class EditSuscription extends EditRecord
@@ -22,7 +23,11 @@ class EditSuscription extends EditRecord
     {
         return [
             ViewAction::make(),
-            DeleteAction::make(),
+            DeleteAction::make()
+            ->successNotification(Notification::make()
+                                    ->title('Suscripcion eliminada!')
+                                    ->body('La suscripción se eliminó correctamente!')
+                                    ->success()),
         ];
     }
 
@@ -45,5 +50,18 @@ class EditSuscription extends EditRecord
         $data['end_date'] = $end_date->toDateString();
 
         return $data;
+    }
+
+    protected function getSavedNotification(): ?Notification
+    {
+        return null;
+    }
+
+    protected function afterSave():void
+    {
+        Notification::make()
+            ->title('Suscripción editada correctamente!')
+            ->success()
+            ->send();
     }
 }

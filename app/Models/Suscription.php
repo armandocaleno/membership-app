@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Suscription extends Model
 {
+    use Notifiable;
+    
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function customer() : BelongsTo {

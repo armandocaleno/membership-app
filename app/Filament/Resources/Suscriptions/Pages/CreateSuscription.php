@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Suscriptions\Pages;
 
 use App\Filament\Resources\Suscriptions\SuscriptionResource;
 use App\Models\Plan;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Carbon;
 
@@ -39,5 +40,26 @@ class CreateSuscription extends CreateRecord
         $data['end_date'] = $end_date->toDateString();
 
         return $data;
+    }
+
+    protected function getCreatedNotification(): ?Notification
+    {
+        return null;
+    }
+
+    protected function afterCreate(){
+        $suscription = $this->record;
+
+        Notification::make()
+            ->title("Suscripción {$suscription->number} creada correctamente!")
+            ->success()
+            ->send();
+
+        $recipient = auth()->user();
+        Notification::make()
+            ->title('Nueva suscripción creada correctamente!')
+            ->icon('heroicon-o-shopping-bag')
+            ->body("Fue creada la suscripcion No.")
+            ->sendToDatabase($recipient);
     }
 }
