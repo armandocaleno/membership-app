@@ -26,7 +26,7 @@ class PaymentMethodSeeder extends Seeder
         ]);
 
         PaymentMethod::create([
-            'name' => 'cheque'
+            'name' => 'Cheque'
         ]);
 
         PaymentMethod::create([

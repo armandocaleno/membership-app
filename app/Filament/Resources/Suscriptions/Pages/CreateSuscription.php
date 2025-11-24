@@ -61,7 +61,7 @@ class CreateSuscription extends CreateRecord
         Notification::make()
             ->title('Nueva suscripción!')
             ->body("Fue creada la suscripcion No. {$suscription->number}")
-            ->icon('heroicon-o-calendar-date-range')
+            // ->icon('heroicon-o-calendar-date-range')
             ->sendToDatabase($recipient);
 
         //envio de email 
