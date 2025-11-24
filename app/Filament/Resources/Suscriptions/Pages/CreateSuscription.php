@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\Suscriptions\Pages;
 
 use App\Filament\Resources\Suscriptions\SuscriptionResource;
+use App\Mail\SuscriptionActivated;
 use App\Models\Plan;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class CreateSuscription extends CreateRecord
 {
@@ -49,7 +51,7 @@ class CreateSuscription extends CreateRecord
 
     protected function afterCreate(){
         $suscription = $this->record;
-
+        
         Notification::make()
             ->title("Suscripción {$suscription->number} creada correctamente!")
             ->success()
@@ -58,8 +60,9 @@ class CreateSuscription extends CreateRecord
         $recipient = auth()->user();
         Notification::make()
             ->title('Nueva suscripción creada correctamente!')
-            ->icon('heroicon-o-shopping-bag')
-            ->body("Fue creada la suscripcion No.")
+            ->body("Fue creada la suscripcion No. {$suscription->number}")
             ->sendToDatabase($recipient);
+        
+        Mail::to('test@test.com')->send(new SuscriptionActivated($suscription));
     }
 }

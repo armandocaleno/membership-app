@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Suscription;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,7 +17,7 @@ class SuscriptionActivated extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public Suscription $suscription)
     {
         //
     }
@@ -27,7 +28,7 @@ class SuscriptionActivated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Suscription Activated',
+            subject: 'Suscripción Activada!',
         );
     }
 
@@ -37,7 +38,7 @@ class SuscriptionActivated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.suscription-activated',
         );
     }
 
