@@ -22,17 +22,20 @@ class CustomersTable
                     ->sortable(),
                 TextColumn::make('ruc')
                     ->searchable()
-                    ->label('RUC'),
+                    ->label('RUC')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('address')
                     ->searchable()
                     ->label('Dirección')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('phone')
                     ->searchable()
-                    ->label('Teléfono'),
+                    ->label('Teléfono')
+                    ->toggleable(condition:false),
                 TextColumn::make('email')
                     ->label('Email')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(condition: false),
                 TextColumn::make('regime.name')
                     ->searchable()
                     ->label('Régimen SRI')
@@ -52,14 +55,6 @@ class CustomersTable
                             return 'Inactivo';
                         }
                     }),
-                // TextColumn::make('created_at')
-                //     ->dateTime()
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: true),
-                // TextColumn::make('updated_at')
-                //     ->dateTime()
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Filter::make('Activos')
@@ -73,12 +68,7 @@ class CustomersTable
                 DeleteAction::make()
             ])
             ->toolbarActions([
-                // BulkActionGroup::make([
-                //     DeleteBulkAction::make(),
-                // ]),
+                
             ]);
-            // ->recordUrl(
-            //     fn (Model $record): string => ViewCustomer::getUrl([$record->id])
-            // );
     }
 }

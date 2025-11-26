@@ -20,7 +20,7 @@ class IncomeResource extends Resource
 {
     protected static ?string $model = Income::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentCurrencyDollar;
 
     protected static ?string $recordTitleAttribute = 'Income';
 
@@ -50,7 +50,7 @@ class IncomeResource extends Resource
     {
         return [
             'index' => ListIncomes::route('/'),
-            'create' => CreateIncome::route('/create'),
+            'create' => CreateIncome::route('/{id?}/{model?}/create'),
             'view' => ViewIncome::route('/{record}'),
             'edit' => EditIncome::route('/{record}/edit'),
         ];

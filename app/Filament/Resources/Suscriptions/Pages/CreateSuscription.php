@@ -7,6 +7,7 @@ use App\Mail\SuscriptionActivated;
 use App\Models\Plan;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
+use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 
@@ -61,7 +62,7 @@ class CreateSuscription extends CreateRecord
         Notification::make()
             ->title('Nueva suscripción!')
             ->body("Fue creada la suscripcion No. {$suscription->number}")
-            // ->icon('heroicon-o-calendar-date-range')
+            ->icon(Heroicon::CalendarDateRange)
             ->sendToDatabase($recipient);
 
         //envio de email 

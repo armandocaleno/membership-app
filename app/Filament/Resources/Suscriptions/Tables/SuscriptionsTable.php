@@ -21,6 +21,7 @@ class SuscriptionsTable
             ->columns([
                 TextColumn::make('number')
                     ->sortable()
+                    ->searchable()
                     ->label('Número'),
                 TextColumn::make('start_date')
                     ->date()
@@ -33,6 +34,7 @@ class SuscriptionsTable
                 TextColumn::make('customer.name')
                     ->numeric()
                     ->sortable()
+                    ->searchable()
                     ->label('Cliente'),
                 TextColumn::make('plan.name')
                     ->numeric()

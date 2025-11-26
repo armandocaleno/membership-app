@@ -18,7 +18,7 @@ class IncomeForm
             ->components([
                 TextInput::make('number')
                     ->required()
-                    ->label('Numero'),
+                    ->label('Número'),
                 DatePicker::make('date')
                     ->required()
                     ->label('Fecha'),
@@ -31,14 +31,19 @@ class IncomeForm
                     ->required()
                     ->label('F. Pago'),
                 FileUpload::make('attached_file')
-                    ->required()
                     ->label('Adjunto')
+                    ->disk('public')
+                    ->directory('income-attachments')
+                    ->visibility('public')
+                    ->preserveFilenames()
                     ->aboveContent([
                         Icon::make(Heroicon::BellAlert),
-                        'Admite archivos PDF e imagenes JPEG y PNG'
+                        'Admite archivos PDF e imágenes JPEG y PNG'
                     ])
                     ->acceptedFileTypes(['application/pdf', 'image/jpeg', 'image/png',])
-                    ->maxSize(1024),
+                    ->maxSize(1024)
+                    ->openable()
+                    ->moveFiles(),
             ]);
     }
 }
