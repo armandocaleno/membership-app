@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Customers\Schemas;
 
 use App\Models\Customer;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -46,6 +47,10 @@ class CustomerForm
                     ->relationship('regime', 'name')
                     ->default(null)
                     ->label('Régimen SRI'),
+                Textarea::make('description')
+                    ->label('Descripción')
+                    ->autosize()
+                    ->rows(1)
             ]);
     }
 }

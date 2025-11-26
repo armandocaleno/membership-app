@@ -29,6 +29,10 @@ class ProductsTable
                             return 'Bien';
                         }
                     }),
+                TextColumn::make('description')
+                    ->searchable()
+                    ->label('Descripción')
+                    // ->toggleable(isToggledHiddenByDefault: true),
                 // TextColumn::make('created_at')
                 //     ->dateTime()
                 //     ->sortable()

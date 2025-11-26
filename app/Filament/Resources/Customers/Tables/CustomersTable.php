@@ -40,6 +40,10 @@ class CustomersTable
                     ->searchable()
                     ->label('Régimen SRI')
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('description')
+                    ->searchable()
+                    ->label('Descripción')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->badge()
                     ->label('Estado')

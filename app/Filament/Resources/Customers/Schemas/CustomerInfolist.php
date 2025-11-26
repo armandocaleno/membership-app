@@ -72,7 +72,10 @@ class CustomerInfolist
                                     'active' => 'success',
                                     'inactive' => 'danger',
                                 }),
-                        ])
+                            TextEntry::make('description')
+                                ->label('Descripción')
+                                ->columnSpan(3)
+                        ])->columns(4)
                     ]),
 
                  RepeatableEntry::make('establishments')

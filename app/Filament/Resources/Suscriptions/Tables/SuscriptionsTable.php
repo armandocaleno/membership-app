@@ -4,11 +4,8 @@ namespace App\Filament\Resources\Suscriptions\Tables;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -39,6 +36,10 @@ class SuscriptionsTable
                 TextColumn::make('plan.name')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('description')
+                    ->searchable()
+                    ->label('Descripción')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('status')
                     ->badge()
                     ->label('Estado')

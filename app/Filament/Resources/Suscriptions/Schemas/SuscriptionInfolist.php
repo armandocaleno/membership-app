@@ -54,6 +54,8 @@ class SuscriptionInfolist
                     ->label('Cliente'),
                 TextEntry::make('plan.name')
                     ->label('Plan'),
+                TextEntry::make('description')
+                    ->label('Descripción'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-')

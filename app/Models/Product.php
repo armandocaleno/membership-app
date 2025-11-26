@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description'];
 
      /**
      * Al insertar en la base de datos el atributo lo convierte en minúsculas

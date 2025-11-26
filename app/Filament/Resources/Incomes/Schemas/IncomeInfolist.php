@@ -22,6 +22,8 @@ class IncomeInfolist
                 TextEntry::make('incomeable_id')
                     ->numeric(),
                 TextEntry::make('incomeable_type'),
+                TextEntry::make('description')
+                                ->label('Descripción'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),

@@ -66,6 +66,10 @@ class IncomesTable
                     })
                     ->html()
                     ->description(fn($state): string => $state->number),
+                TextColumn::make('description')
+                    ->searchable()
+                    ->label('Descripción')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Incomes\Schemas;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Icon;
 use Filament\Schemas\Schema;
@@ -30,6 +31,10 @@ class IncomeForm
                     ->relationship('paymentMethod', 'name')
                     ->required()
                     ->label('F. Pago'),
+                Textarea::make('description')
+                    ->label('Descripción')
+                    ->autosize()
+                    ->rows(1),
                 FileUpload::make('attached_file')
                     ->label('Adjunto')
                     ->disk('public')

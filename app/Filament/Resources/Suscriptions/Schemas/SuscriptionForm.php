@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Suscriptions\Schemas;
 
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -30,6 +31,10 @@ class SuscriptionForm
                     ->label('Plan')
                     ->required()
                     ->native(false),
+                Textarea::make('description')
+                    ->label('Descripción')
+                    ->autosize()
+                    ->rows(1),
                 Select::make('status')
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
                     ->default('active')

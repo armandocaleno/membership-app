@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('end_date');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->enum('payment_status', ['paid', 'pending', 'partial'])->default('pending');
+            $table->string('description')->nullable();
             $table->foreignId('customer_id')->constrained();
             $table->foreignId('plan_id')->constrained();
             $table->timestamps();

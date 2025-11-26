@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('number')->unique();
             $table->date('date');
             $table->decimal('total', 8, 2);
-            $table->string('attached_file');
+            $table->string('attached_file')->nullable();
+            $table->string('description')->nullable();
             $table->foreignId('payment_method_id')->constrained();
             $table->unsignedBigInteger('incomeable_id');
             $table->string('incomeable_type');
