@@ -19,10 +19,12 @@ class IncomeForm
             ->components([
                 TextInput::make('number')
                     ->required()
-                    ->label('Número'),
+                    ->label('Número')
+                    ->autofocus(),
                 DatePicker::make('date')
                     ->required()
-                    ->label('Fecha'),
+                    ->label('Fecha')
+                    ->default(now()),
                 TextInput::make('total')
                     ->required()
                     ->numeric()
@@ -49,6 +51,6 @@ class IncomeForm
                     ->maxSize(1024)
                     ->openable()
                     ->moveFiles(),
-            ]);
+        ]);       
     }
 }

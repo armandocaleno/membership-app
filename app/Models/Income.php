@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Observers\IncomeObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+ 
+#[ObservedBy([IncomeObserver::class])]
 class Income extends Model
 {
     protected $guarded = ['id', 'created_at', 'updated_at'];

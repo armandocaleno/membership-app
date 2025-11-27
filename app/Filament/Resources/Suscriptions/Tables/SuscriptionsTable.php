@@ -34,8 +34,11 @@ class SuscriptionsTable
                     ->searchable()
                     ->label('Cliente'),
                 TextColumn::make('plan.name')
-                    ->numeric()
+                    ->description(fn ($record) :string =>'$ ' . $record->plan->price)
                     ->sortable(),
+                TextColumn::make('incomes.total')
+                    ->label('Pagos')
+                    ->listWithLineBreaks(),
                 TextColumn::make('description')
                     ->searchable()
                     ->label('Descripción')

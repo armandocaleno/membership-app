@@ -28,4 +28,16 @@ class CreateIncome extends CreateRecord
         return $data;
     }
 
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        if ($this->model !== null) {
+            if ($this->model == 'suscription') {
+                $suscription = Suscription::findOrFail($this->id);
+                $data['total'] = $suscription->plan->price;
+            }
+        }
+
+        return $data;
+    }
+
 }
