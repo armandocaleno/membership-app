@@ -20,7 +20,7 @@ class CustomerInfolist
             ->components([
                 Grid::make(2)
                     ->schema([
-                    Section::make('Informacion del cliente')
+                    Section::make('Información del cliente')
                         ->icon(Heroicon::User)
                         ->description('Información detallada acerca del cliente')
                         ->schema([

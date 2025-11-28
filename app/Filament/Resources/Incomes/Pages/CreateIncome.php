@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Incomes\Pages;
 use App\Filament\Resources\Incomes\IncomeResource;
 use App\Models\Support;
 use App\Models\Suscription;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateIncome extends CreateRecord
@@ -15,9 +16,18 @@ class CreateIncome extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
+        $saldo = 0;
+        $model = "";
         if ($this->model !== null) {
             if ($this->model == 'suscription') {
                 $this->incomeable_resource = Suscription::class;
+                $model = Suscription::findOrFail($this->id);
+                $saldo = $model->saldo();
+                if ($data['total'] > $saldo) {
+                    Notification::make()
+                    ->title('El monto es mayor al saldo.')
+                    ->send();
+                }
             }elseif ($this->model == 'support') {
                 $this->incomeable_resource = Support::class;
             }
@@ -25,19 +35,7 @@ class CreateIncome extends CreateRecord
 
         $data['incomeable_id'] = $this->id;
         $data['incomeable_type'] = $this->incomeable_resource;
-        return $data;
-    }
-
-    protected function mutateFormDataBeforeFill(array $data): array
-    {
-        if ($this->model !== null) {
-            if ($this->model == 'suscription') {
-                $suscription = Suscription::findOrFail($this->id);
-                $data['total'] = $suscription->plan->price;
-            }
-        }
-
-        return $data;
+        dd($data);
     }
 
 }

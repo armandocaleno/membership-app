@@ -28,4 +28,12 @@ class Suscription extends Model
     {
         return $this->morphMany(Income::class, 'incomeable');
     }
+
+    public function saldo(): float
+    {
+        $total_incomes = $this->incomes()->sum('total');
+        $total_suscription = $this->plan->price;
+        $saldo = $total_suscription - $total_incomes;
+        return $saldo;
+    }
 }

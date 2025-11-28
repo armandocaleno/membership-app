@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Suscriptions\Tables;
 
+use App\Filament\Resources\Customers\CustomerResource;
+use App\Filament\Resources\Incomes\IncomeResource;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Actions\DeleteAction;
@@ -32,13 +34,17 @@ class SuscriptionsTable
                     ->numeric()
                     ->sortable()
                     ->searchable()
-                    ->label('Cliente'),
+                    ->label('Cliente')
+                    ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer])),
                 TextColumn::make('plan.name')
                     ->description(fn ($record) :string =>'$ ' . $record->plan->price)
                     ->sortable(),
-                TextColumn::make('incomes.total')
+                TextColumn::make('incomes')
                     ->label('Pagos')
-                    ->listWithLineBreaks(),
+                    ->listWithLineBreaks()
+                    ->formatStateUsing(fn($state):string => '$ ' . $state->total)
+                    ->alignment('right')
+                    ->url(fn($state):string =>IncomeResource::getUrl('view', ['record' => $state])),
                 TextColumn::make('description')
                     ->searchable()
                     ->label('Descripción')

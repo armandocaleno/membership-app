@@ -23,4 +23,19 @@ class EditIncome extends EditRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        // if ($this->model !== null) {
+        //     if ($this->model == 'suscription') {
+        //         $suscription = Suscription::findOrFail($this->id);
+        //         $data['total'] = $suscription->plan->price;
+        //         $data['date'] = '2000/10/10';
+        //         // dd($data);
+        //     }
+        // }
+        // $data['date'] = '2000/10/10';
+        // dd($data);  
+        return $data;
+    }
 }

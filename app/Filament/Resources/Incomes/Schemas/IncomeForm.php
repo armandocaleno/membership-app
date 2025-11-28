@@ -28,7 +28,9 @@ class IncomeForm
                 TextInput::make('total')
                     ->required()
                     ->numeric()
-                    ->label('Total'),
+                    ->label('Total')
+                    ->prefix('$'),
+                    // ->description(fn ($record) :string => $record->total),
                 Select::make('payment_method_id')
                     ->relationship('paymentMethod', 'name')
                     ->required()

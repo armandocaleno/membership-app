@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Incomes\Tables;
 
+use App\Filament\Resources\Customers\CustomerResource;
 use App\Models\Support;
 use App\Models\Suscription;
 use Filament\Actions\BulkActionGroup;
@@ -49,23 +50,34 @@ class IncomesTable
                     ->label('Cliente')
                     ->state(function($record){
                         return $record->incomeable->customer->name;
-                    }),
+                    })
+                    ->url(fn($record): string => CustomerResource::getUrl('view', ['record' => $record->incomeable->customer])),
                 TextColumn::make('incomeable')
                     ->label('Recurso')
                     ->formatStateUsing(function($state){
-                        $route = ""; $value = "";
+                        $value = $state['number'];
+                        return $value;
+                    })
+                    ->description(function($state){
+                        $value = "";
                         if ($state instanceof Suscription) {
-                            $route = route('filament.admin.resources.suscriptions.view',['record' => $state]);
                             $value = "Suscripcion";
                         }elseif ($state instanceof Support) {
-                            $route = route('filament.admin.resources.supports.view',['record' => $state]);
                             $value = "Soporte";
                         }
 
-                        return "<a href=\"{$route}\">{$value}</a>";
+                        return $value;
                     })
-                    ->html()
-                    ->description(fn($state): string => $state->number),
+                    ->url(function($state){
+                            $route = ""; 
+                            if ($state instanceof Suscription) {
+                                $route = route('filament.admin.resources.suscriptions.view',['record' => $state]);
+                            }elseif ($state instanceof Support) {
+                                $route = route('filament.admin.resources.supports.view',['record' => $state]);
+                            }
+
+                            return $route;
+                        }),
                 TextColumn::make('description')
                     ->searchable()
                     ->label('Descripción')
