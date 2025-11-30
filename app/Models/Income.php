@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Observers\IncomeObserver;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -23,5 +24,30 @@ class Income extends Model
     public function incomeable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function updatePaymentState(Income $income) : void {
+        $resource = $income->incomeable;
+        $total = 0;
+        $plan_price = 0;
+
+        if ($resource instanceof Suscription) {
+            $total = $resource->incomes()->sum('total');
+            $plan_price = $resource->plan->price;
+
+            if ($total >= $plan_price) {
+                $resource->payment_status = 'paid';
+            }elseif($total < $plan_price) {
+                $resource->payment_status = 'partial';
+            }else {
+                $resource->payment_status = 'pending';
+            }
+
+            $resource->update();
+        }else {
+            Notification::make()
+            ->title('Saldo No Actualizado!')
+            ->send();
+        }
     }
 }
