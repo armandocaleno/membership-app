@@ -15,11 +15,10 @@ class DeviceSeeder extends Seeder
      */
     public function run(): void
     {
-        $type = DeviceType::first()->id;
-        $establishment = Establishment::first()->id;
+        $type = DeviceType::rand()->id;
+        $establishment = Establishment::rand()->id;
         Device::create([
             'serial' => '37453763',
-            'connection_id' => '837462533',
             'device_type_id' => $type,
             'establishment_id' => $establishment
         ]);

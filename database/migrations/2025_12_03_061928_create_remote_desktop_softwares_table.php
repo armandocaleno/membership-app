@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('remote_desktop_softwares', function (Blueprint $table) {
             $table->id();
-            $table->string('serial')->nullable();
-            $table->string('description')->nullable();
-            $table->foreignId('device_type_id')->constrained();
-            $table->foreignId('establishment_id')->constrained();
+            $table->string('conecction_id');
+            $table->string('name');
+            $table->unsignedBigInteger('device_id');
+            $table->foreign('device_id')->references('id')->on('devices');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('remote_desktop_softwares');
     }
 };

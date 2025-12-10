@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
+use App\Models\Establishment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,12 +14,9 @@ class CustomerSeeder extends Seeder
      */
     public function run(): void
     {
-        Customer::create([
-            'name' => 'Juan Piguave',
-            'ruc' => '0999999999',
-            'address' => 'Cdla. Florida Norte Mz. 112 V. 34',
-            'phone' => '0933486755',
-            'email' => 'juanpiguave@gmail.com',
-        ]);
+        Customer::factory()
+        ->count(50)
+        ->has(Establishment::factory()->count(1)->withDevices()->create())
+        ->create();
     }
 }

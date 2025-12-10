@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Customer;
+use App\Models\Establishment;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,19 +21,17 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Armando Caleño',
-            'email' => 'test@example.com',
+            'email' => 'armandoc8181@gmail.com',
             'password' => bcrypt('Admin.1234')
         ]);
 
         $this->call(RegimeSeeder::class);
-
-        Customer::factory(100)->create();
-
         $this->call(DeviceTypeSeeder::class);
+        Customer::factory()
+        ->count(50)
+        ->has(Establishment::factory()->count(1)->withDevices())
+        ->create();
         $this->call(PaymentMethodSeeder::class);
-        // $this->call(CustomerSeeder::class);
-        $this->call(EstablishmentSeeder::class);
-        $this->call(DeviceSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(PlanSeeder::class);
     }

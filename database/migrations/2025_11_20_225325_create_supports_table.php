@@ -19,8 +19,11 @@ return new class extends Migration
             $table->string('comments')->nullable();
             $table->string('attached_file')->nullable();
             $table->foreignId('customer_id')->constrained();
-            $table->unsignedBigInteger('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->enum('payment_status', ['paid', 'pending', 'partial'])->default('pending');
+            $table->unsignedBigInteger('establishment_id')->nullable();
+            $table->unsignedBigInteger('device_id')->nullable();
+            $table->foreign('establishment_id')->references('id')->on('establishments');
+            $table->foreign('device_id')->references('id')->on('devices');
             $table->timestamps();
         });
     }
