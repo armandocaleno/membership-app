@@ -28,26 +28,24 @@ class Income extends Model
 
     public function updatePaymentState(Income $income) : void {
         $resource = $income->incomeable;
-        $total = 0;
-        $plan_price = 0;
+        $resource_total = 0;
+
+        $payments_total = $resource->incomes()->sum('total');
 
         if ($resource instanceof Suscription) {
-            $total = $resource->incomes()->sum('total');
-            $plan_price = $resource->plan->price;
-
-            if ($total >= $plan_price) {
-                $resource->payment_status = 'paid';
-            }elseif($total < $plan_price && $total > 0) {
-                $resource->payment_status = 'partial';
-            }else {
-                $resource->payment_status = 'pending';
-            }
-
-            $resource->update();
+            $resource_total = $resource->plan->price;
         }else {
-            Notification::make()
-            ->title('Saldo No Actualizado!')
-            ->send();
+            $resource_total = $resource->total;
         }
+
+        if ($payments_total >= $resource_total) {
+                $resource->payment_status = 'paid';
+        }elseif($payments_total < $resource_total && $payments_total > 0) {
+            $resource->payment_status = 'partial';
+        }else {
+            $resource->payment_status = 'pending';
+        }
+
+        $resource->update();
     }
 }

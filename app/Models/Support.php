@@ -29,5 +29,13 @@ class Support extends Model
     public function device() : BelongsTo {
         return $this->belongsTo(Device::class);
     }
+
+    public function saldo(): float
+    {
+        $total_incomes = $this->incomes()->sum('total');
+        $total_support = $this->total;
+        $saldo = $total_support - $total_incomes;
+        return $saldo;
+    }
     
 }

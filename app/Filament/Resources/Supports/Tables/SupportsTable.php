@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Supports\Tables;
 
+use App\Filament\Resources\Incomes\IncomeResource;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -45,6 +46,13 @@ class SupportsTable
                     ->money()
                     ->label('Total')
                     ->weight('bold'),
+                TextColumn::make('incomes')
+                    ->label('Pagos')
+                    ->listWithLineBreaks()
+                    ->formatStateUsing(fn($state):string => '$ ' . $state->total)
+                    ->alignment('right')
+                    ->url(fn($state):string =>IncomeResource::getUrl('view', ['record' => $state]))
+                    ->placeholder('0.00'),
                 TextColumn::make('attached_file')
                     ->label('Adjunto')
                     ->formatStateUsing(function ($state) {
