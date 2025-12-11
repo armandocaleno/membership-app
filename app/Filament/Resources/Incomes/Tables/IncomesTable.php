@@ -7,10 +7,6 @@ use App\Models\Support;
 use App\Models\Suscription;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
@@ -35,11 +31,14 @@ class IncomesTable
                     ->weight('bold'),
                 TextColumn::make('attached_file')
                     ->label('Adjunto')
-                    ->state('Ver archivo')
-                    // ->formatStateUsing(function ($record) {
-                    //     $filePath = $record->attached_file;
-                    //     return Storage::url($filePath);
-                    // })
+                    ->formatStateUsing(function ($state) {
+                        $symbol = "/";
+                        $position = strpos($state, $symbol);
+                        if ($position !== false) {
+                            $result = substr($state, $position + 1);
+                            return $result;
+                        }
+                    })
                     ->url(fn ($record) => Storage::url($record->attached_file), true) // El segundo argumento 'true' indica que se descargará
                     ->openUrlInNewTab()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -61,7 +60,7 @@ class IncomesTable
                     ->description(function($state){
                         $value = "";
                         if ($state instanceof Suscription) {
-                            $value = "Suscripcion";
+                            $value = "Suscripción";
                         }elseif ($state instanceof Support) {
                             $value = "Soporte";
                         }

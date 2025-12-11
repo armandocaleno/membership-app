@@ -14,6 +14,11 @@ class CreateIncome extends CreateRecord
     protected static bool $canCreateAnother = false;
     public $id, $model, $incomeable_resource;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $saldo = 0;
@@ -35,7 +40,7 @@ class CreateIncome extends CreateRecord
 
         $data['incomeable_id'] = $this->id;
         $data['incomeable_type'] = $this->incomeable_resource;
-        dd($data);
+        return $data;
     }
 
 }

@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Filament\Resources\Products\Pages;
+namespace App\Filament\Resources\Supports\Pages;
 
-use App\Filament\Resources\Products\ProductResource;
+use App\Filament\Resources\Supports\SupportResource;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\ViewAction;
 use Filament\Resources\Pages\EditRecord;
 
-class EditProduct extends EditRecord
+class EditSupport extends EditRecord
 {
-    protected static string $resource = ProductResource::class;
+    protected static string $resource = SupportResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
+            ViewAction::make(),
             DeleteAction::make(),
         ];
     }

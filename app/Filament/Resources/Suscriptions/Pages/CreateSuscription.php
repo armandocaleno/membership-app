@@ -71,7 +71,8 @@ class CreateSuscription extends CreateRecord
             if (filter_var($suscription->customer->email, FILTER_VALIDATE_EMAIL)) {
                 $customer_mail = $suscription->customer->email;
 
-                $email = Mail::to($customer_mail)->send(new SuscriptionActivated($suscription));
+                $email = Mail::to($customer_mail)->queue(new SuscriptionActivated($suscription));
+                
                 if ($email) {
                     Notification::make()
                     ->title("Email enviado!")

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Support extends Model
@@ -16,4 +17,17 @@ class Support extends Model
     {
         return $this->morphMany(Income::class, 'incomeable');
     }
+
+    public function customer() : BelongsTo {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function establishment() : BelongsTo {
+        return $this->belongsTo(Establishment::class);
+    }
+
+    public function device() : BelongsTo {
+        return $this->belongsTo(Device::class);
+    }
+    
 }

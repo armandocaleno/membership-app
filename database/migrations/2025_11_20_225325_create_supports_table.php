@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('number');
             $table->string('detail')->nullable();
             $table->string('comments')->nullable();
+            $table->decimal('total', 8, 2)->default('0.00');
             $table->string('attached_file')->nullable();
             $table->foreignId('customer_id')->constrained();
             $table->enum('payment_status', ['paid', 'pending', 'partial'])->default('pending');

@@ -19,7 +19,7 @@ class EstablishmentFactory extends Factory
     {
         return [
             'code' => fake()->numerify('###'),
-            'name' => fake()->name(),
+            'name' => fake()->word(1, true),
             'address' => fake()->address(),
             'phone' => fake()->phoneNumber()
         ];

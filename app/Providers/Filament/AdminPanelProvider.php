@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->brandLogo(asset('images/logo-emarket.svg'))
             ->brandLogoHeight('4rem')
+            ->favicon(asset('images/favicon.png'))
             // ->sidebarCollapsibleOnDesktop()
             ->sidebarFullyCollapsibleOnDesktop()
             ->collapsibleNavigationGroups(false)
