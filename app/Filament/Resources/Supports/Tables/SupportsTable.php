@@ -33,7 +33,8 @@ class SupportsTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('customer.name')
                     ->label('Cliente')
-                    ->sortable(),
+                    ->sortable()
+                    ->searchable(),
                 TextColumn::make('establishment.name')
                     ->label('Establecimiento')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -101,6 +102,9 @@ class SupportsTable
             ])
             ->recordUrl(
                 fn (Model $record): string => route('filament.admin.resources.supports.view', ['record' => $record])
-            );
+            )
+            ->groups([
+                'customer.name',
+            ]);
     }
 }

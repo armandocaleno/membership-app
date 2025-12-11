@@ -23,7 +23,6 @@ class SupportResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Cog;
 
     protected static ?string $recordTitleAttribute = 'Support';
-    protected static ?string $pluralModelLabel = 'Soportes';
 
     public static function form(Schema $schema): Schema
     {
