@@ -38,6 +38,12 @@ class CustomerForm
                     ->label('Email')
                     ->email()
                     ->default(null),
+                Select::make('province')
+                    ->options(static::getProvinces())
+                    ->label('Provincia'),
+                TextInput::make('city')
+                    ->label('Ciudad')
+                    ->default(null),
                 Select::make('status')
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
                     ->default('active')
@@ -52,5 +58,34 @@ class CustomerForm
                     ->autosize()
                     ->rows(1)
             ]);
+    }
+
+    protected static function getProvinces() : array {
+        return [
+           "Azuay",
+            "Bolívar",
+            "Cañar",
+            "Carchi",
+            "Chimborazo",
+            "Cotopaxi",
+            "El Oro",
+            "Esmeraldas",
+            "Galápagos",
+            "Guayas",
+            "Imbabura",
+            "Loja",
+            "Los Ríos",
+            "Manabí",
+            "Morona Santiago",
+            "Napo",
+            "Orellana",
+            "Pastaza",
+            "Pichincha",
+            "Santa Elena",
+            "Santo Domingo de los Tsáchilas",
+            "Sucumbíos",
+            "Tungurahua",
+            "Zamora Chinchipe"
+        ];
     }
 }

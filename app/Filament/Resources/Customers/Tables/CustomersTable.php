@@ -28,6 +28,13 @@ class CustomersTable
                     ->searchable()
                     ->label('Dirección')
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('province')
+                    ->label('Provincia')
+                    ->default('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('city')
+                    ->label('Ciudad')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('phone')
                     ->searchable()
                     ->label('Teléfono')

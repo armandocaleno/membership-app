@@ -22,6 +22,12 @@ class EstablishmentForm
                 TextInput::make('address')
                     ->default(null)
                     ->label('Dirección'),
+                Select::make('province')
+                    ->options(static::getProvinces())
+                    ->label('Provincia'),
+                TextInput::make('city')
+                    ->label('Ciudad')
+                    ->default(null),
                 TextInput::make('phone')
                     ->tel()
                     ->default(null)
@@ -44,5 +50,34 @@ class EstablishmentForm
                     ->searchPrompt('Buscar por nombre o RUC del cliente.')
                     ->label('Cliente'),
             ]);
+    }
+
+    protected static function getProvinces() : array {
+        return [
+           "Azuay",
+            "Bolívar",
+            "Cañar",
+            "Carchi",
+            "Chimborazo",
+            "Cotopaxi",
+            "El Oro",
+            "Esmeraldas",
+            "Galápagos",
+            "Guayas",
+            "Imbabura",
+            "Loja",
+            "Los Ríos",
+            "Manabí",
+            "Morona Santiago",
+            "Napo",
+            "Orellana",
+            "Pastaza",
+            "Pichincha",
+            "Santa Elena",
+            "Santo Domingo de los Tsáchilas",
+            "Sucumbíos",
+            "Tungurahua",
+            "Zamora Chinchipe"
+        ];
     }
 }

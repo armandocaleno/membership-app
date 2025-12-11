@@ -23,6 +23,13 @@ class EstablishmentsTable
                 TextColumn::make('address')
                     ->searchable()
                     ->label('Dirección'),
+                TextColumn::make('province')
+                    ->label('Provincia')
+                    ->default('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('city')
+                    ->label('Ciudad')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('phone')
                     ->searchable()
                     ->label('Teléfono'),
