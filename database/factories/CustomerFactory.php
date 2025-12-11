@@ -19,11 +19,12 @@ class CustomerFactory extends Factory
     {
         $regime = Regime::inRandomOrder()->first()->id;
         return [
-            'name' => fake()->company(),
+            'name' => fake('es_ES')->company(),
             'ruc' => fake()->numerify('#############'),
             'address' => fake()->address(),
             'phone' => fake()->phoneNumber(),
             'email' => fake()->email(),
+            'city' => fake('es_Ec')->city(),
             'regime_id' => $regime
         ];
     }
