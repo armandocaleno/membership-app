@@ -79,7 +79,8 @@ class SupportForm
                     ->options(['paid' => 'Pagada', 'pending' => 'Pendiente', 'partial' => 'Parcial'])
                     ->default('pending')
                     ->required()
-                    ->label('Estado de pago'),
+                    ->label('Estado de pago')
+                    ->visible(fn ($operation) => $operation === 'create'),
                 FileUpload::make('attached_file')
                     ->label('Adjunto')
                     ->disk('public')

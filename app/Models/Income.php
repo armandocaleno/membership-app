@@ -37,7 +37,7 @@ class Income extends Model
 
             if ($total >= $plan_price) {
                 $resource->payment_status = 'paid';
-            }elseif($total < $plan_price) {
+            }elseif($total < $plan_price && $total > 0) {
                 $resource->payment_status = 'partial';
             }else {
                 $resource->payment_status = 'pending';

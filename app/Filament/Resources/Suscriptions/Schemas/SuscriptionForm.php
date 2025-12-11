@@ -44,7 +44,8 @@ class SuscriptionForm
                     ->options(['paid' => 'Pagada', 'pending' => 'Pendiente', 'partial' => 'Parcial'])
                     ->default('pending')
                     ->required()
-                    ->label('Estado de pago'),
+                    ->label('Estado de pago')
+                    ->visible(fn ($operation) => $operation === 'create'),
             ]);
     }
 }

@@ -44,7 +44,8 @@ class SuscriptionsTable
                     ->listWithLineBreaks()
                     ->formatStateUsing(fn($state):string => '$ ' . $state->total)
                     ->alignment('right')
-                    ->url(fn($state):string =>IncomeResource::getUrl('view', ['record' => $state])),
+                    ->url(fn($state):string =>IncomeResource::getUrl('view', ['record' => $state]))
+                    ->placeholder('0.00'),
                 TextColumn::make('description')
                     ->searchable()
                     ->label('Descripción')

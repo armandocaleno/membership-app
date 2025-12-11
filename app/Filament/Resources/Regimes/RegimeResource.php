@@ -19,7 +19,7 @@ class RegimeResource extends Resource
 {
     protected static ?string $model = Regime::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::RectangleStack;
 
     protected static ?string $recordTitleAttribute = 'Regime';
     protected static ?string $pluralModelLabel = 'Regímenes';
