@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Supports\Schemas;
 
+use App\Models\Customer;
 use App\Models\Device;
 use App\Models\Establishment;
 use Filament\Forms\Components\DatePicker;
@@ -12,8 +13,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Schemas\Components\Icon;
-use Filament\Schemas\Components\Utilities\Get;
-use Filament\Tables\Filters\SelectFilter;
 
 class SupportForm
 {
@@ -42,11 +41,17 @@ class SupportForm
                     ->relationship('customer', 'name')
                     ->label('Cliente')
                     ->searchable()
+                    ->getSearchResultsUsing(fn (string $search): array => Customer::query()
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('ruc', 'like', "{$search}%")
+                        ->limit(50)
+                        ->pluck('name', 'id')
+                        ->all())
                     ->required()
                     ->native(false)
                     ->default(null)
                     ->reactive()
-                    ->searchPrompt('Seleccione un cliente para cargar los establecimientos')
+                    ->searchPrompt('Buscar por nombre o RUC del cliente.')
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('establishment_id', null);
                     }),

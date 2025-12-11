@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Establishments\Schemas;
 
+use App\Models\Customer;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -34,6 +35,13 @@ class EstablishmentForm
                     ->relationship('customer', 'name')
                     ->required()
                     ->searchable()
+                    ->getSearchResultsUsing(fn (string $search): array => Customer::query()
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('ruc', 'like', "{$search}%")
+                        ->limit(50)
+                        ->pluck('name', 'id')
+                        ->all())
+                    ->searchPrompt('Buscar por nombre o RUC del cliente.')
                     ->label('Cliente'),
             ]);
     }
