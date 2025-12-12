@@ -19,7 +19,7 @@ class DeviceForm
                     ->default(null)
                     ->label('Descripción'),
                 Select::make('device_type_id')
-                    ->relationship('type', 'name')
+                    ->relationship('deviceType', 'name')
                     ->required()
                     ->label('Tipo'),
                 Select::make('establishment_id')

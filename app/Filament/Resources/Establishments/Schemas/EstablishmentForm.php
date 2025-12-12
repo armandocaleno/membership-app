@@ -33,7 +33,7 @@ class EstablishmentForm
                     ->default(null)
                     ->label('Teléfono'),
                 Select::make('status')
-                    ->options(['active' => 'Active', 'inactive' => 'Inactive'])
+                    ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
                     ->default('active')
                     ->required()
                     ->label('Estado'),

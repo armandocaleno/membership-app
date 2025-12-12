@@ -7,6 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class DevicesTable
@@ -39,9 +40,6 @@ class DevicesTable
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Modificado'),
             ])
-            ->groups([
-                'establishment.name',
-            ])
             ->filters([
                 //
             ])
@@ -49,9 +47,11 @@ class DevicesTable
                 EditAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                //
+            ])
+            ->groups([
+                Group::make('establishment.name')
+                ->label('Establecimiento'),
             ]);
     }
 }

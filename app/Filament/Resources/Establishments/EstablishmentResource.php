@@ -18,9 +18,9 @@ class EstablishmentResource extends Resource
 {
     protected static ?string $model = Establishment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::HomeModern;
 
-    protected static ?string $recordTitleAttribute = 'Establishment';
+    protected static ?string $recordTitleAttribute = 'code';
 
     public static function form(Schema $schema): Schema
     {

@@ -10,6 +10,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class SuscriptionsTable
@@ -116,6 +117,10 @@ class SuscriptionsTable
             ])
             ->recordUrl(
                 fn (Model $record): string => route('filament.admin.resources.suscriptions.view', ['record' => $record])
-            );
+            )
+            ->groups([
+                Group::make('customer.name')
+                ->label('Cliente'),
+            ]);
     }
 }
