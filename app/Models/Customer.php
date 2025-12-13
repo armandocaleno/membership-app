@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -45,5 +46,12 @@ class Customer extends Model
                 return strtolower($value);
             }
         );
+    }
+
+    /**
+     * devuelve el query de clientes activos por rango de fechas
+     */
+    public function scopeForDateRange(Builder $query, $startDate, $endDate) : Builder {
+        return $query->where('status', 'active')->whereBetween('created_at', [$startDate, $endDate]);
     }
 }

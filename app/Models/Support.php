@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -38,4 +39,10 @@ class Support extends Model
         return $saldo;
     }
     
+    /**
+     * devuelve el query de soportes por rango de fechas
+     */
+    public function scopeForDateRange(Builder $query, $startDate, $endDate) : Builder {
+        return $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
 }

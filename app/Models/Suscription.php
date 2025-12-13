@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -35,5 +36,12 @@ class Suscription extends Model
         $total_suscription = $this->plan->price;
         $saldo = $total_suscription - $total_incomes;
         return $saldo;
+    }
+
+     /**
+     * devuelve el query de suscripciones activas por rango de fechas
+     */
+    public function scopeForDateRange(Builder $query, $startDate, $endDate) : Builder {
+        return $query->where('status', 'active')->whereBetween('created_at', [$startDate, $endDate]);
     }
 }
