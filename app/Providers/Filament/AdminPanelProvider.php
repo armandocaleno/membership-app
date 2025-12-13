@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -18,6 +19,8 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,7 +42,7 @@ class AdminPanelProvider extends PanelProvider
             ->passwordReset()
             // ->emailVerification()
             // ->emailChangeVerification()
-            ->profile()
+            // ->profile()
             ->colors([
                 'primary' => Color::Blue,
             ])
@@ -69,6 +72,28 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->databaseNotifications()
             ->databaseNotificationsPolling('10s')
-            ->globalSearch(false);
+            ->globalSearch(false)
+            ->plugins([
+                FilamentEditProfilePlugin::make()
+                    ->setTitle('Mi perfil')
+                    ->setNavigationGroup('Opciones')
+                    ->setIcon('heroicon-o-user')
+                    ->shouldShowAvatarForm(
+                        value: true,
+                        directory: 'avatars', // image will be stored in 'storage/app/public/avatars
+                        rules: 'mimes:jpeg,png|max:1024' //only accept jpeg and png files with a maximum size of 1MB
+                    )
+                    ->shouldShowDeleteAccountForm(false)
+                    
+            ])
+            ->userMenuItems([
+                'profile' => Action::make('Edit')
+                    ->label(fn() => auth()->user()->name)
+                    ->url(fn (): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle')
+                    ->visible(function (): bool {
+                        return auth()->user()->exists();
+                    }),
+            ]);
     }
 }
