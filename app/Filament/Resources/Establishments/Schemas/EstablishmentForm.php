@@ -48,7 +48,8 @@ class EstablishmentForm
                         ->pluck('name', 'id')
                         ->all())
                     ->searchPrompt('Buscar por nombre o RUC del cliente.')
-                    ->label('Cliente'),
+                    ->label('Cliente')
+                    ->default(request()->input('customer')),
             ]);
     }
 

@@ -23,7 +23,6 @@ class DevicesTable
                     ->searchable()
                     ->label('Descripción'),
                 TextColumn::make('deviceType.name')
-                    // ->getRelationship(DeviceType, 'type')
                     ->sortable()
                     ->label('Tipo'),
                 TextColumn::make('establishment.name')
@@ -34,6 +33,11 @@ class DevicesTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Creado'),
+                TextColumn::make('remoteDesktopSoftware')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->label('Software Remoto')
+                    ->formatStateUsing(fn (array $state): string => implode(' -> ', $state)),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

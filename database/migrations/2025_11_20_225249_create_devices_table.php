@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('serial')->nullable();
             $table->string('description')->nullable();
+            $table->json('remoteDesktopSoftware')->nullable();
             $table->foreignId('device_type_id')->constrained();
             $table->foreignId('establishment_id')->constrained();
             $table->timestamps();
