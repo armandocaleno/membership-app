@@ -32,7 +32,6 @@ class SuscriptionsTable
                     ->sortable()
                     ->label('Termina'),
                 TextColumn::make('customer.name')
-                    ->numeric()
                     ->sortable()
                     ->searchable()
                     ->label('Cliente')

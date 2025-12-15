@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Suscription extends Model
 {
-    use Notifiable;
+    use Notifiable, HasFactory;
     
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
@@ -42,6 +43,6 @@ class Suscription extends Model
      * devuelve el query de suscripciones activas por rango de fechas
      */
     public function scopeForDateRange(Builder $query, $startDate, $endDate) : Builder {
-        return $query->where('status', 'active')->whereBetween('created_at', [$startDate, $endDate]);
+        return $query->where('status', 'active')->whereBetween('start_date', [$startDate, $endDate]);
     }
 }

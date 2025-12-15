@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Establishment;
+use App\Models\Income;
+use App\Models\Support;
+use App\Models\Suscription;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -34,5 +37,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PaymentMethodSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(PlanSeeder::class);
+
+        Suscription::factory(100)->create();
+        Support::factory(50)->create();
+        Income::factory(75)->create();
     }
 }

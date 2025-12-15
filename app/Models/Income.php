@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Observers\IncomeObserver;
-use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 #[ObservedBy([IncomeObserver::class])]
 class Income extends Model
 {
+    use HasFactory;
+    
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function paymentMethod() : BelongsTo {
@@ -47,5 +49,23 @@ class Income extends Model
         }
 
         $resource->update();
+    }
+
+    public static function getTotalPerPlan($startDate = null, $endDate = null) : array {
+        $query = self::query();
+
+        if ($startDate && $endDate) {
+            # code...
+        }
+
+        $plans = Plan::where('status', 'active')->get();
+
+        // foreach ($plans as $key => $plan) {
+        //     $incomeTotal = $this->query()->withSum('suscriptions');
+        // }
+
+        return [
+            ''
+        ];
     }
 }

@@ -20,7 +20,7 @@ class StatsOverview extends StatsOverviewWidget
     {
         $totalCustomers = Customer::where('status', 'active')->count();
         $totalSuscriptions = Suscription::where('status', 'active')->count();
-        $totalSupports = Suscription::count();
+        $totalSupports = Support::count();
         $thisMonth = \Carbon\Carbon::now()->startOfMonth();
 
         $thisMonthSuscriptions = Suscription::forDateRange($thisMonth, now())->count();
@@ -36,12 +36,12 @@ class StatsOverview extends StatsOverviewWidget
             Stat::make('Clientes', $totalCustomers)
                 ->description('+' . $thisMonthCustomers . ' este mes' )
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->color('success')
+                ->color('info')
                 ->chart([7, 2, 10, 3, 15, 4, 17]),
             Stat::make('Soportes', $totalSupports)
                 ->description('+' . $thisMonthSupports . ' este mes' )
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
-                ->color('success')
+                ->color('warning')
                 ->chart([7, 2, 10, 3, 15, 4, 17]),
         ];
     }
