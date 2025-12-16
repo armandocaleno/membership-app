@@ -14,7 +14,7 @@ use Filament\Tables\Filters\Filter;
 
 class ExpiringSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 6;
     public ?string $filter = 'one_month';
     
 
@@ -55,7 +55,7 @@ class ExpiringSuscriptions extends TableWidget
                 BulkActionGroup::make([
                     //
                 ]),
-            ]);
+            ])->paginated([5, 10]);
     }
 
     protected function getTableHeading(): string

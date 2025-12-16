@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Plan;
 use App\Models\Suscription;
+use Filament\Support\Colors\Color;
 use Filament\Widgets\ChartWidget;
 
 class IncomePerPlanChart extends ChartWidget
@@ -38,9 +39,10 @@ class IncomePerPlanChart extends ChartWidget
                     'label' => 'Planes vendidos',
                     'data' => $totals,
                     'backgroundColor' => [
-                        'rgb(99, 102, 241)',
-                        'rgb(245, 158, 11)',
-                        'rgb(34, 187, 94)'
+                        Color::Sky['900'],
+                        Color::Orange['400'],
+                        Color::Teal['600']
+                        
                     ]
                 ],
             ],

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PendingSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 6;
+    protected static ?int $sort = 7;
 
     public function table(Table $table): Table
     {
@@ -45,7 +45,8 @@ class PendingSuscriptions extends TableWidget
                 BulkActionGroup::make([
                     //
                 ]),
-            ]);
+            ])
+            ->paginated([5, 10]);
     }
 
     protected function getTableHeading(): string

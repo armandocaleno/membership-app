@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\CustomerPerProvinceChart;
+use App\Filament\Widgets\CustomerPerRegimenChart;
 use App\Filament\Widgets\ExpiringSuscriptions;
 use App\Filament\Widgets\IncomePerMonthChart;
 use App\Filament\Widgets\IncomePerPlanChart;
@@ -16,8 +18,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
 use Filament\Widgets\StatsOverviewWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -27,6 +27,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -50,7 +52,7 @@ class AdminPanelProvider extends PanelProvider
             // ->emailChangeVerification()
             // ->profile()
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Sky,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -65,7 +67,9 @@ class AdminPanelProvider extends PanelProvider
                 IncomePerPlanChart::class,
                 SuscriptionPerPlanChart::class,
                 ExpiringSuscriptions::class,
-                PendingSuscriptions::class
+                PendingSuscriptions::class,
+                CustomerPerProvinceChart::class,
+                CustomerPerRegimenChart::class
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -106,5 +110,7 @@ class AdminPanelProvider extends PanelProvider
                         return auth()->user()->exists();
                     }),
             ]);
+
+           
     }
 }

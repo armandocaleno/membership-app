@@ -23,7 +23,7 @@ class EstablishmentForm
                     ->default(null)
                     ->label('Dirección'),
                 Select::make('province')
-                    ->options(static::getProvinces())
+                    ->options(Customer::getProvinces())
                     ->label('Provincia'),
                 TextInput::make('city')
                     ->label('Ciudad')
@@ -51,34 +51,5 @@ class EstablishmentForm
                     ->label('Cliente')
                     ->default(request()->input('customer')),
             ]);
-    }
-
-    protected static function getProvinces() : array {
-        return [
-           "Azuay",
-            "Bolívar",
-            "Cañar",
-            "Carchi",
-            "Chimborazo",
-            "Cotopaxi",
-            "El Oro",
-            "Esmeraldas",
-            "Galápagos",
-            "Guayas",
-            "Imbabura",
-            "Loja",
-            "Los Ríos",
-            "Manabí",
-            "Morona Santiago",
-            "Napo",
-            "Orellana",
-            "Pastaza",
-            "Pichincha",
-            "Santa Elena",
-            "Santo Domingo de los Tsáchilas",
-            "Sucumbíos",
-            "Tungurahua",
-            "Zamora Chinchipe"
-        ];
     }
 }

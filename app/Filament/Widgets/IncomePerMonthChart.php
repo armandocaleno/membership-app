@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use Carbon\Carbon;
 use App\Models\Income;
+use Filament\Support\Colors\Color;
 use Filament\Widgets\ChartWidget;
 
 class IncomePerMonthChart extends ChartWidget
@@ -48,6 +49,7 @@ class IncomePerMonthChart extends ChartWidget
                 [
                     'label' => 'Ingresos del mes',
                     'data' => $totals,
+                    'borderColor' => Color::Sky['900']
                 ],
             ],
             'labels' => $labels,

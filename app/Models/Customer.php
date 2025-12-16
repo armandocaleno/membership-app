@@ -54,4 +54,33 @@ class Customer extends Model
     public function scopeForDateRange(Builder $query, $startDate, $endDate) : Builder {
         return $query->where('status', 'active')->whereBetween('created_at', [$startDate, $endDate]);
     }
+
+    public static function getProvinces() : array {
+        return [
+           "Azuay",
+            "Bolívar",
+            "Cañar",
+            "Carchi",
+            "Chimborazo",
+            "Cotopaxi",
+            "El Oro",
+            "Esmeraldas",
+            "Galápagos",
+            "Guayas",
+            "Imbabura",
+            "Loja",
+            "Los Ríos",
+            "Manabí",
+            "Morona Santiago",
+            "Napo",
+            "Orellana",
+            "Pastaza",
+            "Pichincha",
+            "Santa Elena",
+            "Santo Domingo de los Tsáchilas",
+            "Sucumbíos",
+            "Tungurahua",
+            "Zamora Chinchipe"
+        ];
+    }
 }

@@ -18,9 +18,9 @@ class CustomerInfolist
     {
         return $schema
             ->components([
-                Grid::make(2)
-                    ->schema([
-                    Section::make('Información del cliente')
+                Grid::make(1)
+                ->schema([
+                        Section::make('Información del cliente')
                         ->icon(Heroicon::User)
                         ->description('Información detallada acerca del cliente')
                         ->schema([
@@ -40,64 +40,83 @@ class CustomerInfolist
                                 ->icon(Heroicon::Envelope)
                                 ->color(Color::Gray),
                         ])
-                        ->columnSpanFull()
-                        // ->columns(2)
-                    ]),
-                    Grid::make(1)
-                    ->schema([
-                        Section::make('Tributario')
-                        ->schema([
-                            TextEntry::make('ruc')
-                                ->label('RUC')
-                                ->icon(Heroicon::Identification)
-                                ->color(Color::Gray)
-                                ->weight(FontWeight::Bold),
-                            TextEntry::make('regime.name')
-                                ->label('Régimen SRI')
-                                ->color(Color::Gray),
-                        ]),
-                        Section::make('Estado')
-                        ->schema([
-                            TextEntry::make('status')
-                                ->badge()
-                                ->label('Estado')
-                                ->formatStateUsing(function ($state) {
-                                    if ($state == 'active') {
-                                        return 'Activo';
-                                    }else {
-                                        return 'Inactivo';
-                                    }
-                                })
-                                ->color(fn (string $state): string => match ($state) {
-                                    'active' => 'success',
-                                    'inactive' => 'danger',
-                                }),
-                            TextEntry::make('description')
-                                ->label('Descripción')
-                                ->columnSpan(3)
-                        ])->columns(4)
-                    ]),
+                ]),
 
-                 RepeatableEntry::make('establishments')
+                Grid::make(1)
+                ->schema([
+                    Section::make('Tributario')
+                    ->schema([
+                        TextEntry::make('ruc')
+                            ->label('RUC')
+                            ->icon(Heroicon::Identification)
+                            ->color(Color::Gray)
+                            ->weight(FontWeight::Bold),
+                        TextEntry::make('regime.name')
+                            ->label('Régimen SRI')
+                            ->color(Color::Gray),
+                    ]),
+                    Section::make('Estado')
+                    ->schema([
+                        TextEntry::make('status')
+                            ->badge()
+                            ->label('Estado')
+                            ->formatStateUsing(function ($state) {
+                                if ($state == 'active') {
+                                    return 'Activo';
+                                }else {
+                                    return 'Inactivo';
+                                }
+                            })
+                            ->color(fn (string $state): string => match ($state) {
+                                'active' => 'success',
+                                'inactive' => 'danger',
+                            }),
+                        TextEntry::make('description')
+                            ->label('Descripción')
+                            ->columnSpan(3)
+                    ])->columns(4)
+                ]),
+
+                Grid::make(1)
+                 ->schema([
+                    RepeatableEntry::make('establishments')
                     ->label('Establecimientos')
                     ->schema([
-                        TextEntry::make('code')
-                        ->label('Código')
-                        ->color(Color::Gray),
-                        TextEntry::make('name')
-                        ->label('Nombre')
-                        ->color(Color::Gray),
-                        TextEntry::make('phone')
-                        ->label('Teléfono')
-                        ->color(Color::Gray),
-                        TextEntry::make('address')
-                        ->label('Dirección')
-                        ->color(Color::Gray)
-                        // ->columnSpan(2),
-                ])
-                ->columns(2)
-                ->grid(2)
-                ->columnSpanFull()
+                        Section::make('Datos del establecimiento')
+                        ->schema([
+                            TextEntry::make('code')
+                            ->label('Código')
+                            ->color(Color::Gray),
+                            TextEntry::make('name')
+                            ->label('Nombre')
+                            ->color(Color::Gray),
+                            TextEntry::make('phone')
+                            ->label('Teléfono')
+                            ->color(Color::Gray),
+                            TextEntry::make('address')
+                            ->label('Dirección')
+                            ->color(Color::Gray),
+                        ])->columns(2)->columnSpan(2),
+                        
+                        
+                        RepeatableEntry::make('devices')
+                        ->label('Dispositivos')
+                        ->schema([
+                            TextEntry::make('serial')
+                            ->label('Serial')
+                            ->color(Color::Gray),
+                             TextEntry::make('description')
+                            ->label('Descripcion')
+                            ->color(Color::Gray),
+                        ])
+                        ->columns(2)
+                        ->columnSpan(2)
+                    ])
+                ->columns(4)
+                // ->grid(1)
+                // ->columnSpanFull()
+                
+                 ])->columnSpan('full')
             ]);
     }
 }
