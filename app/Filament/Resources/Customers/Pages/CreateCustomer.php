@@ -13,6 +13,6 @@ class CreateCustomer extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return EstablishmentResource::getUrl('create', ['customer' => $this->record->id]);
+        return EstablishmentResource::getUrl('create');
     }
 }

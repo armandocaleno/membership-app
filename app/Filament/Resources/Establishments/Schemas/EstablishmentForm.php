@@ -49,7 +49,8 @@ class EstablishmentForm
                         ->all())
                     ->searchPrompt('Buscar por nombre o RUC del cliente.')
                     ->label('Cliente')
-                    ->default(request()->input('customer')),
+                    ->default(fn(): ?int => Customer::latest()->first()->id),
+                    // ->default(request()->input('customer')),
             ]);
     }
 }

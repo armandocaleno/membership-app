@@ -9,9 +9,10 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateEstablishment extends CreateRecord
 {
     protected static string $resource = EstablishmentResource::class;
+    
 
     protected function getRedirectUrl(): string
     {
-        return DeviceResource::getUrl('create', ['establishment' => $this->record->id]);
+        return DeviceResource::getUrl('create');
     }
 }
