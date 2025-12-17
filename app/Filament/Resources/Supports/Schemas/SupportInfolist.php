@@ -2,8 +2,16 @@
 
 namespace App\Filament\Resources\Supports\Schemas;
 
+use App\Filament\Resources\Customers\CustomerResource;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\RepeatableEntry\TableColumn;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Colors\Color;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
+use Filament\Support\Icons\Heroicon;
 
 class SupportInfolist
 {
@@ -11,56 +19,101 @@ class SupportInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('date')
-                    ->date()
-                    ->label('Fecha'),
-                TextEntry::make('number')
-                    ->label('Número'),
-                TextEntry::make('detail')
-                    ->label('Detalle')
-                    ->placeholder('-'),
-                TextEntry::make('comments')
-                    ->label('Comentarios')
-                    ->placeholder('-'),
-                TextEntry::make('attached_file')
-                    ->placeholder('-')
-                    ->label('Adjunto'),
-                TextEntry::make('customer.name')
-                    ->label('Cliente'),
-                TextEntry::make('establishment.name')
-                    ->placeholder('-')
-                    ->label('Establecimiento'),
-                TextEntry::make('device.name')
-                    ->placeholder('-')
-                    ->label('Dispositivo'),
-                TextEntry::make('total')
-                    ->money()
-                    ->label('Total'),
-                TextEntry::make('payment_status')
-                    ->badge()
-                    ->label('Estado de pago')
-                    ->formatStateUsing(function ($state) {
-                        if ($state == 'paid') {
-                            return 'Pagado';
-                        }elseif($state == 'partial') {
-                            return 'Parcial';
-                        }else {
-                            return 'Pendiente';
-                        }
-                    })
-                    ->color(fn (string $state): string => match ($state) {
-                        'paid' => 'success',
-                        'pending' => 'danger',
-                        'partial' => 'info',
-                    }),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-')
-                    ->label('Creado'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-')
-                    ->label('Modificado'),
+                Section::make('Datos del soporte')
+                ->schema([
+                    TextEntry::make('date')
+                        ->date()
+                        ->label('Fecha')
+                        ->color(Color::Gray)
+                        ->icon(Heroicon::Calendar),
+                    TextEntry::make('number')
+                        ->label('Número')
+                        ->color(Color::Gray)
+                        ->size(TextSize::Large)
+                        ->weight(FontWeight::Bold),
+                    TextEntry::make('detail')
+                        ->label('Detalle')
+                        ->placeholder('-')
+                        ->color(Color::Gray),
+                    TextEntry::make('comments')
+                        ->label('Comentarios')
+                        ->placeholder('-')
+                        ->color(Color::Gray),
+                    TextEntry::make('attached_file')
+                        ->placeholder('-')
+                        ->label('Adjunto')
+                        ->color(Color::Gray),
+                    TextEntry::make('customer.name')
+                        ->label('Cliente')
+                        ->size(TextSize::Large)
+                        ->weight(FontWeight::Bold)
+                        ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer]))
+                        ->color(Color::Gray)
+                        ->icon(Heroicon::User),
+                    TextEntry::make('establishment.name')
+                        ->placeholder('-')
+                        ->label('Establecimiento')
+                        ->color(Color::Gray)
+                        ->icon(Heroicon::HomeModern),
+                    TextEntry::make('device.description')
+                        ->placeholder('-')
+                        ->label('Dispositivo')
+                        ->color(Color::Gray)
+                        ->icon(Heroicon::ComputerDesktop),
+                    TextEntry::make('total')
+                        ->money()
+                        ->label('Total')
+                        ->color(Color::Gray),
+                    TextEntry::make('payment_status')
+                        ->badge()
+                        ->label('Estado de pago')
+                        ->formatStateUsing(function ($state) {
+                            if ($state == 'paid') {
+                                return 'Pagado';
+                            }elseif($state == 'partial') {
+                                return 'Parcial';
+                            }else {
+                                return 'Pendiente';
+                            }
+                        })
+                        ->color(fn (string $state): string => match ($state) {
+                            'paid' => 'success',
+                            'pending' => 'danger',
+                            'partial' => 'info',
+                        }),
+                    TextEntry::make('created_at')
+                        ->dateTime()
+                        ->placeholder('-')
+                        ->label('Creado')
+                        ->color(Color::Gray),
+                    TextEntry::make('updated_at')
+                        ->dateTime()
+                        ->placeholder('-')
+                        ->label('Modificado')
+                        ->color(Color::Gray)
+                ])->columns(2),
+
+                Section::make('Información del pagos')
+                    ->schema([
+                        RepeatableEntry::make('incomes')
+                        ->label('Pagos')
+                        ->table([
+                            TableColumn::make('Fecha'),
+                            TableColumn::make('Total'),
+                            TableColumn::make('Número'),
+                            TableColumn::make('F. Pago'),
+                            TableColumn::make('Descrpcion')
+                        ])
+                        ->schema([
+                            TextEntry::make('date')
+                            ->date(),
+                            TextEntry::make('total')
+                            ->money(),
+                            TextEntry::make('number'),
+                            TextEntry::make('paymentMethod.name'),
+                            TextEntry::make('description')
+                        ])
+                    ])->columnSpanFull()
             ]);
     }
 }

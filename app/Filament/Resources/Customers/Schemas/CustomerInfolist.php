@@ -34,6 +34,7 @@ class CustomerInfolist
                                 ->color(Color::Gray),
                             TextEntry::make('phone')
                                 ->label('Teléfono')
+                                ->color(Color::Gray)
                                 ->icon(Heroicon::DevicePhoneMobile),
                             TextEntry::make('email')
                                 ->label('Email')
@@ -92,10 +93,12 @@ class CustomerInfolist
                             ->color(Color::Gray),
                             TextEntry::make('phone')
                             ->label('Teléfono')
-                            ->color(Color::Gray),
+                            ->color(Color::Gray)
+                            ->icon(Heroicon::Phone),
                             TextEntry::make('address')
                             ->label('Dirección')
-                            ->color(Color::Gray),
+                            ->color(Color::Gray)
+                            ->icon(Heroicon::MapPin),
                         ])->columns(2)->columnSpan(2),
                         
                         
@@ -108,14 +111,14 @@ class CustomerInfolist
                              TextEntry::make('description')
                             ->label('Descripcion')
                             ->color(Color::Gray),
+                             TextEntry::make('deviceType.name')
+                            ->label('Tipo')
+                            ->color(Color::Gray),
                         ])
-                        ->columns(2)
+                        ->columns(3)
                         ->columnSpan(2)
                     ])
                 ->columns(4)
-                // ->grid(1)
-                // ->columnSpanFull()
-                
                  ])->columnSpan('full')
             ]);
     }

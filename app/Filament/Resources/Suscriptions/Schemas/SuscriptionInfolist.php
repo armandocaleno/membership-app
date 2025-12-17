@@ -3,11 +3,16 @@
 namespace App\Filament\Resources\Suscriptions\Schemas;
 
 use App\Filament\Resources\Customers\CustomerResource;
-use App\Models\Customer;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\RepeatableEntry\TableColumn;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Colors\Color;
+use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
+use Filament\Support\Icons\Heroicon;
 
 class SuscriptionInfolist
 {
@@ -20,17 +25,26 @@ class SuscriptionInfolist
                     Section::make('Información de la suscripción')
                         ->schema([
                             TextEntry::make('number')
-                                ->label('Número'),
+                                ->label('Número')
+                                ->color(Color::Gray)
+                                ->size(TextSize::Large)
+                                ->weight(FontWeight::Bold),
                             TextEntry::make('start_date')
                                 ->date()
-                                ->label('Inicia'),
+                                ->label('Inicia')
+                                ->color(Color::Gray)
+                                ->icon(Heroicon::Clock),
                             TextEntry::make('end_date')
                                 ->date()
-                                ->label('Termina'),
+                                ->label('Termina')
+                                ->color(Color::Gray)
+                                ->icon(Heroicon::Clock),
                             TextEntry::make('plan.name')
-                                ->label('Plan'),
+                                ->label('Plan')
+                                ->color(Color::Gray),
                             TextEntry::make('description')
-                                ->label('Descripción'),
+                                ->label('Descripción')
+                                ->color(Color::Gray),
                             TextEntry::make('status')
                                 ->badge()
                                 ->label('Estado')
@@ -44,10 +58,7 @@ class SuscriptionInfolist
                                 ->color(fn (string $state): string => match ($state) {
                                     'active' => 'success',
                                     'inactive' => 'danger',
-                        }),
-                    ]),
-                    Section::make('Informacion del cliente')
-                        ->schema([
+                                }),
                             TextEntry::make('payment_status')
                                 ->badge()
                                 ->label('Estado de pago')
@@ -67,16 +78,43 @@ class SuscriptionInfolist
                                 }),
                             TextEntry::make('customer.name')
                                 ->label('Cliente')
+                                ->icon(Heroicon::User)
+                                ->size(TextSize::Large)
+                                ->weight(FontWeight::Bold)
                                 ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer])),
                             TextEntry::make('created_at')
                                 ->dateTime()
                                 ->placeholder('-')
-                                ->label('Creado'),
+                                ->label('Creado')
+                                ->color(Color::Gray),
                             TextEntry::make('updated_at')
                                 ->dateTime()
                                 ->placeholder('-')
-                                ->label('Modificado'),
+                                ->label('Modificado')
+                                ->color(Color::Gray)
+                        ])->columns(2),
+
+                    Section::make('Información del pagos')
+                    ->schema([
+                        RepeatableEntry::make('incomes')
+                        ->label('Pagos')
+                        ->table([
+                            TableColumn::make('Fecha'),
+                            TableColumn::make('Total'),
+                            TableColumn::make('Número'),
+                            TableColumn::make('F. Pago'),
+                            TableColumn::make('Descrpcion')
                         ])
+                        ->schema([
+                            TextEntry::make('date')
+                            ->date(),
+                            TextEntry::make('total')
+                            ->money(),
+                            TextEntry::make('number'),
+                            TextEntry::make('paymentMethod.name'),
+                            TextEntry::make('description')
+                        ])
+                    ])->columnSpanFull()
                 ])
                 ->columnSpanFull()
             ]);
