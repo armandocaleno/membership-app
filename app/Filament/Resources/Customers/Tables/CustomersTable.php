@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\Customers\Tables;
 
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Filters\Filter;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use App\Models\Customer;
+use App\Models\Regime;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class CustomersTable
@@ -68,18 +70,36 @@ class CustomersTable
                     }),
             ])
             ->filters([
-                Filter::make('Activos')
-                ->query(fn (Builder $query): Builder => $query->where('status', 'active')),
-                Filter::make('Inactivos')
-                ->query(fn (Builder $query): Builder => $query->where('status', 'inactive')),
+                SelectFilter::make('regime_id')
+                    ->label('Régimen')
+                    ->indicator('Régimen seleccionado')
+                    ->options(Regime::pluck('name', 'id')),
+                SelectFilter::make('city')
+                    ->label('Ciudad')
+                    ->indicator('Ciudad seleccionada')
+                    ->options(fn (): array => Customer::query()
+                        ->select('city')
+                        ->whereNotNull('city')
+                        ->distinct()
+                        ->orderBy('city')
+                        ->pluck('city', 'city')
+                        ->toArray())
+                    ->searchable(),
+                SelectFilter::make('status')
+                    ->label('Estado')
+                    ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
+
             ])
             ->recordActions([
                 EditAction::make(),
                 ViewAction::make(),
                 DeleteAction::make()
             ])
-            ->toolbarActions([
-                
+            ->headerActions([
+                FilamentExportHeaderAction::make('exportar')
+                ->disableCsv()
+                ->disableAdditionalColumns()
+                ->withHiddenColumns()
             ]);
     }
 }

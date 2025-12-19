@@ -5,11 +5,22 @@ namespace App\Filament\Resources\Incomes\Tables;
 use App\Filament\Resources\Customers\CustomerResource;
 use App\Models\Support;
 use App\Models\Suscription;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use App\Models\Customer;
+use App\Models\PaymentMethod;
+use Carbon\Carbon;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Indicator;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Model;
 
 class IncomesTable
 {
@@ -18,14 +29,14 @@ class IncomesTable
         return $table
             ->columns([
                 TextColumn::make('number')
-                    ->searchable()
+                    // ->searchable()
                     ->label('Número'),
                 TextColumn::make('date')
                     ->date()
                     ->sortable()
                     ->label('Fecha'),
                 TextColumn::make('total')
-                    ->money()
+                    ->prefix('$')
                     ->sortable()
                     ->label('Total')
                     ->weight('bold'),
@@ -50,6 +61,7 @@ class IncomesTable
                     ->state(function($record){
                         return $record->incomeable->customer->name;
                     })
+                    ->searchable()
                     ->url(fn($record): string => CustomerResource::getUrl('view', ['record' => $record->incomeable->customer])),
                 TextColumn::make('incomeable')
                     ->label('Recurso')
@@ -93,17 +105,81 @@ class IncomesTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('payment_method_id')
+                    ->label('F. de pago')
+                    ->options(PaymentMethod::pluck('name', 'id'))
+                    ->indicator('Forma de pago'),
+                SelectFilter::make('incomeable_type')
+                    ->label('Recurso')
+                    ->options(['App\Models\Suscription' => 'Suscripción', 'App\Models\Support' => 'Soporte'])
+                    ->preload(),
+                // Filter::make('customer')
+                //     ->schema([
+                //         Select::make('select_customer')
+                //         ->label('Cliente')
+                //         ->options(Customer::where('status', 'active')->pluck('name', 'id'))
+                //         ->searchable()
+                //     ])
+                    // ->modifyQueryUsing(fn(Builder $query) =>
+                    //     $query->join('suscriptions as sus', 'incomes.incomeable_id', '=', 'sus.id')
+                    //             ->selectRaw('incomes.*, sus.customer_id')
+                    // )
+                    // ->query(function (Builder $query, array $data) : Builder {
+                    //     dd($query);
+                    //     return $query
+                    //             ->when(
+                    //                 filled($data['select_customer'] ?? null),
+                                    
+                    //                 fn(Builder $query) => $query
+                    //                                         ->where('customer_id', $data['select_customer'])
+                    //             );
+                    // }),
+                Filter::make('date_range')
+                    ->label('Fecha de registro')
+                    ->indicator('Fecha')
+                    ->schema([
+                        DatePicker::make('date_from')
+                        ->label('Desde'),
+                        DatePicker::make('date_until')
+                        ->label('Hasta')
+                    ])
+                    ->columns(2)
+                    ->indicateUsing(function (array $data): array{
+                        $indicators =[];
+                        Carbon::setLocale('es');
+                        if (filled($data['date_from'] ?? null)) {
+                            $indicators[] = Indicator::make('Desde: ' . Carbon::parse($data['date_from'])->locale('es')->isoFormat('D MMMM YYYY'))
+                            ->removeField('date_from');
+                        }
+                        if (filled($data['date_until'] ?? null)) {
+                            $indicators[] = Indicator::make('Hasta: ' . Carbon::parse($data['date_until'])->locale('es')->isoFormat('D MMMM YYYY'))
+                            ->removeField('date_until');
+                        }
+
+                        return $indicators;
+                    })
+                    ->query(function (Builder $query, array $data) : Builder {
+                        return $query
+                            ->when(
+                                filled($data['date_from'] ?? null),
+                                fn(Builder $query) => $query->whereDate('date', '>=', $data['date_from'])
+                            )
+                            ->when(
+                                filled($data['date_until'] ?? null),
+                                fn(Builder $query) => $query->whereDate('date', '<=', $data['date_until'])
+                            );
+                    })
             ])
             ->recordActions([
-                // ViewAction::make(),
-                // EditAction::make(),
                 DeleteAction::make()
             ])
-            ->toolbarActions([
-                // BulkActionGroup::make([
-                //     DeleteBulkAction::make(),
-                // ]),
+            ->headerActions([
+                FilamentExportHeaderAction::make('exportar')
+                ->disableCsv()
+                ->disableAdditionalColumns()
+                ->withHiddenColumns()
             ]);
     }
+
+    
 }

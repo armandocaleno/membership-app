@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class IncomeResource extends Resource
 {
@@ -60,4 +61,11 @@ class IncomeResource extends Resource
     {
         return "Ingreso";
     }
+
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     return parent::getEloquentQuery()
+    //         ->join('suscriptions as sus', 'incomes.incomeable_id', '=', 'sus.id')
+    //         ->selectRaw('incomes.*, sus.customer_id, sus.number as suscription_number');
+    // }
 }

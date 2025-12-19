@@ -2,13 +2,24 @@
 
 namespace App\Filament\Resources\Supports\Tables;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\Incomes\IncomeResource;
+use App\Models\Establishment;
+use Carbon\Carbon;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Indicator;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,16 +55,16 @@ class SupportsTable
                     ->label('Dispositivo')
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('total')
-                    ->money()
+                    ->prefix('$')
                     ->label('Total')
                     ->weight('bold'),
-                TextColumn::make('incomes')
+                TextColumn::make('incomes.total')
                     ->label('Pagos')
                     ->listWithLineBreaks()
-                    ->formatStateUsing(fn($state):string => '$ ' . $state->total)
+                    ->prefix('$')
                     ->alignment('right')
                     ->url(fn($state):string =>IncomeResource::getUrl('view', ['record' => $state]))
-                    ->placeholder('0.00'),
+                    ->placeholder('$0.00'),
                 TextColumn::make('attached_file')
                     ->label('Adjunto')
                     ->formatStateUsing(function ($state) {
@@ -97,17 +108,118 @@ class SupportsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('payment_status')
+                    ->label('Estado de pago')
+                    ->options(['paid' => 'Pagadas', 'pending' => 'Pendientes', 'partial' => 'Parciales'])
+                    ->indicator('Estado de pago'),
+                SelectFilter::make('customer')
+                    ->label('Cliente')
+                    ->relationship('customer', 'name')
+                    ->searchable()
+                    ->preload(),
+                Filter::make('customer_establishment')
+                    ->label('Establecimiento')
+                    ->indicator('Establecimiento')
+                    ->schema([
+                        Select::make('customer_id')
+                            ->label('Cliente')
+                            ->relationship('customer', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->live(),
+                        Select::make('establishment_id')
+                            ->label('Establecimiento')
+                            ->options(function(Get $get) : array {
+                                $customerId = $get('customer_id');
+
+                                if (! $customerId) {
+                                    return [];
+                                }
+
+                                return Establishment::query()
+                                        ->where('customer_id', $customerId)
+                                        ->orderBy('name')
+                                        ->pluck('name', 'id')
+                                        ->toArray();
+                            })
+                            ->searchable()
+                            ->preload()
+                            ->disabled(fn (Get $get) : bool => ! filled($get('customer_id')))
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->query(function(Builder $query, array $data) : Builder {
+                                return $query
+                                    ->when(
+                                        filled($data['customer_id'] ?? null),
+                                        fn (Builder $query) : Builder => $query->where('customer_id', $data['customer_id'])
+                                    )
+                                    ->when(
+                                        filled($data['establishment_id'] ?? null),
+                                        fn (Builder $query ) : Builder => $query->where('establishment_id', $data['establishment_id'])
+                                    );
+                            }),
+                Filter::make('date_range')
+                    ->label('Fecha de registro')
+                    ->indicator('Fecha')
+                    ->schema([
+                        DatePicker::make('date_from')
+                        ->label('Desde'),
+                        DatePicker::make('date_until')
+                        ->label('Hasta')
+                    ])->columnSpanFull()
+                    ->columns(2)
+                    ->indicateUsing(function (array $data): array{
+                        $indicators =[];
+                        Carbon::setLocale('es');
+                        if (filled($data['date_from'] ?? null)) {
+                            $indicators[] = Indicator::make('Desde: ' . Carbon::parse($data['date_from'])->locale('es')->isoFormat('D MMMM YYYY'))
+                            ->removeField('date_from');
+                        }
+                        if (filled($data['date_until'] ?? null)) {
+                            $indicators[] = Indicator::make('Hasta: ' . Carbon::parse($data['date_until'])->locale('es')->isoFormat('D MMMM YYYY'))
+                            ->removeField('date_until');
+                        }
+
+                        return $indicators;
+                    })
+                    ->query(function (Builder $query, array $data) : Builder {
+                        return $query
+                            ->when(
+                                filled($data['date_from'] ?? null),
+                                fn(Builder $query) => $query->whereDate('date', '>=', $data['date_from'])
+                            )
+                            ->when(
+                                filled($data['date_until'] ?? null),
+                                fn(Builder $query) => $query->whereDate('date', '<=', $data['date_until'])
+                            );
+                    })
+            ])
+            ->filtersFormColumns(2)
+            ->filtersFormSchema(fn(array $filters): array =>[
+                Section::make('Estado y cliente')
+                ->schema([
+                    $filters['payment_status'],
+                    $filters['customer']
+                ])
+                ->columns(2)
+                ->columnSpanFull(),
+                Section::make('Fechas')
+                ->schema([
+                    $filters['date_range']
+                ])
+                ->columns(2)
+                ->columnSpanFull(),
+                Section::make('Establecimientos')
+                ->schema([
+                    $filters['customer_establishment']
+                ])
+                ->columns(2)
+                ->columnSpanFull(),
             ])
             ->recordActions([
-                // ViewAction::make(),
                 EditAction::make(),
                 DeleteAction::make()
-            ])
-            ->toolbarActions([
-                // BulkActionGroup::make([
-                //     DeleteBulkAction::make(),
-                // ]),
             ])
             ->recordUrl(
                 fn (Model $record): string => route('filament.admin.resources.supports.view', ['record' => $record])
@@ -115,6 +227,12 @@ class SupportsTable
             ->groups([
                 Group::make('customer.name')
                 ->label('Cliente'),
+            ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('exportar')
+                ->disableCsv()
+                ->disableAdditionalColumns()
+                ->withHiddenColumns()
             ]);
     }
 }

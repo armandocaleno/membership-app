@@ -50,22 +50,4 @@ class Income extends Model
 
         $resource->update();
     }
-
-    public static function getTotalPerPlan($startDate = null, $endDate = null) : array {
-        $query = self::query();
-
-        if ($startDate && $endDate) {
-            # code...
-        }
-
-        $plans = Plan::where('status', 'active')->get();
-
-        // foreach ($plans as $key => $plan) {
-        //     $incomeTotal = $this->query()->withSum('suscriptions');
-        // }
-
-        return [
-            ''
-        ];
-    }
 }
