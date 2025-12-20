@@ -9,7 +9,7 @@ use Filament\Widgets\ChartWidget;
 
 class SuscriptionPerPlanChart extends ChartWidget
 {
-    protected ?string $heading = 'Ingresos por Plan';
+    protected ?string $heading = 'Ingresos por plan';
     protected static ?int $sort = 3;
     public ?string $filter = 'this_year';
 

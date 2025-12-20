@@ -233,6 +233,7 @@ class SupportsTable
                 ->disableCsv()
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
+                ->visible(fn(): bool => auth()->user()->can('Export:Support'))
             ]);
     }
 }

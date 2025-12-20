@@ -21,7 +21,6 @@ class ExpiringSuscriptions extends TableWidget
     public function table(Table $table): Table
     {
         $check_date = Carbon::now()->addMonth();
-        // $check_date = $this->getDateRange();
         return $table
             ->query(fn (): Builder => Suscription::query()
                         ->where('status', 'active')

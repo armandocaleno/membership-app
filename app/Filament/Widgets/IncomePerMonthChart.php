@@ -2,7 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use Carbon\Carbon;
 use App\Models\Income;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\ChartWidget;

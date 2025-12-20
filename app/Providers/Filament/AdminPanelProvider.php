@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Widgets\CustomerPerProvinceChart;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use App\Filament\Widgets\CustomerPerRegimenChart;
 use App\Filament\Widgets\ExpiringSuscriptions;
 use App\Filament\Widgets\IncomePerMonthChart;
@@ -89,6 +90,7 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->globalSearch(false)
             ->plugins([
+                FilamentShieldPlugin::make(),
                 FilamentEditProfilePlugin::make()
                     ->setTitle('Mi perfil')
                     ->setNavigationGroup('Opciones')
@@ -103,7 +105,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->userMenuItems([
                 'profile' => Action::make('Edit')
-                    ->label(fn() => auth()->user()->name)
+                    ->label('Editar perfil')
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle')
                     ->visible(function (): bool {

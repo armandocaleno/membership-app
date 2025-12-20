@@ -32,20 +32,6 @@ class PendingSuscriptions extends TableWidget
                     ->label('Cliente'),
                 TextColumn::make('plan.name')
             ])
-            ->filters([
-                //
-            ])
-            ->headerActions([
-                //
-            ])
-            ->recordActions([
-                //
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    //
-                ]),
-            ])
             ->paginated([5, 10]);
     }
 

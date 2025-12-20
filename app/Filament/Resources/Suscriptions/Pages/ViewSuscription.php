@@ -21,7 +21,7 @@ class ViewSuscription extends ViewRecord
             ->label('Registrar Cobro')
             ->icon('heroicon-o-arrow-top-right-on-square')
             ->url(IncomeResource::getUrl('create', ['id' => $this->record->id, 'model' => 'suscription']))
-            ->visible( $this->record->payment_status !== 'paid' ),
+            ->visible( $this->record->payment_status !== 'paid' && auth()->user()->can('Create:Income')),
         ];
     }
 }

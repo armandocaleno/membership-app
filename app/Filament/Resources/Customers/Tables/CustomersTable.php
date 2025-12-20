@@ -100,6 +100,7 @@ class CustomersTable
                 ->disableCsv()
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
+                ->visible(fn(): bool => auth()->user()->can('Export:Customer'))
             ]);
     }
 }

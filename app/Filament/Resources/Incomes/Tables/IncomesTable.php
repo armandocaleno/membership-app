@@ -178,6 +178,7 @@ class IncomesTable
                 ->disableCsv()
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
+                ->visible(fn(): bool => auth()->user()->can('Export:Income'))
             ]);
     }
 

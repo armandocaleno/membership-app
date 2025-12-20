@@ -20,7 +20,7 @@ class ViewSupport extends ViewRecord
             ->label('Registrar cobro')
             ->icon('heroicon-o-arrow-top-right-on-square')
             ->url(IncomeResource::getUrl('create', ['id' => $this->record->id, 'model' => 'support']))
-            ->visible( $this->record->payment_status !== 'paid' ),
+            ->visible( $this->record->payment_status !== 'paid' && auth()->user()->can('Create:Income') ),
         ];
     }
 }

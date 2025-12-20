@@ -213,6 +213,7 @@ class SuscriptionsTable
                 ->disableCsv()
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
+                ->visible(fn(): bool => auth()->user()->can('Export:Suscription'))
             ]);
     }
 }
