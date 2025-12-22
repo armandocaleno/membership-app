@@ -23,11 +23,10 @@ class IncomePerMonthChart extends ChartWidget
 
     protected function getData(): array
     {
-        $startDate = now()->startOfYear();
-        $endDate = now();
+        $dateRage = $this->getDateRange();
         
         $incomePerMonth = Income::query()
-            ->whereBetween('date', [$startDate, $endDate])
+            ->whereBetween('date', [$dateRage['start'], $dateRage['end']])
             ->selectRaw('MONTH(date) as month, SUM(total) as totalMonth')
             ->groupBy('month')
             ->orderBy('month')
@@ -37,7 +36,7 @@ class IncomePerMonthChart extends ChartWidget
         $labels = [];
         $totals = [];
 
-        for ($date = $startDate->copy(); $date <= $endDate ; $date->addMonth()) { 
+        for ($date = $dateRage['start']->copy(); $date <= $dateRage['end'] ; $date->addMonth()) { 
             $dateString = $date->format('n');
             $labels[] = $date->locale('es')->isoFormat('MMM');
             $totals[] = $incomePerMonth->get($dateString) ?->totalMonth ?? 0; 
@@ -58,5 +57,30 @@ class IncomePerMonthChart extends ChartWidget
     protected function getType(): string
     {
         return 'line';
+    }
+
+    protected function getFilters(): ?array
+    {
+        return [
+            'this_year' => 'Este año',
+            'last_year' => 'Año anterior',
+        ];
+    }
+
+    private function getDateRange() : array {
+        return match($this->filter){
+            'this_year' => [
+                'start' => now()->startOfYear(),
+                'end' => now()
+            ],
+            'last_year' => [
+                'start' => now()->subYear()->startOfMonth(),
+                'end' => now()->subYear()->endOfMonth()
+            ],
+            default => [
+                'start' => now()->startOfYear(),
+                'end' => now()
+            ]
+        };
     }
 }
