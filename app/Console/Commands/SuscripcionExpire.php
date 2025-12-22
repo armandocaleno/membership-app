@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\SuscriptionExpire;
+use App\Mail\SuscriptionExpired;
 use App\Models\Suscription;
 use App\Models\User;
 use Carbon\Carbon;
@@ -33,28 +34,43 @@ class SuscripcionExpire extends Command
     public function handle()
     {
         $check_date = Carbon::now()->addMonth()->format('Y-m-d');
+        $expire_suscription_date = Carbon::now()->subDay(1)->format('Y-m-d');
        
         $suscriptions = Suscription::where('status', 'active')->get();
-        
+        $user = User::first()->get();
+
         foreach ($suscriptions as $sus) {
             $expire_date = Carbon::parse($sus->end_date)->format('Y-m-d');
+            $customer_mail = $sus->customer->email;
 
             if ($check_date == $expire_date) {
-                
-                $customer_mail = $sus->customer->email;
                 Mail::to($customer_mail)->queue(new SuscriptionExpire($sus));
 
-                $user = User::first()->get();
                 Notification::make()
-                        ->title("Suscripción $sus->number por vencer!")
-                        ->info()
-                        ->actions([
-                            Action::make('Ver')
-                                ->button()
-                                ->markAsRead()
-                                ->url(route('filament.admin.resources.suscriptions.view', ['record' => $sus])),
-                        ])
-                        ->sendToDatabase($user);
+                    ->title("Suscripción $sus->number por vencer!")
+                    ->info()
+                    ->actions([
+                        Action::make('Ver')
+                            ->button()
+                            ->markAsRead()
+                            ->url(route('filament.admin.resources.suscriptions.view', ['record' => $sus])),
+                    ])
+                    ->sendToDatabase($user);
+            }
+
+            if ($expire_date == $expire_suscription_date) {
+                Mail::to($customer_mail)->queue(new SuscriptionExpired($sus));
+
+                Notification::make()
+                    ->title("Suscripción $sus->number expirada!")
+                    ->info()
+                    ->actions([
+                        Action::make('Ver')
+                            ->button()
+                            ->markAsRead()
+                            ->url(route('filament.admin.resources.suscriptions.view', ['record' => $sus])),
+                    ])
+                    ->sendToDatabase($user);
             }
         }
     }
