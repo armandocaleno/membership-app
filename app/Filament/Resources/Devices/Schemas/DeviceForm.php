@@ -24,7 +24,8 @@ class DeviceForm
                 Select::make('device_type_id')
                     ->relationship('deviceType', 'name')
                     ->required()
-                    ->label('Tipo'),
+                    ->label('Tipo')
+                    ->native(false),
                 Select::make('customer_id')
                     ->label('Cliente')
                     ->default(null)
@@ -56,7 +57,8 @@ class DeviceForm
                         return $customer_id ? Establishment::where('customer_id', $customer_id)->pluck('name', 'id') : [];
                     })
                     ->label('Establecimiento')
-                    ->reactive(),
+                    ->reactive()
+                    ->native(false),
                 Repeater::make('remoteDesktopSoftware')
                     ->schema([
                         TextInput::make('conecction_id')

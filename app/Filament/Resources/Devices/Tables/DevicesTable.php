@@ -2,9 +2,6 @@
 
 namespace App\Filament\Resources\Devices\Tables;
 
-use App\Models\DeviceType;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
@@ -44,14 +41,8 @@ class DevicesTable
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Modificado'),
             ])
-            ->filters([
-                //
-            ])
             ->recordActions([
                 EditAction::make(),
-            ])
-            ->toolbarActions([
-                //
             ])
             ->groups([
                 Group::make('establishment.name')

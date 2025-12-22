@@ -24,7 +24,8 @@ class EstablishmentForm
                     ->label('Dirección'),
                 Select::make('province')
                     ->options(Customer::getProvinces())
-                    ->label('Provincia'),
+                    ->label('Provincia')
+                    ->native(false),
                 TextInput::make('city')
                     ->label('Ciudad')
                     ->default(null),
@@ -36,7 +37,8 @@ class EstablishmentForm
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
                     ->default('active')
                     ->required()
-                    ->label('Estado'),
+                    ->label('Estado')
+                    ->native(false),
                 Select::make('customer_id')
                     ->relationship('customer', 'name')
                     ->required()
@@ -49,8 +51,8 @@ class EstablishmentForm
                         ->all())
                     ->searchPrompt('Buscar por nombre o RUC del cliente.')
                     ->label('Cliente')
-                    ->default(fn(): ?int => Customer::latest()->first()->id),
-                    // ->default(request()->input('customer')),
+                    ->default(fn(): ?int => Customer::latest()->first()->id)
+                    ->native(false),
             ]);
     }
 }

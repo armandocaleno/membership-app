@@ -23,7 +23,8 @@ class ProductForm
                     ->options(['service' => 'Servicio', 'hardware' => 'Bien'])
                     ->default('service')
                     ->required()
-                    ->label('Tipo'),
+                    ->label('Tipo')
+                    ->native(false),
                 Textarea::make('description')
                     ->label('Descripción')
                     ->autosize()

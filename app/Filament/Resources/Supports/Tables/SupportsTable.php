@@ -111,12 +111,14 @@ class SupportsTable
                 SelectFilter::make('payment_status')
                     ->label('Estado de pago')
                     ->options(['paid' => 'Pagadas', 'pending' => 'Pendientes', 'partial' => 'Parciales'])
-                    ->indicator('Estado de pago'),
+                    ->indicator('Estado de pago')
+                    ->native(false),
                 SelectFilter::make('customer')
                     ->label('Cliente')
                     ->relationship('customer', 'name')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->native(false),
                 Filter::make('customer_establishment')
                     ->label('Establecimiento')
                     ->indicator('Establecimiento')
@@ -126,7 +128,8 @@ class SupportsTable
                             ->relationship('customer', 'name')
                             ->searchable()
                             ->preload()
-                            ->live(),
+                            ->live()
+                            ->native(false),
                         Select::make('establishment_id')
                             ->label('Establecimiento')
                             ->options(function(Get $get) : array {
@@ -145,6 +148,7 @@ class SupportsTable
                             ->searchable()
                             ->preload()
                             ->disabled(fn (Get $get) : bool => ! filled($get('customer_id')))
+                            ->native(false)
                     ])
                     ->columns(2)
                     ->columnSpanFull()

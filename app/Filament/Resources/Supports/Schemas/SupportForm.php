@@ -65,7 +65,8 @@ class SupportForm
                     ->default(null)
                     ->afterStateUpdated(function ($state, callable $set) {
                         $set('device_id', null);
-                    }),
+                    })
+                    ->native(false),
                 Select::make("device_id")
                     ->options(function (callable $get) {
                         $establishment_id = $get('establishment_id');
@@ -73,7 +74,8 @@ class SupportForm
                     })
                     ->label('Dispositivo')
                     ->reactive()
-                    ->default(null),
+                    ->default(null)
+                    ->native(false),
                 TextInput::make('total')
                     ->required()
                     ->numeric()
@@ -85,7 +87,8 @@ class SupportForm
                     ->default('pending')
                     ->required()
                     ->label('Estado de pago')
-                    ->visible(fn ($operation) => $operation === 'create'),
+                    ->visible(fn ($operation) => $operation === 'create')
+                    ->native(false),
                 FileUpload::make('attached_file')
                     ->label('Adjunto')
                     ->disk('public')

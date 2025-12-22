@@ -40,7 +40,8 @@ class CustomerForm
                     ->default(null),
                 Select::make('province')
                     ->options(Customer::getProvinces())
-                    ->label('Provincia'),
+                    ->label('Provincia')
+                    ->native(false),
                 TextInput::make('city')
                     ->label('Ciudad')
                     ->default(null),
@@ -48,11 +49,13 @@ class CustomerForm
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
                     ->default('active')
                     ->required()
-                    ->label('Estado'),
+                    ->label('Estado')
+                    ->native(false),
                 Select::make('regime_id')
                     ->relationship('regime', 'name')
                     ->default(null)
-                    ->label('Régimen SRI'),
+                    ->label('Régimen SRI')
+                    ->native(false),
                 Textarea::make('description')
                     ->label('Descripción')
                     ->autosize()

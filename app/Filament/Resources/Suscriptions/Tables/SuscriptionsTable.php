@@ -103,20 +103,24 @@ class SuscriptionsTable
                SelectFilter::make('status')
                     ->label('Estado de suscripción')
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
-                    ->indicator('Estado'),
+                    ->indicator('Estado')
+                    ->native(false),
                 SelectFilter::make('payment_status')
                     ->label('Estado de pago')
                     ->options(['paid' => 'Pagadas', 'pending' => 'Pendientes', 'partial' => 'Parciales'])
-                    ->indicator('Estado de pago'),
+                    ->indicator('Estado de pago')
+                    ->native(false),
                 SelectFilter::make('customer')
                     ->label('Cliente')
                     ->relationship('customer', 'name')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->native(false),
                 SelectFilter::make('plan')
                     ->label('Plan')
                     ->relationship('plan', 'name')
-                    ->preload(),
+                    ->preload()
+                    ->native(false),
                 Filter::make('start_range')
                     ->label('Inicio de suscripciones')
                     ->indicator('fechas')

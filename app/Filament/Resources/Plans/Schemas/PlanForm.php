@@ -36,11 +36,12 @@ class PlanForm
                     ->default('active')
                     ->required()
                     ->label('Estado')
-                    ->native(true),
+                    ->native(false),
                 Select::make('product_id')
                     ->relationship('product', 'name')
                     ->required()
-                    ->label('Producto'),
+                    ->label('Producto')
+                    ->native(false),
             ]);
     }
 }

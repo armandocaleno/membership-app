@@ -20,7 +20,6 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Model;
 
 class IncomesTable
 {
@@ -108,11 +107,13 @@ class IncomesTable
                 SelectFilter::make('payment_method_id')
                     ->label('F. de pago')
                     ->options(PaymentMethod::pluck('name', 'id'))
-                    ->indicator('Forma de pago'),
+                    ->indicator('Forma de pago')
+                    ->native(false),
                 SelectFilter::make('incomeable_type')
                     ->label('Recurso')
                     ->options(['App\Models\Suscription' => 'Suscripción', 'App\Models\Support' => 'Soporte'])
-                    ->preload(),
+                    ->preload()
+                    ->native(false),
                 // Filter::make('customer')
                 //     ->schema([
                 //         Select::make('select_customer')

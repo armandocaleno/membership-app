@@ -73,7 +73,8 @@ class CustomersTable
                 SelectFilter::make('regime_id')
                     ->label('Régimen')
                     ->indicator('Régimen seleccionado')
-                    ->options(Regime::pluck('name', 'id')),
+                    ->options(Regime::pluck('name', 'id'))
+                    ->native(false),
                 SelectFilter::make('city')
                     ->label('Ciudad')
                     ->indicator('Ciudad seleccionada')
@@ -84,10 +85,12 @@ class CustomersTable
                         ->orderBy('city')
                         ->pluck('city', 'city')
                         ->toArray())
-                    ->searchable(),
+                    ->searchable()
+                    ->native(false),
                 SelectFilter::make('status')
                     ->label('Estado')
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
+                    ->native(false)
 
             ])
             ->recordActions([

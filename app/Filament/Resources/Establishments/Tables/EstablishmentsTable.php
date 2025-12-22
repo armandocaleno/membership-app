@@ -2,8 +2,6 @@
 
 namespace App\Filament\Resources\Establishments\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
@@ -51,14 +49,8 @@ class EstablishmentsTable
                     ->toggleable(isToggledHiddenByDefault: true)
                     ->label('Modificado'),
             ])
-            ->filters([
-                //
-            ])
             ->recordActions([
                 EditAction::make(),
-            ])
-            ->toolbarActions([
-               //
             ])
             ->groups([
                 Group::make('customer.name')

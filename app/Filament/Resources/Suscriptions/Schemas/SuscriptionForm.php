@@ -46,13 +46,15 @@ class SuscriptionForm
                     ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
                     ->default('active')
                     ->required()
-                    ->label('Estado'),
+                    ->label('Estado')
+                    ->native(false),
                 Select::make('payment_status')
                     ->options(['paid' => 'Pagada', 'pending' => 'Pendiente', 'partial' => 'Parcial'])
                     ->default('pending')
                     ->required()
                     ->label('Estado de pago')
-                    ->visible(fn ($operation) => $operation === 'create'),
+                    ->visible(fn ($operation) => $operation === 'create')
+                    ->native(false),
             ]);
     }
 }
