@@ -21,6 +21,7 @@
             border-collapse: collapse;
             border-spacing: 0;
             border-radius: 10px 10px 10px 10px;
+            table-layout: fixed; /* Ayuda a fijar anchos */
         }
 
         table td,
@@ -35,12 +36,13 @@
         }
 
         table th {
-            font-weight: normal;
+            font-weight:bold; /* antes: normal*/
         }
 
     </style>
 </head>
 <body>
+    <h1>Reporte</h1>
     <table>
         <tr>
             @foreach ($columns as $column)

@@ -75,6 +75,10 @@ class CustomersTable
                     ->indicator('Régimen seleccionado')
                     ->options(Regime::pluck('name', 'id'))
                     ->native(false),
+                SelectFilter::make('province')
+                    ->label('Provincia')
+                    ->options(Customer::getProvinces())
+                    ->native(false),
                 SelectFilter::make('city')
                     ->label('Ciudad')
                     ->indicator('Ciudad seleccionada')

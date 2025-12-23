@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Customer extends Model
 {
@@ -30,6 +31,14 @@ class Customer extends Model
 
     public function suscriptions() : HasMany {
         return $this->hasMany(Suscription::class);
+    }
+
+     /**
+     * Get the devices's customer.
+     */
+    public function devices(): HasManyThrough
+    {
+        return $this->HasManyThrough(Device::class, Establishment::class);
     }
 
      /**
@@ -57,30 +66,30 @@ class Customer extends Model
 
     public static function getProvinces() : array {
         return [
-           "Azuay",
-            "Bolívar",
-            "Cañar",
-            "Carchi",
-            "Chimborazo",
-            "Cotopaxi",
-            "El Oro",
-            "Esmeraldas",
-            "Galápagos",
-            "Guayas",
-            "Imbabura",
-            "Loja",
-            "Los Ríos",
-            "Manabí",
-            "Morona Santiago",
-            "Napo",
-            "Orellana",
-            "Pastaza",
-            "Pichincha",
-            "Santa Elena",
-            "Santo Domingo de los Tsáchilas",
-            "Sucumbíos",
-            "Tungurahua",
-            "Zamora Chinchipe"
+            "Azuay" => "Azuay",
+            "Bolívar" => "Bolívar",
+            "Cañar" => "Cañar",
+            "Carchi" => "Carchi",
+            "Chimborazo" => "Chimborazo",
+            "Cotopaxi" => "Cotopaxi",
+            "El Oro" => "El Oro",
+            "Esmeraldas" => "Esmeraldas",
+            "Galápagos" => "Galápagos",
+            "Guayas" => "Guayas",
+            "Imbabura" => "Imbabura",
+            "Loja" => "Loja",
+            "Los Ríos" => "Los Ríos",
+            "Manabí" => "Manabí",
+            "Morona Santiago" => "Morona Santiago",
+            "Napo" => "Napo",
+            "Orellana" => "Orellana",
+            "Pastaza" => "Pastaza",
+            "Pichincha" => "Pichincha",
+            "Santa Elena" => "Santa Elena",
+            "Santo Domingo de los Tsáchilas" => "Santo Domingo de los Tsáchilas",
+            "Sucumbíos" => "Sucumbíos",
+            "Tungurahua" => "Tungurahua",
+            "Zamora Chinchipe" => "Zamora Chinchipe"
         ];
     }
 }
