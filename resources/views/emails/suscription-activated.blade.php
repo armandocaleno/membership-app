@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,6 +107,10 @@
                 font-size: 20px;
                 font-weight: 900;
             }
+
+            #logo{
+                max-width: 100px;
+            }
         }
     </style>
 </head>
@@ -172,26 +176,22 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Total:</strong></td>
-                                                        <td>{{ $suscription->plan->price }}</td>
+                                                        <td>${{ $suscription->plan->price }}</td>
                                                     </tr>
                                                 </table>
 
                                             <p
-                                                style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 15px;color: #999999;">
-                                                Recuerde que puede solicitar soporte técnico personalizado comunicándose al teléfono: 0999999999 
+                                                style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 5px;color: #999999;">
+                                                Recuerde que puede solicitar soporte técnico comunicándose al teléfono: 099 560 7147 
                                             </p>
-                                            <div>
-                                                <a href="#"
-                                                    target="_blank" rel="noopener noreferrer"
-                                                    style="font-size: 14px; font-weight: bold; display:flex; align-items:center; gap:10px">
 
-                                                    <p>eMarket</p>
+                                            {{-- Logo --}}
+                                            <div style="text-align: center;">
+                                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                                    <img src="{{ $message->embed(asset('images/logo-emarket.png')) }}" alt="logo eMarket" id="logo" style="display: block; margin: 0 auto;">
                                                 </a>
-
                                             </div>
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                Saludos.</p>
+                                            
                                         </td>
                                     </tr>
                                 </table>
