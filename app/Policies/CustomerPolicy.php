@@ -52,13 +52,24 @@ class CustomerPolicy
         return $authUser->can('ForceDeleteAny:Customer');
     }
 
-    public function restoreAny(AuthUser $authUser, Customer $customer): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Customer');
     }
 
-    public function export(AuthUser $authUser, Suscription $suscription): bool
+    public function replicate(AuthUser $authUser, Customer $customer): bool
+    {
+        return $authUser->can('Replicate:Customer');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Customer');
+    }
+
+    public function export(AuthUser $authUser): bool
     {
         return $authUser->can('Export:Customer');
     }
+
 }

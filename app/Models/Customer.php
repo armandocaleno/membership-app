@@ -17,6 +17,10 @@ class Customer extends Model
 
     protected $guarded =['id', 'created_at', 'updated_at'];
 
+    protected $casts = [
+        'is_whatsapp' => 'boolean',
+    ];
+
     public function regime() : BelongsTo {
         return $this->belongsTo(Regime::class);
     }

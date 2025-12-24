@@ -52,13 +52,19 @@ class SupportPolicy
         return $authUser->can('ForceDeleteAny:Support');
     }
 
-    public function restoreAny(AuthUser $authUser, Support $support): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Support');
     }
 
-    public function export(AuthUser $authUser, Suscription $suscription): bool
+    public function replicate(AuthUser $authUser, Support $support): bool
     {
-        return $authUser->can('Export:Support');
+        return $authUser->can('Replicate:Support');
     }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Support');
+    }
+
 }

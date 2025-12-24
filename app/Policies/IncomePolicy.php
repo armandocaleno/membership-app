@@ -52,13 +52,19 @@ class IncomePolicy
         return $authUser->can('ForceDeleteAny:Income');
     }
 
-    public function restoreAny(AuthUser $authUser, Income $income): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Income');
     }
 
-    public function export(AuthUser $authUser, Suscription $suscription): bool
+    public function replicate(AuthUser $authUser, Income $income): bool
     {
-        return $authUser->can('Export:Income');
+        return $authUser->can('Replicate:Income');
     }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Income');
+    }
+
 }

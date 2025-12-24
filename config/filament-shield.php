@@ -17,7 +17,7 @@ return [
 
     'shield_resource' => [
         'slug' => 'shield/roles',
-        'show_model_path' => false,
+        'show_model_path' => true,
         'cluster' => null,
         'tabs' => [
             'pages' => true,
@@ -123,7 +123,7 @@ return [
         'generate' => true,
         'methods' => [
             'viewAny', 'view', 'create', 'update', 'delete', 
-            //'forceDelete', 'forceDeleteAny', 'restoreAny', 'replicate', 'reorder', 'restore',
+            // 'forceDelete', 'forceDeleteAny', 'restoreAny', 'replicate', 'reorder', 'restore',
         ],
         'single_parameter_methods' => [
             'viewAny',
@@ -229,10 +229,10 @@ return [
     */
 
     'custom_permissions' => [
-        'Export:Suscription' => 'Exportar suscripciones',
         'Export:Customer' => 'Exportar clientes',
-        'Export:Support' => 'Exportar soportes',
         'Export:Income' => 'Exportar ingresos',
+        'Export:Support' => 'Exportar Soportes',
+        'Export:Suscriptions' => 'Exportar suscripciones'
     ],
 
     /*

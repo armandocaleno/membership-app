@@ -52,9 +52,19 @@ class PlanPolicy
         return $authUser->can('ForceDeleteAny:Plan');
     }
 
-    public function restoreAny(AuthUser $authUser, Plan $plan): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Plan');
+    }
+
+    public function replicate(AuthUser $authUser, Plan $plan): bool
+    {
+        return $authUser->can('Replicate:Plan');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Plan');
     }
 
 }

@@ -52,14 +52,19 @@ class SuscriptionPolicy
         return $authUser->can('ForceDeleteAny:Suscription');
     }
 
-    public function restoreAny(AuthUser $authUser, Suscription $suscription): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Suscription');
     }
 
-    public function export(AuthUser $authUser, Suscription $suscription): bool
+    public function replicate(AuthUser $authUser, Suscription $suscription): bool
     {
-        return $authUser->can('Export:Suscription');
+        return $authUser->can('Replicate:Suscription');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Suscription');
     }
 
 }

@@ -28,6 +28,7 @@ class CustomerFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'email' => fake()->email(),
             'city' => fake('es_Ec')->city(),
+            'is_whatsapp' => fake()->boolean(75),
             'regime_id' => $regime,
             'province' => $provinces->random()
         ];

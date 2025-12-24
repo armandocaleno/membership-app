@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Customers\Schemas;
 use App\Filament\Resources\Devices\DeviceResource;
 use App\Filament\Resources\Establishments\EstablishmentResource;
 use Filament\Actions\Action;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Support\Icons\Heroicon;
@@ -12,6 +13,7 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +37,8 @@ class CustomerInfolist
                             TextEntry::make('address')
                                 ->label('Dirección')
                                 ->icon(Heroicon::MapPin)
-                                ->color(Color::Gray),
+                                ->color(Color::Gray)
+                                ->columnSpan(2),
                             TextEntry::make('province')
                                 ->label('Provincia')
                                 ->icon(Heroicon::Flag)
@@ -44,16 +47,25 @@ class CustomerInfolist
                                 ->label('Ciudad')
                                 ->icon(Heroicon::Map)
                                 ->color(Color::Gray),
-                            TextEntry::make('phone')
-                                ->label('Teléfono')
-                                ->color(Color::Gray)
-                                ->icon(Heroicon::DevicePhoneMobile),
                             TextEntry::make('email')
                                 ->label('Email')
                                 ->icon(Heroicon::Envelope)
                                 ->color(Color::Gray),
+                            TextEntry::make('phone')
+                                ->label('Teléfono')
+                                ->color(Color::Gray)
+                                ->icon(Heroicon::DevicePhoneMobile),
+                            Action::make('chat')
+                                ->url(fn(Get $get) => 'https://wa.me/' . preg_replace('/[^0-9]/', '', $get('phone')))
+                                ->icon(Heroicon::ChatBubbleOvalLeft)
+                                ->label('WhatsApp')
+                                ->badge()
+                                ->color('success')
+                                ->openUrlInNewTab()
+                                ->disabled(fn($record) : bool => !$record->is_whatsapp),
+                            
                         ])
-                        ->columns(2)
+                        ->columns(3)
                 ]),
 
                 Grid::make(1)

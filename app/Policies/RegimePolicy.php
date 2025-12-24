@@ -52,9 +52,19 @@ class RegimePolicy
         return $authUser->can('ForceDeleteAny:Regime');
     }
 
-    public function restoreAny(AuthUser $authUser, Regime $regime): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Regime');
+    }
+
+    public function replicate(AuthUser $authUser, Regime $regime): bool
+    {
+        return $authUser->can('Replicate:Regime');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Regime');
     }
 
 }

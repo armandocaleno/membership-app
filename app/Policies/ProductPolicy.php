@@ -52,9 +52,19 @@ class ProductPolicy
         return $authUser->can('ForceDeleteAny:Product');
     }
 
-    public function restoreAny(AuthUser $authUser, Product $product): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Product');
+    }
+
+    public function replicate(AuthUser $authUser, Product $product): bool
+    {
+        return $authUser->can('Replicate:Product');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Product');
     }
 
 }

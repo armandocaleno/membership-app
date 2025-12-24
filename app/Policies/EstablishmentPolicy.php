@@ -52,9 +52,19 @@ class EstablishmentPolicy
         return $authUser->can('ForceDeleteAny:Establishment');
     }
 
-    public function restoreAny(AuthUser $authUser, Establishment $establishment): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Establishment');
+    }
+
+    public function replicate(AuthUser $authUser, Establishment $establishment): bool
+    {
+        return $authUser->can('Replicate:Establishment');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Establishment');
     }
 
 }

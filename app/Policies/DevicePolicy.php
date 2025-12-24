@@ -52,9 +52,19 @@ class DevicePolicy
         return $authUser->can('ForceDeleteAny:Device');
     }
 
-    public function restoreAny(AuthUser $authUser, Device $device): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:Device');
+    }
+
+    public function replicate(AuthUser $authUser, Device $device): bool
+    {
+        return $authUser->can('Replicate:Device');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:Device');
     }
 
 }

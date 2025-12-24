@@ -22,7 +22,11 @@ class DeviceFactory extends Factory
         return [
             'serial' => fake()->numerify('########'),
             'description' => fake()->words(3, true),
-            'device_type_id' => $type
+            'device_type_id' => $type,
+            'remoteDesktopSoftware' => [
+                'conecction_id' => fake()->numerify('##########'),
+                'name' => fake()->word()
+            ]
         ];
     }
 }

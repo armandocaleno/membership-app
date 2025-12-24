@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('province')->nullable();
             $table->string('city')->nullable();
+            $table->boolean('is_whatsapp')->default(true);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('description')->nullable();
             $table->unsignedBigInteger('regime_id')->nullable();

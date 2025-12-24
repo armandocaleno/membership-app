@@ -52,9 +52,19 @@ class PaymentMethodPolicy
         return $authUser->can('ForceDeleteAny:PaymentMethod');
     }
 
-    public function restoreAny(AuthUser $authUser, PaymentMethod $paymentMethod): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
         return $authUser->can('RestoreAny:PaymentMethod');
+    }
+
+    public function replicate(AuthUser $authUser, PaymentMethod $paymentMethod): bool
+    {
+        return $authUser->can('Replicate:PaymentMethod');
+    }
+
+    public function reorder(AuthUser $authUser): bool
+    {
+        return $authUser->can('Reorder:PaymentMethod');
     }
 
 }
