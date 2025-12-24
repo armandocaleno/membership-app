@@ -28,8 +28,6 @@ class DeviceForm
                     ->native(false),
                 Select::make('customer_id')
                     ->label('Cliente')
-                    ->default(null)
-                    // ->default(fn() => Customer::latest()->first()?->id)
                     ->searchable()
                     ->options(function(){
                         return Customer::where('status', 'active')->pluck('name', 'id') ?? [];
@@ -43,14 +41,10 @@ class DeviceForm
                     ->native(false)
                     ->reactive()
                     ->searchPrompt('Buscar por nombre o RUC del cliente.')
-                    ->afterStateUpdated(function ($state, callable $set) {
-                        $set('establishment_id', null);
-                        $set('device_id', null);
-                    }),
+                    ->afterStateUpdated(fn (callable $set) => $set('establishment_id', null)),
                 Select::make('establishment_id')
                     ->required()
                     ->label('Establecimiento')
-                    // ->default(fn() => Establishment::latest()->first()?->id)
                     ->default(null)
                     ->options(function (callable $get) {
                         $customer_id = $get('customer_id');
@@ -58,7 +52,8 @@ class DeviceForm
                     })
                     ->label('Establecimiento')
                     ->reactive()
-                    ->native(false),
+                    ->native(false)
+                    ->getOptionLabelUsing(fn ($value): ?string => Establishment::find($value)?->name),
                 Repeater::make('remoteDesktopSoftware')
                     ->schema([
                         TextInput::make('conecction_id')
