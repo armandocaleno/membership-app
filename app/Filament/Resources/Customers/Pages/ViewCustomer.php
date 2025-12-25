@@ -14,7 +14,7 @@ class ViewCustomer extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
-            // EditAction::make(),
+            EditAction::make(),
             Action::make('back')
                 ->label('Regresar')
                 ->url(CustomerResource::getUrl('index'))

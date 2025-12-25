@@ -5,7 +5,6 @@ namespace App\Filament\Resources\Customers\Schemas;
 use App\Filament\Resources\Devices\DeviceResource;
 use App\Filament\Resources\Establishments\EstablishmentResource;
 use Filament\Actions\Action;
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Schemas\Components\Grid;
 use Filament\Support\Icons\Heroicon;
@@ -305,7 +304,6 @@ class CustomerInfolist
                     ->columns(4)
                  ])
                  ->columnSpan('full')
-                 
             ]);
     }
 }

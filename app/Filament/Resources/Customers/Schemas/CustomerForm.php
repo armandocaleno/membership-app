@@ -3,9 +3,13 @@
 namespace App\Filament\Resources\Customers\Schemas;
 
 use App\Models\Customer;
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
 use Filament\Schemas\Schema;
 
 class CustomerForm
@@ -28,12 +32,20 @@ class CustomerForm
                     ->default(null)
                     ->label('Dirección')
                     ->maxLength(100),
-                TextInput::make('phone')
-                    ->tel()
-                    ->default(null)
-                    ->label('Teléfono')
-                    ->rules(['digits:10', 'numeric'])
-                    ->helperText('Número telefónico sin símbolos ni espacios'),
+                Grid::make(2)
+                    ->schema([
+                        TextInput::make('phone')
+                            ->tel()
+                            ->default(null)
+                            ->label('Teléfono')
+                            ->rules(['digits:10', 'numeric'])
+                            ->helperText('Número sin símbolos ni espacios'),
+                        ToggleButtons::make('is_whatsapp')
+                            ->label('WhatsApp')
+                            ->boolean()
+                            ->grouped(),
+                            ]),
+                
                 TextInput::make('email')
                     ->label('Email')
                     ->email()
