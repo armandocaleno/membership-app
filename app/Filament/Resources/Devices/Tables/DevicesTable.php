@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Filament\Resources\Devices\Tables;
+
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Grouping\Group;
+use Filament\Tables\Table;
+
+class DevicesTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('serial')
+                    ->searchable()
+                    ->label('No. de Serie'),
+                TextColumn::make('description')
+                    ->searchable()
+                    ->label('Descripción'),
+                TextColumn::make('deviceType.name')
+                    ->sortable()
+                    ->label('Tipo'),
+                TextColumn::make('establishment.name')
+                    ->searchable()
+                    ->label('Establecimiento'),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Creado'),
+                TextColumn::make('remoteDesktopSoftware')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->label('Software Remoto')
+                    ->formatStateUsing(fn (array $state): string => implode(' -> ', $state)),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Modificado'),
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->groups([
+                Group::make('establishment.name')
+                ->label('Establecimiento'),
+            ]);
+    }
+}
