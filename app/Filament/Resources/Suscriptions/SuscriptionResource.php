@@ -20,7 +20,7 @@ class SuscriptionResource extends Resource
 {
     protected static ?string $model = Suscription::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDateRange;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendarDateRange;
 
     protected static ?string $recordTitleAttribute = 'Suscription';
     protected static ?string $pluralModelLabel = 'Suscripciones';

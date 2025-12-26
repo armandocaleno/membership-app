@@ -21,7 +21,7 @@ class IncomeResource extends Resource
 {
     protected static ?string $model = Income::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::DocumentCurrencyDollar;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentCurrencyDollar;
 
     protected static ?string $recordTitleAttribute = 'Income';
 
