@@ -2,10 +2,7 @@
 
 namespace App\Filament\Resources\Regimes\Tables;
 
-use Filament\Support\Enums\TextSize;
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -20,17 +17,9 @@ class RegimesTable
                     ->searchable()
                     ->label('Nombre'),
             ])
-            ->filters([
-                //
-            ])
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
-            ])
-            ->toolbarActions([
-                // BulkActionGroup::make([
-                //     DeleteBulkAction::make(),
-                // ]),
             ]);
     }
 }

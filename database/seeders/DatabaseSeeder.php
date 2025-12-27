@@ -41,5 +41,6 @@ class DatabaseSeeder extends Seeder
         Suscription::factory(100)->create();
         Support::factory(50)->create();
         Income::factory(75)->create();
+        $this->call(SettingsSeeder::class);
     }
 }

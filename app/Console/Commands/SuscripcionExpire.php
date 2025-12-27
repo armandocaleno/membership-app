@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Mail\SuscriptionExpire;
 use App\Mail\SuscriptionExpired;
+use App\Models\Settings;
 use App\Models\Suscription;
 use App\Models\User;
 use Carbon\Carbon;
@@ -33,7 +34,8 @@ class SuscripcionExpire extends Command
      */
     public function handle()
     {
-        $check_date = Carbon::now()->addMonth()->format('Y-m-d');
+        $days_advance = (int)Settings::where('name', 'days_advance_notifications')->value('value');
+        $check_date = Carbon::now()->addDays($days_advance)->format('Y-m-d');
         $expire_suscription_date = Carbon::now()->subDay(1)->format('Y-m-d');
        
         $suscriptions = Suscription::where('status', 'active')->get();
