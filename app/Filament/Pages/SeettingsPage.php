@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use BezhanSalleh\FilamentShield\Traits\HasPageShield;
 use App\Models\Settings;
 use BackedEnum;
 use Filament\Notifications\Notification;
@@ -18,6 +19,8 @@ use UnitEnum;
 
 class SeettingsPage extends Page
 {
+    use HasPageShield;
+
     protected string $view = 'filament.pages.seettings-page';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
     protected static string|UnitEnum|null $navigationGroup = 'Opciones';
