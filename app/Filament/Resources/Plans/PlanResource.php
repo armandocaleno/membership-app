@@ -21,7 +21,7 @@ class PlanResource extends Resource
 {
     protected static ?string $model = Plan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::ShoppingCart;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedStar;
 
     protected static ?string $recordTitleAttribute = 'Plan';
     protected static string|UnitEnum|null $navigationGroup = 'Opciones';

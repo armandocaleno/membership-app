@@ -20,7 +20,7 @@ class SupportResource extends Resource
 {
     protected static ?string $model = Support::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::Cog;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
 
     protected static ?string $recordTitleAttribute = 'Support';
 

@@ -232,7 +232,7 @@ return [
         'Export:Customer' => 'Exportar clientes',
         'Export:Income' => 'Exportar ingresos',
         'Export:Support' => 'Exportar Soportes',
-        'Export:Suscriptions' => 'Exportar suscripciones'
+        'Export:Suscription' => 'Exportar suscripciones'
     ],
 
     /*

@@ -18,7 +18,7 @@ class DeviceResource extends Resource
 {
     protected static ?string $model = Device::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::ComputerDesktop;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedComputerDesktop;
 
     protected static ?string $recordTitleAttribute = 'name';
 
