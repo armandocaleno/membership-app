@@ -19,5 +19,12 @@ class SettingsSeeder extends Seeder
             'type' => 'integer',
             'description' => 'Días de anticipación de las notificaciones por vencimiento de suscripciones.',
         ]);
+
+        Settings::create([
+            'name' => 'send_email_notification',
+            'value' => '0',
+            'type' => 'boolean',
+            'description' => 'Enviar una notificación al cliente cuando la suscripción sea creada.',
+        ]);
     }
 }

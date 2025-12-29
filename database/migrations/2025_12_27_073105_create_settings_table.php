@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('value');
             $table->string('type');
             $table->string('description');
+            $table->string('group')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
