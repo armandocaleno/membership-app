@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Suscriptions\Pages;
 use App\Filament\Resources\Suscriptions\SuscriptionResource;
 use App\Mail\SuscriptionActivated;
 use App\Models\Plan;
+use App\Models\Settings;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Filament\Support\Icons\Heroicon;
@@ -24,7 +25,7 @@ class CreateSuscription extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         //crea el numero de la suscripcion a partir de la fecha y hora
-        $data['number'] = Carbon::now()->format('Ymdhi');
+        $data['number'] = Carbon::now()->format('Ymdhis');
 
         // calcula la fecha en la que termina la suscripcion 
         // a partir de la fecha de incio y los meses del plan
@@ -58,46 +59,50 @@ class CreateSuscription extends CreateRecord
             ->success()
             ->send();
 
-        $recipient = auth()->user();
-        Notification::make()
-            ->title('Nueva suscripción!')
-            ->body("Fue creada la suscripcion No. {$suscription->number}")
-            ->icon(Heroicon::CalendarDateRange)
-            ->sendToDatabase($recipient);
+        $send_email_suscription = (bool)Settings::where('name', 'send_email_notification')->value('value');
+
+        // $recipient = auth()->user();
+        // Notification::make()
+        //     ->title('Nueva suscripción!')
+        //     ->body("Fue creada la suscripcion No. {$suscription->number}")
+        //     ->icon(Heroicon::CalendarDateRange)
+        //     ->sendToDatabase($recipient);
 
         //envio de email 
-        $customer_mail = "";
-        if ($suscription->customer->email !== null) {
-            if (filter_var($suscription->customer->email, FILTER_VALIDATE_EMAIL)) {
-                $customer_mail = $suscription->customer->email;
+        if ($send_email_suscription) {
+            $customer_mail = "";
+            if ($suscription->customer->email !== null) {
+                if (filter_var($suscription->customer->email, FILTER_VALIDATE_EMAIL)) {
+                    $customer_mail = $suscription->customer->email;
 
-                $email = Mail::to($customer_mail)->queue(new SuscriptionActivated($suscription));
-                
-                if ($email) {
-                    Notification::make()
-                    ->title("Email enviado!")
-                    ->success()
-                    ->send();
+                    $email = Mail::to($customer_mail)->queue(new SuscriptionActivated($suscription));
+                    
+                    if ($email) {
+                        Notification::make()
+                        ->title("Email enviado!")
+                        ->success()
+                        ->send();
+                    }else {
+                        Notification::make()
+                        ->title("Error al enviar email")
+                        ->body('Hubo un error al enviar el email.')
+                        ->error()
+                        ->send();
+                    }
                 }else {
                     Notification::make()
                     ->title("Error al enviar email")
-                    ->body('Hubo un error al enviar el email.')
+                    ->body('Email no válido o inexistente.')
                     ->error()
                     ->send();
                 }
             }else {
-                Notification::make()
-                ->title("Error al enviar email")
-                ->body('Email no válido o inexistente.')
-                ->error()
-                ->send();
+                    Notification::make()
+                    ->title("Error al enviar email")
+                    ->body('Email no válido o inexistente.')
+                    ->error()
+                    ->send();
             }
-        }else {
-                Notification::make()
-                ->title("Error al enviar email")
-                ->body('Email no válido o inexistente.')
-                ->error()
-                ->send();
-            }
+        }
     }
 }
