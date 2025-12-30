@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Plans\Schemas;
 
 use App\Models\Plan;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -42,6 +43,10 @@ class PlanForm
                     ->required()
                     ->label('Producto')
                     ->native(false),
+                Textarea::make('description')
+                    ->label('Descripción')
+                    ->autosize()
+                    ->rows(1)
             ]);
     }
 }

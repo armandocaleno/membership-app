@@ -48,6 +48,10 @@ class PlansTable
                 TextColumn::make('product.name')
                     ->searchable()
                     ->label('Producto'),
+                TextColumn::make('description')
+                    ->label('Descripción')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->recordActions([
                 EditAction::make(),
