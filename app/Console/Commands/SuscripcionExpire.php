@@ -64,10 +64,6 @@ class SuscripcionExpire extends Command
                 //customer mail send
                 Mail::to($customer_mail)->queue(new SuscriptionExpired($sus));
 
-                //suscription status change
-                $sus->status = 'inactive';
-                $sus->save();
-
                 //database notification send
                 Notification::make()
                     ->title("Suscripción $sus->number expirada!")
@@ -79,6 +75,12 @@ class SuscripcionExpire extends Command
                             ->url(route('filament.admin.resources.suscriptions.view', ['record' => $sus])),
                     ])
                     ->sendToDatabase($user);
+            }
+
+            if ($expire_date <= $expire_suscription_date) {
+                //suscription status change
+                $sus->status = 'inactive';
+                $sus->save();
             }
         }
     }
