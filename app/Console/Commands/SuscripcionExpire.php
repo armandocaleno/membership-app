@@ -61,8 +61,14 @@ class SuscripcionExpire extends Command
             }
 
             if ($expire_date == $expire_suscription_date) {
+                //customer mail send
                 Mail::to($customer_mail)->queue(new SuscriptionExpired($sus));
 
+                //suscription status change
+                $sus->status = 'inactive';
+                $sus->save();
+
+                //database notification send
                 Notification::make()
                     ->title("Suscripción $sus->number expirada!")
                     ->info()
