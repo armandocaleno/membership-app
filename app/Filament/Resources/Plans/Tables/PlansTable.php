@@ -45,9 +45,16 @@ class PlansTable
                             return 'Inactivo';
                         }
                     }),
-                TextColumn::make('product.name')
-                    ->searchable()
-                    ->label('Producto'),
+                TextColumn::make('products')
+                    ->listWithLineBreaks()
+                    ->bulleted()
+                    ->label('Productos')
+                    ->formatStateUsing(function ($state){
+                        if (is_array($state)) {
+                            implode(' -> ', $state);
+                        }
+                        return $state;
+                    }),
                 TextColumn::make('description')
                     ->label('Descripción')
                     ->searchable()

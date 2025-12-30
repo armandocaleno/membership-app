@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Plans\Schemas;
 
 use App\Models\Plan;
+use App\Models\Product;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -38,15 +40,16 @@ class PlanForm
                     ->required()
                     ->label('Estado')
                     ->native(false),
-                Select::make('product_id')
-                    ->relationship('product', 'name')
-                    ->required()
-                    ->label('Producto')
-                    ->native(false),
                 Textarea::make('description')
                     ->label('Descripción')
                     ->autosize()
-                    ->rows(1)
+                    ->rows(1),
+                Select::make('products')
+                        ->required()
+                        ->label('Producto')
+                        ->native(false)
+                        ->options(Product::all()->pluck('name', 'name'))
+                        ->multiple()
             ]);
     }
 }
