@@ -42,7 +42,17 @@ class SupportInfolist
                     TextEntry::make('attached_file')
                         ->placeholder('-')
                         ->label('Adjunto')
-                        ->color(Color::Gray),
+                        ->color(Color::Gray)
+                        ->formatStateUsing(function ($state) {
+                            if ($state !== null) {
+                                $symbol = "/";
+                                $position = strpos($state, $symbol);
+                                if ($position !== false) {
+                                    $result = substr($state, $position + 1);
+                                    return $result;
+                                }
+                            }
+                        }),
                     TextEntry::make('customer.name')
                         ->label('Cliente')
                         ->size(TextSize::Large)
@@ -91,7 +101,7 @@ class SupportInfolist
                         ->placeholder('-')
                         ->label('Modificado')
                         ->color(Color::Gray)
-                ])->columns(2),
+                ])->columns(2)->columnSpanFull(),
 
                 Section::make('Información del pagos')
                     ->schema([

@@ -40,6 +40,8 @@ class PlanInfolist
                     }),
                 TextEntry::make('product.name')
                     ->label('Producto'),
+                TextEntry::make('description')
+                    ->label('Descripción'),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-')
