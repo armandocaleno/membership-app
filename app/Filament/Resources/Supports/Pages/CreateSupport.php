@@ -14,4 +14,12 @@ class CreateSupport extends CreateRecord
     {
         return $this->getResource()::getUrl('index');
     }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        //crea el numero de soporte a partir de la fecha y hora
+        $data['number'] = \Carbon\Carbon::now()->format('Ymdhis');
+
+        return $data;
+    }
 }
