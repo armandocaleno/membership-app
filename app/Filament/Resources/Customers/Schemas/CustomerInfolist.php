@@ -12,7 +12,6 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\TextSize;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Illuminate\Database\Eloquent\Model;
@@ -55,7 +54,7 @@ class CustomerInfolist
                                 ->color(Color::Gray)
                                 ->icon(Heroicon::DevicePhoneMobile),
                             Action::make('chat')
-                                ->url(fn(Get $get) => 'https://wa.me/' . preg_replace('/[^0-9]/', '', $get('phone')))
+                                ->url(fn($record) => 'https://wa.me/593' . $record->phone . '?text=Estimado%20cliente')
                                 ->icon(Heroicon::ChatBubbleOvalLeft)
                                 ->label('WhatsApp')
                                 ->badge()
