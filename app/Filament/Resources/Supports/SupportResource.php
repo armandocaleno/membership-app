@@ -6,6 +6,7 @@ use App\Filament\Resources\Supports\Pages\CreateSupport;
 use App\Filament\Resources\Supports\Pages\EditSupport;
 use App\Filament\Resources\Supports\Pages\ListSupports;
 use App\Filament\Resources\Supports\Pages\ViewSupport;
+use App\Filament\Resources\Supports\RelationManagers\IncomesRelationManager;
 use App\Filament\Resources\Supports\Schemas\SupportForm;
 use App\Filament\Resources\Supports\Schemas\SupportInfolist;
 use App\Filament\Resources\Supports\Tables\SupportsTable;
@@ -42,7 +43,7 @@ class SupportResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            IncomesRelationManager::class
         ];
     }
 

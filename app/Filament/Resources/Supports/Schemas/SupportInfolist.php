@@ -21,16 +21,23 @@ class SupportInfolist
             ->components([
                 Section::make('Datos del soporte')
                 ->schema([
-                    TextEntry::make('date')
-                        ->date()
-                        ->label('Fecha')
-                        ->color(Color::Gray)
-                        ->icon(Heroicon::Calendar),
                     TextEntry::make('number')
                         ->label('Número')
                         ->color(Color::Gray)
                         ->size(TextSize::Large)
                         ->weight(FontWeight::Bold),
+                    TextEntry::make('date')
+                        ->date()
+                        ->label('Fecha')
+                        ->color(Color::Gray)
+                        ->icon(Heroicon::Calendar),
+                    TextEntry::make('customer.name')
+                        ->label('Cliente')
+                        ->size(TextSize::Large)
+                        ->weight(FontWeight::Bold)
+                        ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer]))
+                        ->color(Color::Gray)
+                        ->icon(Heroicon::User),
                     TextEntry::make('detail')
                         ->label('Detalle')
                         ->placeholder('-')
@@ -53,13 +60,6 @@ class SupportInfolist
                                 }
                             }
                         }),
-                    TextEntry::make('customer.name')
-                        ->label('Cliente')
-                        ->size(TextSize::Large)
-                        ->weight(FontWeight::Bold)
-                        ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer]))
-                        ->color(Color::Gray)
-                        ->icon(Heroicon::User),
                     TextEntry::make('establishment.name')
                         ->placeholder('-')
                         ->label('Establecimiento')
@@ -101,29 +101,7 @@ class SupportInfolist
                         ->placeholder('-')
                         ->label('Modificado')
                         ->color(Color::Gray)
-                ])->columns(2)->columnSpanFull(),
-
-                Section::make('Información del pagos')
-                    ->schema([
-                        RepeatableEntry::make('incomes')
-                        ->label('Pagos')
-                        ->table([
-                            TableColumn::make('Fecha'),
-                            TableColumn::make('Total'),
-                            TableColumn::make('Número'),
-                            TableColumn::make('F. Pago'),
-                            TableColumn::make('Descrpcion')
-                        ])
-                        ->schema([
-                            TextEntry::make('date')
-                            ->date(),
-                            TextEntry::make('total')
-                            ->money(),
-                            TextEntry::make('number'),
-                            TextEntry::make('paymentMethod.name'),
-                            TextEntry::make('description')
-                        ])
-                    ])->columnSpanFull()
+                ])->columns(4)->columnSpanFull(),
             ]);
     }
 }
