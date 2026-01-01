@@ -90,7 +90,8 @@ class AdminPanelProvider extends PanelProvider
             ->databaseNotificationsPolling('30s')
             ->globalSearch(false)
             ->plugins([
-                FilamentShieldPlugin::make(),
+                FilamentShieldPlugin::make()
+                    ->navigationGroup('Opciones'),
                 FilamentEditProfilePlugin::make()
                     ->setTitle('Mi perfil')
                     ->setNavigationGroup('Opciones')
