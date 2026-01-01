@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Suscriptions\RelationManagers;
+namespace App\Filament\Resources\Supports\RelationManagers;
 
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
@@ -34,11 +34,11 @@ class IncomesRelationManager extends RelationManager
             ->components([
                 TextInput::make('number')
                     ->required()
-                    ->maxLength(255),
+                    ->label('Número'),
                 DatePicker::make('date')
                     ->required()
                     ->label('Fecha')
-                    ->default(fn():string => $this->getOwnerRecord()->start_date),
+                    ->default(fn():string => $this->getOwnerRecord()->date),
                 TextInput::make('total')
                     ->required()
                     ->numeric()
@@ -124,13 +124,13 @@ class IncomesRelationManager extends RelationManager
                         Notification::make()
                             ->warning()
                             ->title('Monto no válido!')
-                            ->body('El valor a pagar es mayor que el saldo de la suscripción o su estado es pagado.')
+                            ->body('El valor a pagar es mayor que el saldo del soporte o su estado es pagado.')
                             ->persistent()
                             ->send();
                     
                         $action->halt();
                     }
-                })
+                }),
             ])
             ->recordActions([
                 DeleteAction::make(),
