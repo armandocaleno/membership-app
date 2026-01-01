@@ -37,7 +37,16 @@ class SuscriptionForm
                     ->default(null)
                     ->label('Plan')
                     ->required()
-                    ->native(false),
+                    ->native(false)
+                    ->afterStateUpdated(function($state, callable $set){
+                        $set('price', $state);
+                    })
+                    ->reactive(),
+                Select::make('price')
+                    ->relationship('plan', 'price')
+                    ->label('Total')
+                    ->prefix('$')
+                    ->disabled(),
                 Textarea::make('description')
                     ->label('Descripción')
                     ->autosize()

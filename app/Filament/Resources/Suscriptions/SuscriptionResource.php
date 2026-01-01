@@ -6,6 +6,7 @@ use App\Filament\Resources\Suscriptions\Pages\CreateSuscription;
 use App\Filament\Resources\Suscriptions\Pages\EditSuscription;
 use App\Filament\Resources\Suscriptions\Pages\ListSuscriptions;
 use App\Filament\Resources\Suscriptions\Pages\ViewSuscription;
+use App\Filament\Resources\Suscriptions\RelationManagers\IncomesRelationManager;
 use App\Filament\Resources\Suscriptions\Schemas\SuscriptionForm;
 use App\Filament\Resources\Suscriptions\Schemas\SuscriptionInfolist;
 use App\Filament\Resources\Suscriptions\Tables\SuscriptionsTable;
@@ -43,7 +44,7 @@ class SuscriptionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            IncomesRelationManager::class
         ];
     }
 

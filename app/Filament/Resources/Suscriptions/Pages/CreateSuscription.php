@@ -4,8 +4,10 @@ namespace App\Filament\Resources\Suscriptions\Pages;
 
 use App\Filament\Resources\Suscriptions\SuscriptionResource;
 use App\Mail\SuscriptionActivated;
+use App\Models\Income;
 use App\Models\Plan;
 use App\Models\Settings;
+use App\Models\Suscription;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Support\Carbon;
@@ -18,7 +20,7 @@ class CreateSuscription extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return $this->getResource()::getUrl('edit', ['record' => $this->record]);
     }
     
     protected function mutateFormDataBeforeCreate(array $data): array
@@ -59,13 +61,6 @@ class CreateSuscription extends CreateRecord
             ->send();
 
         $send_email_suscription = (bool)Settings::where('name', 'send_email_notification')->value('value');
-
-        // $recipient = auth()->user();
-        // Notification::make()
-        //     ->title('Nueva suscripción!')
-        //     ->body("Fue creada la suscripcion No. {$suscription->number}")
-        //     ->icon(Heroicon::CalendarDateRange)
-        //     ->sendToDatabase($recipient);
 
         //envio de email 
         if ($send_email_suscription) {

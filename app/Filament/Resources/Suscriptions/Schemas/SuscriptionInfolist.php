@@ -20,7 +20,7 @@ class SuscriptionInfolist
     {
         return $schema
             ->components([
-                Grid::make(2)
+                Grid::make(1)
                 ->schema([
                     Section::make('Información de la suscripción')
                         ->schema([
@@ -39,8 +39,18 @@ class SuscriptionInfolist
                                 ->label('Termina')
                                 ->color(Color::Gray)
                                 ->icon(Heroicon::Clock),
+                            TextEntry::make('customer.name')
+                                ->label('Cliente')
+                                ->icon(Heroicon::User)
+                                ->size(TextSize::Large)
+                                ->weight(FontWeight::Bold)
+                                ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer])),
                             TextEntry::make('plan.name')
                                 ->label('Plan')
+                                ->color(Color::Gray),
+                            TextEntry::make('plan.price')
+                                ->label('Total')
+                                ->prefix('$')
                                 ->color(Color::Gray),
                             TextEntry::make('description')
                                 ->label('Descripción')
@@ -76,12 +86,6 @@ class SuscriptionInfolist
                                     'pending' => 'danger',
                                     'partial' => 'info',
                                 }),
-                            TextEntry::make('customer.name')
-                                ->label('Cliente')
-                                ->icon(Heroicon::User)
-                                ->size(TextSize::Large)
-                                ->weight(FontWeight::Bold)
-                                ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer])),
                             TextEntry::make('created_at')
                                 ->dateTime()
                                 ->placeholder('-')
@@ -92,31 +96,9 @@ class SuscriptionInfolist
                                 ->placeholder('-')
                                 ->label('Modificado')
                                 ->color(Color::Gray)
-                        ])->columns(2),
-
-                    Section::make('Información del pagos')
-                    ->schema([
-                        RepeatableEntry::make('incomes')
-                        ->label('Pagos')
-                        ->table([
-                            TableColumn::make('Fecha'),
-                            TableColumn::make('Total'),
-                            TableColumn::make('Número'),
-                            TableColumn::make('F. Pago'),
-                            TableColumn::make('Descrpcion')
-                        ])
-                        ->schema([
-                            TextEntry::make('date')
-                            ->date(),
-                            TextEntry::make('total')
-                            ->money(),
-                            TextEntry::make('number'),
-                            TextEntry::make('paymentMethod.name'),
-                            TextEntry::make('description')
-                        ])
-                    ])->columnSpanFull()
-                ])
-                ->columnSpanFull()
+                        ])->columns(4),
+                ])->columnSpanFull()
+                
             ]);
     }
 }
