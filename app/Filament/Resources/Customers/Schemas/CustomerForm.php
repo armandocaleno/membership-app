@@ -26,8 +26,9 @@ class CustomerForm
                     ->default(null)
                     ->label('RUC')
                     ->unique(Customer::class, 'ruc', ignoreRecord: true)
-                    ->rules(['digits:13', 'numeric'])
-                    ->validationAttribute('RUC'),
+                    ->validationAttribute('RUC')
+                    ->maxLength(13)
+                    ->extraInputAttributes(['pattern' => '[0-9]{13}', 'title' => 'El RUC debe contener exactamente 13 números']),
                 TextInput::make('address')
                     ->default(null)
                     ->label('Dirección')
@@ -43,7 +44,8 @@ class CustomerForm
                         ToggleButtons::make('is_whatsapp')
                             ->label('WhatsApp')
                             ->boolean()
-                            ->grouped(),
+                            ->grouped()
+                            ->default(true),
                             ]),
                 
                 TextInput::make('email')

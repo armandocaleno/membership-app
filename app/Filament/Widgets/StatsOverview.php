@@ -5,11 +5,8 @@ namespace App\Filament\Widgets;
 use App\Models\Customer;
 use App\Models\Support;
 use App\Models\Suscription;
-use Filament\Support\Colors\Color;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-
-use function Symfony\Component\Clock\now;
 
 class StatsOverview extends StatsOverviewWidget
 {
@@ -30,20 +27,38 @@ class StatsOverview extends StatsOverviewWidget
         
         return [
             Stat::make('Suscripciones', $totalSuscriptions)
+                ->icon('heroicon-s-calendar')
                 ->description('+' . $thisMonthSuscriptions . ' este mes' )
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('success')
-                ->chart([7, 2, 10, 3, 15, 4, 17]),
+                ->chart([7, 2, 10, 3, 15, 4, 17])
+                ->extraAttributes([
+                    'wire:navigate' => 'true', // Para navegar a una página de recurso de Filament
+                    'href' => route('filament.admin.resources.suscriptions.create'), // URL de destino
+                    'class' => 'cursor-pointer', // Estilo opcional
+                ]),
             Stat::make('Clientes', $totalCustomers)
+                ->icon('heroicon-s-users')
                 ->description('+' . $thisMonthCustomers . ' este mes' )
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('info')
-                ->chart([7, 2, 10, 3, 15, 4, 17]),
+                ->chart([7, 2, 10, 3, 15, 4, 17])
+                ->extraAttributes([
+                    'wire:navigate' => 'true', // Para navegar a una página de recurso de Filament
+                    'href' => route('filament.admin.resources.customers.create'), // URL de destino
+                    'class' => 'cursor-pointer', // Estilo opcional
+                ]),
             Stat::make('Soportes', $totalSupports)
+                ->icon('heroicon-s-wrench-screwdriver')
                 ->description('+' . $thisMonthSupports . ' este mes' )
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->color('warning')
-                ->chart([7, 2, 10, 3, 15, 4, 17]),
+                ->chart([7, 2, 10, 3, 15, 4, 17])
+                ->extraAttributes([
+                    'wire:navigate' => 'true', // Para navegar a una página de recurso de Filament
+                    'href' => route('filament.admin.resources.supports.create'), // URL de destino
+                    'class' => 'cursor-pointer', // Estilo opcional
+                ])
         ];
     }
 }

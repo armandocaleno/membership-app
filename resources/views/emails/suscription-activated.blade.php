@@ -150,14 +150,24 @@
                                                 style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
                                                 Hola </p>
                                             <h3>{{ $suscription->customer->name }}</h3>
-                                            <p>Gracias por tu compra!</p>
+                                            <p>Reciba un cordial saludo.</p>
                                             @php
                                                 $end_date = \Carbon\Carbon::parse($suscription->end_date);
                                             @endphp
                                             <p
                                                 style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                <strong>eMarket</strong> te da la bienvenida y te comunica que el plan 
-                                                <strong>{{ $suscription->plan->name }}</strong> está activo hasta el <strong>{{ $end_date->translatedFormat('d \d\e F \d\e\l Y') }}</strong>.
+                                                Gracias por confiar en <a href="www.emarket.com.ec" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif; font-size: 14px;">eMarket</a> y por realizar el pago correspondiente a su plan <strong>{{ $suscription->plan->name }}</strong> 
+                                                Valoramos su preferencia y reafirmamos nuestro compromiso de acompañarlo en todo momento para garantizar el correcto funcionamiento, estabilidad y continuidad de su sistema. 
+                                            </p>
+
+                                            <p
+                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Nos complace informarle que su plan ha sido activado exitosamente, por lo que desde este momento ya cuenta con todos los beneficios incluidos en el servicio.
+                                            </p>
+
+                                            <p
+                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Información del servicio contratado: 
                                             </p>
 
                                             <table role="presentation" border="0" cellpadding="0" cellspacing="10"
@@ -171,24 +181,55 @@
                                                         <td>{{ $suscription->plan->devices }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Tiempo:</strong></td>
+                                                        <td><strong>Duración:</strong></td>
                                                         <td>{{ $suscription->plan->months }} meses</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Total:</strong></td>
+                                                        <td><strong>Vigencia:</strong></td>
+                                                        <td><strong>hasta el {{ $end_date->translatedFormat('d \d\e F \d\e\l Y') }}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Valor total:</strong></td>
                                                         <td>${{ $suscription->plan->price }}</td>
                                                     </tr>
                                                 </table>
-
                                             <p
-                                                style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 5px;color: #999999;">
-                                                Recuerde que puede solicitar soporte técnico comunicándose al teléfono: 099 560 7147 
+                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Con este plan activo, usted dispone de los siguientes beneficios: 
                                             </p>
 
+                                            <div>
+                                                <ul>
+                                                    @foreach ($suscription->plan->products as $product)
+                                                        <li>{{ $product }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
+                                            <p style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 5px;color: #999999;">
+                                                Es importante informarle que este servicio de soporte es completamente opcional y su contratación no afecta el correcto funcionamiento del sistema previamente instalado.  
+                                                En caso de no renovar la suscripción anual, el sistema seguirá operando con normalidad; sin embargo, los beneficios mencionados anteriormente dejarán de estar disponibles.
+                                            </p>
+
+                                            <p style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 5px;color: #999999;">
+                                                En 
+                                                <a href="www.emarket.com.ec" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif; font-size: 12px;">eMarket</a>
+                                                 estamos comprometidos con brindarle un servicio confiable, oportuno y de calidad, asegurando que su sistema funcione correctamente y cuente con el respaldo necesario para su operación diaria.
+                                            </p>
+
+                                            <p style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 5px;color: #999999;">
+                                                Para cualquier consulta o requerimiento de soporte técnico, puede comunicarse con nosotros al 099 560 7147. Estaremos encantados de asistirle.
+                                            </p>
+
+                                            <p style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 5px;color: #999999;">
+                                                Atentamente,
+                                            </p>
+
+                                            <a href="www.emarket.com.ec" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif; font-size: 12px;">eMarket</a>
                                             {{-- Logo --}}
                                             <div style="text-align: center;">
                                                 <a href="#" target="_blank" rel="noopener noreferrer">
-                                                    <img src="{{ $message->embed(asset('images/logo-emarket.png')) }}" alt="logo eMarket" id="logo" style="display: block; margin: 0 auto;">
+                                                    {{-- <img src="{{ $message->embed(asset('images/logo-emarket.png')) }}" alt="logo eMarket" id="logo" style="display: block; margin: 0 auto;"> --}}
                                                 </a>
                                             </div>
                                             
@@ -212,7 +253,7 @@
                                     style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;"
                                     valign="top" align="center">
                                     <span class="apple-link"
-                                        style="color: #999999; font-size: 12px; text-align: center;">eMarket,
+                                        style="color: #999999; font-size: 12px; text-align: center;">Equipo eMarket,
                                         Guayaquil - Ecuador</span>
                                     {{-- <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>. --}}
                                 </td>
