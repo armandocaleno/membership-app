@@ -78,7 +78,8 @@ class IncomesRelationManager extends RelationManager
                 TextColumn::make('number')
                     ->label('Número'),
                 TextColumn::make('date')
-                    ->label('Fecha'),
+                    ->label('Fecha')
+                    ->date(),
                 TextColumn::make('total')
                     ->prefix('$')
                     ->sortable()
