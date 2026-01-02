@@ -15,7 +15,7 @@ class IncomePerPlanChart extends ChartWidget
 
     protected function getData(): array
     {
-        $dateRage = $this->getDateRange();
+        $dateRange = $this->getDateRange();
 
         $plans = Plan::where('status', 'active')->get();
 
@@ -24,12 +24,12 @@ class IncomePerPlanChart extends ChartWidget
         $suscriptionsPerPlan = Suscription::query()
                         ->join('plans', 'suscriptions.plan_id', '=', 'plans.id')
                         ->selectRaw('COUNT(*) as tot, plan_id')
-                        ->whereBetween('start_date', [$dateRage['start'], $dateRage['end']])
+                        ->whereBetween('start_date', [$dateRange['start'], $dateRange['end']])
                         ->groupBy('plan_id')
                         ->get()
                         ->keyBy('plan_id');
 
-        foreach ($plans as $key => $plan) {
+        foreach ($plans as $plan) {
             $totals[] =  $suscriptionsPerPlan->get($plan->id)?->tot ?? 0;
             $labels[] = $plan->name;
         }
@@ -41,7 +41,11 @@ class IncomePerPlanChart extends ChartWidget
                     'backgroundColor' => [
                         Color::Sky['900'],
                         Color::Orange['400'],
-                        Color::Teal['600']
+                        Color::Teal['600'],
+                        Color::Amber['300'],
+                        Color::Red['600'],
+                        Color::Zinc['400'],
+                        Color::Blue['600'],
                         
                     ]
                 ],
@@ -80,8 +84,8 @@ class IncomePerPlanChart extends ChartWidget
                 'end' => now()
             ],
             'last_year' => [
-                'start' => now()->subYear()->startOfMonth(),
-                'end' => now()->subYear()->endOfMonth()
+                'start' => now()->subYear()->startOfYear(),
+                'end' => now()->subYear()->endOfYear()
             ],
             default => [
                 'start' => now()->startOfYear(),

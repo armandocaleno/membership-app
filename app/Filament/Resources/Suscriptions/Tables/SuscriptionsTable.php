@@ -137,11 +137,11 @@ class SuscriptionsTable
                         $indicators =[];
 
                         if (filled($data['sus_from'] ?? null)) {
-                            $indicators[] = Indicator::make('Inician desde el' . Carbon::parse($data['sus_from'])->isoFormat('D MMMM YYYY'))
+                            $indicators[] = Indicator::make('Inician desde el: ' . Carbon::parse($data['sus_from'])->isoFormat('D MMMM YYYY'))
                             ->removeField('sus_from');
                         }
                         if (filled($data['sus_until'] ?? null)) {
-                            $indicators[] = Indicator::make('Inician hasta el' . Carbon::parse($data['sus_until'])->isoFormat('D MMMM YYYY'))
+                            $indicators[] = Indicator::make('Inician hasta el: ' . Carbon::parse($data['sus_until'])->isoFormat('D MMMM YYYY'))
                             ->removeField('sus_until');
                         }
 
@@ -168,6 +168,20 @@ class SuscriptionsTable
                         ->label('Termina hasta')
                     ])
                     ->columns(2)
+                    ->indicateUsing(function (array $data): array{
+                        $indicators =[];
+
+                        if (filled($data['end_from'] ?? null)) {
+                            $indicators[] = Indicator::make('Terminan desde el: ' . Carbon::parse($data['end_from'])->isoFormat('D MMMM YYYY'))
+                            ->removeField('end_from');
+                        }
+                        if (filled($data['end_until'] ?? null)) {
+                            $indicators[] = Indicator::make('Terminan hasta el: ' . Carbon::parse($data['end_until'])->isoFormat('D MMMM YYYY'))
+                            ->removeField('end_until');
+                        }
+
+                        return $indicators;
+                    })
                     ->query(function (Builder $query, array $data) : Builder {
                         return $query
                             ->when(
