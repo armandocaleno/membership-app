@@ -2,6 +2,7 @@
 
 namespace App\Filament\Widgets;
 
+use App\Models\Income;
 use App\Models\Plan;
 use App\Models\Suscription;
 use Filament\Support\Colors\Color;
@@ -15,17 +16,26 @@ class SuscriptionPerPlanChart extends ChartWidget
 
     protected function getData(): array
     {
-        $dateRage = $this->getDateRange();
+        $dateRange = $this->getDateRange();
 
         $plans = Plan::where('status', 'active')->get();
 
         $labels = [];
         $totals = [];
-        $suscriptionsPerPlan = Suscription::query()
+        // $suscriptionsPerPlan = Suscription::query()
+        //                 ->join('plans', 'suscriptions.plan_id', '=', 'plans.id')
+        //                 ->selectRaw('SUM(plans.price) as totalPlan, plan_id')
+        //                 ->whereBetween('start_date', [$dateRange['start'], $dateRange['end']])
+        //                 ->groupBy('plan_id')
+        //                 ->get()
+        //                 ->keyBy('plan_id');
+        $suscriptionsPerPlan = Income::query()
+                        ->rightjoin('suscriptions', 'incomes.incomeable_id', '=', 'suscriptions.id')
                         ->join('plans', 'suscriptions.plan_id', '=', 'plans.id')
-                        ->selectRaw('SUM(plans.price) as totalPlan, plan_id')
-                        ->whereBetween('start_date', [$dateRage['start'], $dateRage['end']])
-                        ->groupBy('plan_id')
+                        ->selectRaw('SUM(plans.price) as totalPlan, plan_id, suscriptions.number')
+                        ->whereBetween('incomes.date', [$dateRange['start'], $dateRange['end']])
+                        ->where('incomes.incomeable_type', Suscription::class)
+                        ->groupBy('plan_id', 'suscriptions.number')
                         ->get()
                         ->keyBy('plan_id');
 
@@ -42,7 +52,11 @@ class SuscriptionPerPlanChart extends ChartWidget
                     'backgroundColor' => [
                         Color::Sky['900'],
                         Color::Orange['400'],
-                        Color::Teal['600']
+                        Color::Teal['600'],
+                        Color::Amber['300'],
+                        Color::Red['600'],
+                        Color::Zinc['400'],
+                        Color::Blue['600'],
                     ]
                 ],
             ],
@@ -80,8 +94,8 @@ class SuscriptionPerPlanChart extends ChartWidget
                 'end' => now()
             ],
             'last_year' => [
-                'start' => now()->subYear()->startOfMonth(),
-                'end' => now()->subYear()->endOfMonth()
+                'start' => now()->subYear()->startOfYear(),
+                'end' => now()->subYear()->endOfYear()
             ],
             default => [
                 'start' => now()->startOfYear(),
