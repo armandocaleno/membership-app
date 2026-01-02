@@ -41,7 +41,8 @@ class SuscriptionsTable
                     ->sortable()
                     ->searchable()
                     ->label('Cliente')
-                    ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer])),
+                    ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer]))
+                    ->description(fn ($record) :string => $record->customer->ruc),
                 TextColumn::make('plan.name')
                     ->description(fn ($record) :string =>'$ ' . $record->plan->price)
                     ->sortable(),
@@ -117,6 +118,11 @@ class SuscriptionsTable
                     ->relationship('customer', 'name')
                     ->searchable()
                     ->preload()
+                    ->native(false),
+                SelectFilter::make('ruc')
+                    ->label('RUC')
+                    ->relationship('customer', 'ruc')
+                    ->searchable()
                     ->native(false),
                 SelectFilter::make('plan')
                     ->label('Plan')
@@ -212,6 +218,7 @@ class SuscriptionsTable
                 Section::make('Planes y Cliente')
                     ->schema([
                         $filters['customer'],
+                        $filters['ruc'],
                         $filters['plan']
                     ])
                     ->columns(2)

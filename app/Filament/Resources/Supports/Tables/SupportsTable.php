@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Supports\Tables;
 
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use App\Filament\Resources\Customers\CustomerResource;
 use App\Filament\Resources\Incomes\IncomeResource;
 use App\Models\Establishment;
 use Carbon\Carbon;
@@ -47,7 +48,9 @@ class SupportsTable
                 TextColumn::make('customer.name')
                     ->label('Cliente')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->url(fn($record):string => CustomerResource::getUrl('view', ['record' => $record->customer]))
+                    ->description(fn ($record) :string => $record->customer->ruc),
                 TextColumn::make('establishment.name')
                     ->label('Establecimiento')
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -118,6 +121,11 @@ class SupportsTable
                     ->relationship('customer', 'name')
                     ->searchable()
                     ->preload()
+                    ->native(false),
+                SelectFilter::make('ruc')
+                    ->label('RUC')
+                    ->relationship('customer', 'ruc')
+                    ->searchable()
                     ->native(false),
                 Filter::make('customer_establishment')
                     ->label('Establecimiento')
@@ -204,7 +212,8 @@ class SupportsTable
                 Section::make('Estado y cliente')
                 ->schema([
                     $filters['payment_status'],
-                    $filters['customer']
+                    $filters['customer'],
+                    $filters['ruc']
                 ])
                 ->columns(2)
                 ->columnSpanFull(),
