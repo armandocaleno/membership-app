@@ -109,7 +109,7 @@
             }
 
             #logo{
-                max-width: 100px;
+                max-width: 120px;
             }
         }
     </style>
@@ -138,18 +138,26 @@
                         <!-- START MAIN CONTENT AREA -->
                         <tr>
                             <td class="wrapper"
-                                style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;"
+                                style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 10px 20px;"
                                 valign="top">
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                     style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"
                                     width="100%">
                                     <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"
+                                        <td style="text-align: center; border-bottom: 1px solid #000; margin-top:-10px">
+                                             {{-- Logo --}}
+                                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                                <img src="{{ $message->embedData(file_get_contents(public_path('images/logo-emarket.png')), 'logo-emarket.png') }}" alt="Logo" id="logo">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-top: 8px;"
                                             valign="top">
-                                            <p
-                                                style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                Hola </p>
-                                            <h3>{{ $suscription->customer->name }}</h3>
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Hola, <strong>{{ $suscription->customer->name }}</strong>
+                                            </p>
+                                            
                                             <p>Reciba un cordial saludo.</p>
                                             @php
                                                 $end_date = \Carbon\Carbon::parse($suscription->end_date);
@@ -226,12 +234,7 @@
                                             </p>
 
                                             <a href="www.emarket.com.ec" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif; font-size: 12px;">eMarket</a>
-                                            {{-- Logo --}}
-                                            <div style="text-align: center;">
-                                                <a href="#" target="_blank" rel="noopener noreferrer">
-                                                    <img src="{{ $message->embedData(file_get_contents(public_path('images/logo-emarket.png')), 'logo-emarket.png') }}" alt="Logo" id="logo">
-                                                </a>
-                                            </div>
+                                           
                                             
                                         </td>
                                     </tr>
