@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('plans', function (Blueprint $table) {
             $table->dropForeign('plans_product_id_foreign');
             $table->renameColumn('product_id', 'products');
-            $table->json('products')->change();
+            $table->longText('products')->change();
         });
     }
 
