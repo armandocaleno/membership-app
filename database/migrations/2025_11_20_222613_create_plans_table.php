@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('description')->nullable();
-            $table->foreignId('product_id')->constrained();
+            $table->json('product_id');
             $table->timestamps();
         });
     }

@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('plans', function (Blueprint $table) {
-            $table->dropForeign('plans_product_id_foreign');
+            // $table->dropForeign('plans_product_id_foreign');
             $table->renameColumn('product_id', 'products');
-            $table->longText('products')->change();
+            // $table->longText('products')->change();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
     {
         Schema::table('plans', function (Blueprint $table) {
             $table->renameColumn('products', 'product_id');
-            $table->unsignedBigInteger('product_id')->change();
-            $table->foreign('product_id')->references('id')->on('products');
+            // $table->unsignedBigInteger('product_id')->change();
+            // $table->foreign('product_id')->references('id')->on('products');
         });
     }
 };
