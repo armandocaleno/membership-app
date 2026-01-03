@@ -48,12 +48,16 @@ class DeviceForm
                     ->default(null)
                     ->options(function (callable $get) {
                         $customer_id = $get('customer_id');
-                        return $customer_id ? Establishment::where('customer_id', $customer_id)->pluck('name', 'id') : [];
+                        $establishments = Establishment::where('customer_id', $customer_id)->get();
+                        $format_establishments = [];
+                        foreach ($establishments as $establishment) {
+                            $format_establishments[$establishment->id] = $establishment->code_name;
+                        }
+                        return $customer_id ? $format_establishments : [];
                     })
                     ->label('Establecimiento')
                     ->reactive()
-                    ->native(false)
-                    ->getOptionLabelUsing(fn ($value): ?string => Establishment::find($value)?->name),
+                    ->native(false),
                 Repeater::make('remoteDesktopSoftware')
                     ->schema([
                         TextInput::make('conecction_id')
@@ -65,7 +69,8 @@ class DeviceForm
                     ->maxItems(3)
                     ->grid(2)
                     ->columnSpan('full')
-                    ->label('Software de Escritorio Remoto'),
+                    ->label('Software de Escritorio Remoto')
+                    ->defaultItems(0),
             ]);
     }
 }
