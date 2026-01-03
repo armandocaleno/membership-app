@@ -109,7 +109,7 @@
             }
 
             #logo{
-                max-width: 100px;
+                max-width: 120px;
             }
         }
     </style>
@@ -138,17 +138,25 @@
                         <!-- START MAIN CONTENT AREA -->
                         <tr>
                             <td class="wrapper"
-                                style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;"
+                                style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 10px 20px;"
                                 valign="top">
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0"
                                     style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"
                                     width="100%">
                                     <tr>
+                                        <td style="text-align: center; border-bottom: 1px solid #000; margin-top:-10px">
+                                             {{-- Logo --}}
+                                            <a href="#" target="_blank" rel="noopener noreferrer">
+                                                <img src="{{ $message->embedData(file_get_contents(public_path('images/logo-emarket.png')), 'logo-emarket.png') }}" alt="Logo" id="logo">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         @php
                                             $end_date = \Carbon\Carbon::parse($suscription->end_date);
                                         @endphp
 
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"
+                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-top: 8px;"
                                             valign="top">
                                             <p
                                                 style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
@@ -189,17 +197,9 @@
                                                     </tr>
                                                 </table>
 
-                                            <p
-                                                style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 15px;color: #999999;">
+                                            <p style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 15px;color: #999999;">
                                                 Ante cualquier duda o si necesita asistencia, nuestro equipo de soporte estará encantado de ayudarle a través del número: 099 560 7147
                                             </p>
-
-                                            {{-- Logo --}}
-                                            <div style="text-align: center;">
-                                                <a href="#" target="_blank" rel="noopener noreferrer">
-                                                    <img src="{{ $message->embed(asset('images/logo-emarket.png')) }}" alt="logo eMarket" id="logo" style="display: block; margin: 0 auto;">
-                                                </a>
-                                            </div>
                                         </td>
                                     </tr>
                                 </table>

@@ -10,7 +10,7 @@ use Filament\Widgets\ChartWidget;
 class IncomePerPlanChart extends ChartWidget
 {
     protected ?string $heading = 'Planes vendidos';
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 5;
     public ?string $filter = 'this_year';
 
     protected function getData(): array
