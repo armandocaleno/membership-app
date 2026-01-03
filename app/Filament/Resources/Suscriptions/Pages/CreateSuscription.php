@@ -80,21 +80,21 @@ class CreateSuscription extends CreateRecord
                         Notification::make()
                         ->title("Error al enviar email")
                         ->body('Hubo un error al enviar el email.')
-                        ->error()
+                        ->warning()
                         ->send();
                     }
                 }else {
                     Notification::make()
                     ->title("Error al enviar email")
                     ->body('Email no válido o inexistente.')
-                    ->error()
+                    ->warning()
                     ->send();
                 }
             }else {
                     Notification::make()
                     ->title("Error al enviar email")
                     ->body('Email no válido o inexistente.')
-                    ->error()
+                    ->warning()
                     ->send();
             }
         }
