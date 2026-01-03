@@ -10,7 +10,7 @@ class IncomePerMonthChart extends ChartWidget
 {
     protected int | string | array $columnSpan = 2;
     protected ?string $maxHeight = '300px';
-    protected ?string $heading = 'Ingresos por año';
+    protected ?string $heading = 'Ingresos por mes';
     protected static ?int $sort = 2;
 
     protected function getData(): array

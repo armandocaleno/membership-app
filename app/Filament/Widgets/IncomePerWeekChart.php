@@ -8,7 +8,7 @@ use Filament\Widgets\ChartWidget;
 
 class IncomePerWeekChart extends ChartWidget
 {
-    protected ?string $heading = 'Ingresos por mes';
+    protected ?string $heading = 'Ingresos por día';
     protected int | string | array $columnSpan = 2;
     protected ?string $maxHeight = '300px';
     protected static ?int $sort = 3;
@@ -72,24 +72,50 @@ class IncomePerWeekChart extends ChartWidget
 
     protected function getFilters(): ?array
     {
+        $start = now()->startOfWeek()->translatedFormat('M j');
+        $end = now()->endOfWeek()->translatedFormat('M j');
+        $this_week = $start . ' - ' . $end;
+
+        $last_start = now()->subWeek()->startOfWeek()->translatedFormat('M j');
+        $last_end = now()->subWeek()->endOfWeek()->translatedFormat('M j');
+        $last_week = $last_start . ' - ' . $last_end;
+
+        $two_week_start = now()->subWeek(2)->startOfWeek()->translatedFormat('M j');
+        $two_week_end = now()->subWeek(2)->endOfWeek()->translatedFormat('M j');
+        $last_2_week = $two_week_start . ' - ' . $two_week_end;
+
+        $three_week_start = now()->subWeek(3)->startOfWeek()->translatedFormat('M j');
+        $three_week_end = now()->subWeek(3)->endOfWeek()->translatedFormat('M j');
+        $last_3_week = $three_week_start . ' - ' . $three_week_end;
+
         return [
-            'this_month' => 'Este mes',
-            'last_month' => 'Mes anterior',
+            'this_week' => $this_week,
+            'last_week' => $last_week,
+            'last_2_week' => $last_2_week,
+            'last_3_week' => $last_3_week,
         ];
     }
 
     private function getDateRange() : array {
         return match($this->filter){
-            'this_month' => [
-                'start' => now()->startOfMonth(),
+            'this_week' => [
+                'start' => now()->startOfWeek(),
                 'end' => now()
             ],
-            'last_month' => [
-                'start' => now()->subMonth()->startOfMonth(),
-                'end' => now()->subMonth()->endOfMonth()
+            'last_week' => [
+                'start' => now()->subWeek()->startOfWeek(),
+                'end' => now()->subWeek()->endOfWeek()
+            ],
+            'last_2_week' => [
+                'start' => now()->subWeek(2)->startOfWeek(),
+                'end' => now()->subWeek(2)->endOfWeek()
+            ],
+            'last_3_week' => [
+                'start' => now()->subWeek(3)->startOfWeek(),
+                'end' => now()->subWeek(3)->endOfWeek()
             ],
             default => [
-                'start' => now()->startOfMonth(),
+                'start' => now()->startOfWeek(),
                 'end' => now()
             ]
         };
