@@ -229,7 +229,7 @@
                                             {{-- Logo --}}
                                             <div style="text-align: center;">
                                                 <a href="#" target="_blank" rel="noopener noreferrer">
-                                                    <img src="{{ $message->embedData(file_get_contents(public_path('images/logo-emarket.png')), 'logo-emarket.png') }}" alt="Logo">
+                                                    <img src="{{ $message->embedData(file_get_contents(public_path('images/logo-emarket.png')), 'logo-emarket.png') }}" alt="Logo" id="logo">
                                                 </a>
                                             </div>
                                             
