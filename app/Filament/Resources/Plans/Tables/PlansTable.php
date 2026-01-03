@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Plans\Tables;
 
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -63,6 +64,18 @@ class PlansTable
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
+                    ->before(function (DeleteAction $action, $record) {
+                        if ($record->suscriptions()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este plan porque tiene suscripciones relacionadas.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ]);
     }
 }
