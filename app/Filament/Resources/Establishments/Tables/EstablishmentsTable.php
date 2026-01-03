@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Establishments\Tables;
 
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
@@ -51,6 +53,19 @@ class EstablishmentsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make()
+                ->before(function (DeleteAction $action, $record) {
+                        if ($record->devices()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este establecimiento porque tiene dispositivos relacionadas.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ])
             ->groups([
                 Group::make('customer.name')

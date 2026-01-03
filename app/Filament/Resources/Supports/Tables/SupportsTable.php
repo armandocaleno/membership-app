@@ -12,6 +12,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables\Columns\TextColumn;
@@ -233,6 +234,18 @@ class SupportsTable
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
+                ->before(function (DeleteAction $action, $record) {
+                        if ($record->incomes()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este soporte porque tiene ingresos relacionados.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ])
             ->recordUrl(
                 fn (Model $record): string => route('filament.admin.resources.supports.view', ['record' => $record])

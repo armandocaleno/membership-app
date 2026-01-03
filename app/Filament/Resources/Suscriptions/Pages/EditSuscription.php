@@ -24,6 +24,18 @@ class EditSuscription extends EditRecord
         return [
             ViewAction::make(),
             DeleteAction::make()
+            ->before(function (DeleteAction $action, $record) {
+                        if ($record->incomes()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este suscripción porque tiene ingresos relacionados.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ->successNotification(Notification::make()
                                     ->title('Suscripcion eliminada!')
                                     ->body('La suscripción se eliminó correctamente!')

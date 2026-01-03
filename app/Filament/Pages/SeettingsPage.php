@@ -22,7 +22,7 @@ class SeettingsPage extends Page
     use HasPageShield;
 
     protected string $view = 'filament.pages.seettings-page';
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog;
     protected static string|UnitEnum|null $navigationGroup = 'Opciones';
     protected static ?string $navigationLabel = 'Configuración';
     protected static ?string $title = 'Configuración';

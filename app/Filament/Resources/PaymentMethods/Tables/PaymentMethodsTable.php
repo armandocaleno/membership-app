@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources\PaymentMethods\Tables;
 
-use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -20,17 +19,21 @@ class PaymentMethodsTable
                     ->label('Nombre')
                     ->sortable(),
             ])
-            ->filters([
-                //
-            ])
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
-            ])
-            ->toolbarActions([
-                // BulkActionGroup::make([
-                //     DeleteBulkAction::make(),
-                // ]),
+                ->before(function (DeleteAction $action, $record) {
+                        if ($record->incomes()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este método de pago porque tiene ingresos relacionados.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ]);
     }
 }

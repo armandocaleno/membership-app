@@ -8,6 +8,7 @@ use App\Models\Regime;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Notifications\Notification;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -101,6 +102,40 @@ class CustomersTable
                 EditAction::make(),
                 ViewAction::make(),
                 DeleteAction::make()
+                ->before(function (DeleteAction $action, $record) {
+                        if ($record->suscriptions()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este cliente porque tiene suscripciones relacionadas.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+
+                        if ($record->supports()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este cliente porque tiene soportes relacionadas.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+
+                        if ($record->establishments()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este cliente porque tiene establecimientos relacionadas.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ])
             ->headerActions([
                 FilamentExportHeaderAction::make('exportar')

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
@@ -227,6 +228,18 @@ class SuscriptionsTable
             ->recordActions([
                 EditAction::make(),
                 DeleteAction::make()
+                ->before(function (DeleteAction $action, $record) {
+                        if ($record->incomes()->exists()) {
+                            Notification::make()
+                            ->warning()
+                                ->title('Acción no válida!')
+                                ->body('No se puede eliminar este suscripción porque tiene ingresos relacionados.')
+                                ->persistent()
+                                ->send();
+                        
+                            $action->cancel();
+                        }
+                    })
             ])
             ->recordUrl(
                 fn (Model $record): string => route('filament.admin.resources.suscriptions.view', ['record' => $record])
