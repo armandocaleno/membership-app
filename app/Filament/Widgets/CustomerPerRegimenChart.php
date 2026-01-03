@@ -10,7 +10,7 @@ use Filament\Widgets\ChartWidget;
 class CustomerPerRegimenChart extends ChartWidget
 {
     protected ?string $heading = 'Clientes por régimen SRI';
-    protected static ?int $sort = 6;
+    protected static ?int $sort = 7;
 
     protected ?array $options = [
         'plugins' => [

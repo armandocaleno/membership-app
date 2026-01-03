@@ -6,12 +6,12 @@ use App\Models\Income;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\ChartWidget;
 
-class IncomePerMonthChart extends ChartWidget
+class IncomePerWeekChart extends ChartWidget
 {
+    protected ?string $heading = 'Ingresos por mes';
     protected int | string | array $columnSpan = 2;
     protected ?string $maxHeight = '300px';
-    protected ?string $heading = 'Ingresos por año';
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 3;
 
     protected function getData(): array
     {
@@ -19,27 +19,30 @@ class IncomePerMonthChart extends ChartWidget
         
         $incomePerMonth = Income::query()
             ->whereBetween('date', [$dateRange['start'], $dateRange['end']])
-            ->selectRaw('MONTH(date) as month, SUM(total) as totalMonth')
-            ->groupBy('month')
-            ->orderBy('month')
+            ->selectRaw('DATE(date) as date, SUM(total) as totalMonth')
+            ->groupBy('date')
+            ->orderBy('date')
             ->get()
-            ->keyBy('month');
+            ->keyBy('date');
         
         $labels = [];
         $totals = [];
 
-        for ($date = $dateRange['start']->copy(); $date <= $dateRange['end'] ; $date->addMonth()) { 
-            $dateString = $date->format('n');
-            $labels[] = $date->locale('es')->isoFormat('MMM');
+        for ($date = $dateRange['start']->copy(); $date <= $dateRange['end'] ; $date->addDay()) { 
+            $dateString = $date->format('Y-m-d');
+            $labels[] = $date->locale('es')->translatedFormat('M j');
             $totals[] = $incomePerMonth->get($dateString) ?->totalMonth ?? 0; 
         }
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Ingresos del mes',
+                    'label' => 'Ingresos diarios',
                     'data' => $totals,
-                    'borderColor' => Color::Sky['900']
+                    'borderColor' => Color::Orange['600'],
+                    'backgroundColor' => Color::Orange['200'],
+                    'fill' => true,
+                    'tension' => 0.3
                 ],
             ],
             'labels' => $labels,
@@ -70,23 +73,23 @@ class IncomePerMonthChart extends ChartWidget
     protected function getFilters(): ?array
     {
         return [
-            'this_year' => 'Este año',
-            'last_year' => 'Año anterior',
+            'this_month' => 'Este mes',
+            'last_month' => 'Mes anterior',
         ];
     }
 
     private function getDateRange() : array {
         return match($this->filter){
-            'this_year' => [
-                'start' => now()->startOfYear(),
+            'this_month' => [
+                'start' => now()->startOfMonth(),
                 'end' => now()
             ],
-            'last_year' => [
-                'start' => now()->subYear()->startOfYear(),
-                'end' => now()->subYear()->endOfYear()
+            'last_month' => [
+                'start' => now()->subMonth()->startOfMonth(),
+                'end' => now()->subMonth()->endOfMonth()
             ],
             default => [
-                'start' => now()->startOfYear(),
+                'start' => now()->startOfMonth(),
                 'end' => now()
             ]
         };

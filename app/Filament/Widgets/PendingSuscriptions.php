@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class PendingSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 7;
+    protected static ?int $sort = 9;
     protected int | string | array $columnSpan = 2;
 
     public function table(Table $table): Table

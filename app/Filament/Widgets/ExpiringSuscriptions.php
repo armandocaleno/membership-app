@@ -13,7 +13,7 @@ use Filament\Tables\Filters\Filter;
 
 class ExpiringSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 6;
+    protected static ?int $sort = 8;
     protected int | string | array $columnSpan = 2;
     public ?string $filter = 'one_month';
     

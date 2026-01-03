@@ -8,6 +8,7 @@ use App\Filament\Widgets\CustomerPerRegimenChart;
 use App\Filament\Widgets\ExpiringSuscriptions;
 use App\Filament\Widgets\IncomePerMonthChart;
 use App\Filament\Widgets\IncomePerPlanChart;
+use App\Filament\Widgets\IncomePerWeekChart;
 use App\Filament\Widgets\PendingSuscriptions;
 use App\Filament\Widgets\SuscriptionPerPlanChart;
 use Filament\Actions\Action;
@@ -41,17 +42,12 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('4rem')
             ->favicon(asset('images/favicon.png'))
             ->sidebarCollapsibleOnDesktop()
-            // ->sidebarFullyCollapsibleOnDesktop()
             ->collapsibleNavigationGroups(true)
             ->sidebarWidth('14rem')
             ->id('admin')
             ->path('admin')
             ->login()
-            // ->registration()
             ->passwordReset()
-            // ->emailVerification()
-            // ->emailChangeVerification()
-            // ->profile()
             ->colors([
                 'primary' => Color::Sky,
             ])
@@ -62,7 +58,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                // AccountWidget::class,
                 StatsOverviewWidget::class,
                 IncomePerMonthChart::class,
                 IncomePerPlanChart::class,
@@ -70,7 +65,8 @@ class AdminPanelProvider extends PanelProvider
                 ExpiringSuscriptions::class,
                 PendingSuscriptions::class,
                 CustomerPerProvinceChart::class,
-                CustomerPerRegimenChart::class
+                CustomerPerRegimenChart::class,
+                IncomePerWeekChart::class
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -102,7 +98,6 @@ class AdminPanelProvider extends PanelProvider
                         rules: 'mimes:jpeg,png|max:1024' //only accept jpeg and png files with a maximum size of 1MB
                     )
                     ->shouldShowDeleteAccountForm(false)
-                    
             ])
             ->userMenuItems([
                 'profile' => Action::make('Edit')
