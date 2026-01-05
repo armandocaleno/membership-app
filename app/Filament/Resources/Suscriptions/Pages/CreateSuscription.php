@@ -68,8 +68,10 @@ class CreateSuscription extends CreateRecord
             if ($suscription->customer->email !== null) {
                 if (filter_var($suscription->customer->email, FILTER_VALIDATE_EMAIL)) {
                     $customer_mail = $suscription->customer->email;
-
-                    $email = Mail::to($customer_mail)->queue(new SuscriptionActivated($suscription));
+                    $copy_recipient = Settings::where('name', 'mail_copy_recipient')->value('value');
+                    $email = Mail::to($customer_mail)
+                                ->bcc($copy_recipient)
+                                ->queue(new SuscriptionActivated($suscription));
                     
                     if ($email) {
                         Notification::make()

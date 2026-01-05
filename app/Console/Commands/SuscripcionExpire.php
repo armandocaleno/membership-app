@@ -40,13 +40,16 @@ class SuscripcionExpire extends Command
        
         $suscriptions = Suscription::where('status', 'active')->get();
         $user = User::first()->get();
-
+        $copy_recipient = Settings::where('name', 'mail_copy_recipient')->value('value');
         foreach ($suscriptions as $sus) {
             $expire_date = Carbon::parse($sus->end_date)->format('Y-m-d');
             $customer_mail = $sus->customer->email;
 
             if ($check_date == $expire_date) {
-                Mail::to($customer_mail)->queue(new SuscriptionExpire($sus));
+                
+                Mail::to($customer_mail)
+                    ->bcc($copy_recipient)
+                    ->queue(new SuscriptionExpire($sus));
 
                 Notification::make()
                     ->title("Suscripción $sus->number por vencer!")
@@ -62,7 +65,9 @@ class SuscripcionExpire extends Command
 
             if ($expire_date == $expire_suscription_date) {
                 //customer mail send
-                Mail::to($customer_mail)->queue(new SuscriptionExpired($sus));
+                Mail::to($customer_mail)
+                    ->bcc($copy_recipient)
+                    ->queue(new SuscriptionExpired($sus));
 
                 //database notification send
                 Notification::make()

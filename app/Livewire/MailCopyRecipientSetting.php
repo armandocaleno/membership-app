@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Livewire;
 
 use App\Models\Settings;
@@ -15,7 +16,7 @@ use Filament\Schemas\Contracts\HasSchemas;
 use Filament\Schemas\Schema;
 use Livewire\Component;
 
-class SendEmailNotificationSetting extends Component implements HasSchemas
+class MailCopyRecipientSetting extends Component implements HasSchemas
 {
     use InteractsWithSchemas;
 
@@ -30,13 +31,13 @@ class SendEmailNotificationSetting extends Component implements HasSchemas
 
     public function render()
     {
-        return view('livewire.send-email-notification-setting');
+        return view('livewire.mail-copy-recipient-setting');
     }
 
-    public function getRecord()
+     public function getRecord()
     {
         return Settings::query()
-            ->where('name', 'send_email_notification')
+            ->where('name', 'mail_copy_recipient')
             ->first();
     }
 
@@ -44,21 +45,19 @@ class SendEmailNotificationSetting extends Component implements HasSchemas
         return $schema
             ->components([
                Form::make([
-                    Section::make('Envío de correos electrónicos')
-                        ->description('Opciones para el envío de notificaciones por correo electrónico.')
+                    Section::make('Copia de correos electrónicos')
+                        ->description('Dirección de correo para enviar una copia.')
                         ->aside()
                         ->schema([
                             TextInput::make('name')
                                 ->label('Nombre')
                                 ->maxLength(255)
                                 ->disabled(),
-                            ToggleButtons::make('value')
-                                ->label('Valor')
-                                ->boolean()
-                                ->grouped(),
+                            TextInput::make('value')
+                                ->label('Email')
+                                ->email(),
                             TextInput::make('description')
                                 ->label('Descripción')
-                                ->required()
                                 ->disabled(),
                             DatePicker::make('updated_at')
                                 ->label('Modificado')
@@ -85,7 +84,11 @@ class SendEmailNotificationSetting extends Component implements HasSchemas
         
         if (! $record) {
             $record = new Settings();
-            $record->name = $data['name'];
+            $record->name = 'mail_copy_recipient';
+            $record->value = $data['value'];
+            $record->description = 'Dirección de correo donde se enviarán copias de todos los correos enviados.';
+            $record->type = 'string';
+            $record->group = 'emails';
         }
         
         $record->fill($data);
