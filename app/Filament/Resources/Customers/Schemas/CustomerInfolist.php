@@ -147,6 +147,11 @@ class CustomerInfolist
                                 TextEntry::make('deviceType.name')
                                 ->label('Tipo')
                                 ->color(Color::Gray),
+                                TextEntry::make('remoteDesktopSoftware')
+                                ->label('Conexion remota')
+                                ->color(Color::Gray)
+                                ->listWithLineBreaks()
+                                ->formatStateUsing(fn (array $state): string => implode(' -> ', $state)),
                                 Action::make('edit')
                                 ->label('Editar')
                                 ->url(fn (Model $record) => DeviceResource::getUrl('edit', ['record' => $record]))
