@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Supports\RelationManagers;
 
+use App\Models\Income;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
@@ -34,7 +35,9 @@ class IncomesRelationManager extends RelationManager
             ->components([
                 TextInput::make('number')
                     ->required()
-                    ->label('Número'),
+                    ->maxLength(25)
+                    ->label('Número')
+                    ->unique(Income::class, 'number', ignoreRecord: true),
                 DatePicker::make('date')
                     ->required()
                     ->label('Fecha')
