@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Incomes\Schemas;
 
+use App\Models\Income;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -20,7 +21,8 @@ class IncomeForm
                 TextInput::make('number')
                     ->required()
                     ->label('Número')
-                    ->autofocus(),
+                    ->autofocus()
+                    ->unique(Income::class, 'number', ignoreRecord: true),
                 DatePicker::make('date')
                     ->required()
                     ->label('Fecha')
@@ -30,7 +32,6 @@ class IncomeForm
                     ->numeric()
                     ->label('Total')
                     ->prefix('$'),
-                    // ->description(fn ($record) :string => $record->total),
                 Select::make('payment_method_id')
                     ->relationship('paymentMethod', 'name')
                     ->required()
