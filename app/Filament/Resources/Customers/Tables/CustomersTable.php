@@ -143,6 +143,10 @@ class CustomersTable
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
                 ->visible(fn(): bool => auth()->user()->can('Export:Customer'))
+                ->extraViewData([
+                    'title' => 'Reporte de clientes',
+                    'date' => now()->format('d-m-Y H:i')
+                ])
             ]);
     }
 }

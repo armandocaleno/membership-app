@@ -104,10 +104,12 @@ class SupportsTable
                     }),
                 TextColumn::make('created_at')
                     ->dateTime()
+                    ->label('Creado')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->dateTime()
+                    ->label('Modificado')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
@@ -260,6 +262,17 @@ class SupportsTable
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
                 ->visible(fn(): bool => auth()->user()->can('Export:Support'))
+                ->extraViewData([
+                    'title' => 'Reporte de soportes',
+                    'date' => now()->format('d-m-Y H:i')
+                ])
+                ->formatStates([
+                    'incomes.total' => function (?Model $record){
+                        $incomes = $record->incomes->pluck('total');
+                        $totals = $incomes->toArray();
+                        return implode(', ', $totals);
+                    }
+                ])
             ]);
     }
 }
