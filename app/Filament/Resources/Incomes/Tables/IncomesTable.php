@@ -159,6 +159,10 @@ class IncomesTable
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
                 ->visible(fn(): bool => auth()->user()->can('Export:Income'))
+                ->extraViewData([
+                    'title' => 'Reporte de ingresos',
+                    'date' => now()->format('d-m-Y H:i')
+                ])
             ]);
     }
 

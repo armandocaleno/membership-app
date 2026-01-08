@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -9,11 +9,16 @@
     <title>{{ $fileName }}</title>
     <style type="text/css" media="all">
         * {
-            font-family: DejaVu Sans, sans-serif !important;
+            /* font-family: DejaVu Sans, sans-serif !important; */
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
         }
 
         html{
             width:100%;
+        }
+
+        body {
+            position: relative;
         }
 
         table {
@@ -21,7 +26,6 @@
             border-collapse: collapse;
             border-spacing: 0;
             border-radius: 10px 10px 10px 10px;
-            table-layout: fixed; /* Ayuda a fijar anchos */
         }
 
         table td,
@@ -36,13 +40,45 @@
         }
 
         table th {
-            font-weight:bold; /* antes: normal*/
+            font-weight:bold;
+            background-color: #ededed;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .imagen-logo {
+            width: 100%;
+            text-align: left;
+            vertical-align: middle;
+            height: 20px;
+        }
+        .date{
+            float: right;
+            font-size: 12px;
+            color: #535353;
+        }
+
+        img {
+            max-width: 140px;
+            height: auto;
+            position: absolute;
+            top: -60px;
         }
 
     </style>
 </head>
 <body>
-    <h1>Reporte</h1>
+    <div class="imagen-logo">
+        @if (file_exists(public_path('images/logo-emarket.png')))
+            <img src="{{ public_path('images/logo-emarket.png') }}" alt="Logo eMarket">
+        @endif
+        <p class="date">{{ isset($date) ? $date : '' }}</p>
+    </div>
+
+
+    <h2>{{ isset($title) ? $title : 'Reporte' }}</h2>
     <table>
         <tr>
             @foreach ($columns as $column)

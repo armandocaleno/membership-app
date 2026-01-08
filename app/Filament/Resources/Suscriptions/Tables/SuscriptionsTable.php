@@ -20,6 +20,8 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
+use function PHPUnit\Framework\isArray;
+
 class SuscriptionsTable
 {
     public static function configure(Table $table): Table
@@ -254,6 +256,17 @@ class SuscriptionsTable
                 ->disableAdditionalColumns()
                 ->withHiddenColumns()
                 ->visible(fn(): bool => auth()->user()->can('Export:Suscription'))
+                ->extraViewData([
+                    'title' => 'Reporte de suscripciones',
+                    'date' => now()->format('d-m-Y H:i')
+                ])
+                ->formatStates([
+                    'incomes.total' => function (?Model $record){
+                        $incomes = $record->incomes->pluck('total');
+                        $totals = $incomes->toArray();
+                        return implode(', ', $totals);
+                    }
+                ])
             ]);
     }
 }
