@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Suscription;
 use Carbon\Carbon;
 use Filament\Tables\Filters\Filter;
-
+use Illuminate\Database\Eloquent\Model;
 
 class ExpiringSuscriptions extends TableWidget
 {
@@ -98,7 +98,11 @@ class ExpiringSuscriptions extends TableWidget
                 Filter::make('3 meses')
                     ->query(fn (Builder $query): Builder => $query->orwhere('end_date','<=', Carbon::now()->addMonths(3))),
             ])
-            ->paginated([5, 10]);
+            ->recordUrl(
+                fn (Model $record): string => route('filament.admin.resources.suscriptions.view', ['record' => $record])
+            )
+            ->defaultPaginationPageOption(5)
+            ->paginated([5, 10, 25]);
     }
 
     protected function getTableHeading(): string

@@ -140,4 +140,9 @@ class IncomesRelationManager extends RelationManager
                 DeleteAction::make(),
             ]);
     }
+
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
 }
