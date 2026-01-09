@@ -23,7 +23,7 @@ class ExpiringSuscriptions extends TableWidget
         $check_date = Carbon::now()->addMonth();
         return $table
             ->query(fn (): Builder => Suscription::query()
-                        ->where('status', 'active')
+                        // ->where('status', 'active')
                         ->where('end_date', '<=', $check_date))
             ->columns([
                 TextColumn::make('number')
