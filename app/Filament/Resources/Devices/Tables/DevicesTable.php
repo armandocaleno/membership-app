@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Devices\Tables;
 
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Grouping\Group;
@@ -25,16 +26,19 @@ class DevicesTable
                 TextColumn::make('establishment.name')
                     ->searchable()
                     ->label('Establecimiento'),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->label('Creado'),
                 TextColumn::make('remoteDesktopSoftware')
                     ->listWithLineBreaks()
                     ->bulleted()
                     ->label('Software Remoto')
                     ->formatStateUsing(fn (array $state): string => implode(' -> ', $state)),
+                TextColumn::make('notes')
+                    ->label('Notas')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Creado'),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
@@ -43,6 +47,7 @@ class DevicesTable
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->groups([
                 Group::make('establishment.name')

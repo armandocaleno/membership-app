@@ -24,9 +24,6 @@ class SupportForm
                     ->label('Fecha')
                     ->default(now())
                     ->required(),
-                // TextInput::make('number')
-                //     ->label('Número')
-                //     ->required(),
                 Textarea::make('detail')
                     ->default(null)
                     ->label('Detalle')

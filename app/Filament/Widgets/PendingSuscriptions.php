@@ -7,6 +7,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class PendingSuscriptions extends TableWidget
 {
@@ -86,7 +87,11 @@ class PendingSuscriptions extends TableWidget
                     ->label('Modificado')
                     ->toggleable(isToggledHiddenByDefault: true)
             ])
-            ->paginated([5, 10]);
+            ->recordUrl(
+                fn (Model $record): string => route('filament.admin.resources.suscriptions.view', ['record' => $record])
+            )
+            ->defaultPaginationPageOption(5)
+            ->paginated([5, 10, 25]);
     }
 
     protected function getTableHeading(): string

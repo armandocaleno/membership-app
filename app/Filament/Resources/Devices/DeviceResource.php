@@ -52,4 +52,9 @@ class DeviceResource extends Resource
     {
         return "Dispositivo";
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false; 
+    }
 }

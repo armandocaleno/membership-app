@@ -25,8 +25,7 @@ class CustomersTable
                     ->sortable(),
                 TextColumn::make('ruc')
                     ->searchable()
-                    ->label('RUC')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('RUC'),
                 TextColumn::make('address')
                     ->searchable()
                     ->label('Dirección')

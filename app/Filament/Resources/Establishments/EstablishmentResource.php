@@ -52,4 +52,9 @@ class EstablishmentResource extends Resource
     {
         return "Establecimiento";
     }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return false; 
+    }
 }
