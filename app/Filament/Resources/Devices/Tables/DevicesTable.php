@@ -25,16 +25,19 @@ class DevicesTable
                 TextColumn::make('establishment.name')
                     ->searchable()
                     ->label('Establecimiento'),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->label('Creado'),
                 TextColumn::make('remoteDesktopSoftware')
                     ->listWithLineBreaks()
                     ->bulleted()
                     ->label('Software Remoto')
                     ->formatStateUsing(fn (array $state): string => implode(' -> ', $state)),
+                TextColumn::make('notes')
+                    ->label('Notas')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->label('Creado'),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

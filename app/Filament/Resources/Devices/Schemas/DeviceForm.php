@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Establishment;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -58,6 +59,10 @@ class DeviceForm
                     ->label('Establecimiento')
                     ->reactive()
                     ->native(false),
+                Textarea::make('notes')
+                    ->label('notas')
+                    ->autosize()
+                    ->rows(1),
                 Repeater::make('remoteDesktopSoftware')
                     ->schema([
                         TextInput::make('conecction_id')
