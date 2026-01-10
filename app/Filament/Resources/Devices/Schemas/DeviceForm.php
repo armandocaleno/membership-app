@@ -56,7 +56,6 @@ class DeviceForm
                         }
                         return $customer_id ? $format_establishments : [];
                     })
-                    ->label('Establecimiento')
                     ->reactive()
                     ->native(false),
                 Textarea::make('notes')
