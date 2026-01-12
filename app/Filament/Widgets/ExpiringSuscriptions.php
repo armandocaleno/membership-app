@@ -109,4 +109,9 @@ class ExpiringSuscriptions extends TableWidget
     {
         return 'Suscripciones por expirar'; // Aquí va el nuevo título
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:ExpiringSuscriptions');
+    }
 }

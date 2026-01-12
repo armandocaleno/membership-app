@@ -59,4 +59,9 @@ class CustomerPerRegimenChart extends ChartWidget
     {
         return 'polarArea';
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:CustomerPerRegimenChart');
+    }
 }

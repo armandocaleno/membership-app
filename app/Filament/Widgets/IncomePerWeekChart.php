@@ -120,4 +120,9 @@ class IncomePerWeekChart extends ChartWidget
             ]
         };
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:IncomePerWeekChart');
+    }
 }

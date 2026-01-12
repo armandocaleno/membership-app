@@ -98,4 +98,9 @@ class PendingSuscriptions extends TableWidget
     {
         return 'Suscripciones pendientes de cobro'; // Aquí va el nuevo título
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:PendingSuscriptions');
+    }
 }

@@ -61,4 +61,9 @@ class StatsOverview extends StatsOverviewWidget
                 ])
         ];
     }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:StatsOverview');
+    }
 }
