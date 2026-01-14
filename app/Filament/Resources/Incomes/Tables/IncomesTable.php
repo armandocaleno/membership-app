@@ -57,6 +57,7 @@ class IncomesTable
                     ->label('Id cliente'),
                 TextColumn::make('incomeable.customer.name')
                     ->label('Cliente')
+                    // ->searchable()
                     ->url(fn($record): string => CustomerResource::getUrl('view', ['record' => $record->incomeable->customer])),
                 TextColumn::make('incomeable')
                     ->label('Recurso')
@@ -164,9 +165,9 @@ class IncomesTable
                 })
                 ->indicateUsing(function (array $data): array{
                     $indicators =[];
-                    $customer = Customer::findOrFail($data['customer_id'])->value('name');
+                    // $customer = Customer::findOrFail($data['customer_id'])->value('name');
                     if (filled($data['customer_id'] ?? null)) {
-                        $indicators[] = 'Cliente: ' . $customer;
+                        $indicators[] = 'Cliente: ' ;
                     }
                     return $indicators;
                 })
