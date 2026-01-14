@@ -20,8 +20,6 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
-use function PHPUnit\Framework\isArray;
-
 class SuscriptionsTable
 {
     public static function configure(Table $table): Table
