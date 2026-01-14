@@ -162,6 +162,14 @@ class IncomesTable
                         $morphQuery->where('customer_id', $data['customer_id']);
                     });
                 })
+                ->indicateUsing(function (array $data): array{
+                    $indicators =[];
+                    $customer = Customer::findOrFail($data['customer_id'])->value('name');
+                    if (filled($data['customer_id'] ?? null)) {
+                        $indicators[] = 'Cliente: ' . $customer;
+                    }
+                    return $indicators;
+                })
             ])
             ->recordActions([
                 DeleteAction::make()
