@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PendingSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 9;
+    protected static ?int $sort = 10;
     protected int | string | array $columnSpan = 2;
 
     public function table(Table $table): Table

@@ -9,7 +9,7 @@ use Filament\Widgets\ChartWidget;
 class CustomerPerProvinceChart extends ChartWidget
 {
     protected ?string $heading = 'Clientes por provincia';
-    protected static ?int $sort = 6;
+    protected static ?int $sort = 7;
     protected int | string | array $columnSpan = 1;
 
     protected ?array $options = [

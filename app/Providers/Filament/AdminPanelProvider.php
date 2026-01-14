@@ -10,6 +10,7 @@ use App\Filament\Widgets\IncomePerMonthChart;
 use App\Filament\Widgets\IncomePerPlanChart;
 use App\Filament\Widgets\IncomePerWeekChart;
 use App\Filament\Widgets\PendingSuscriptions;
+use App\Filament\Widgets\SuscriptionPerMonthChart;
 use App\Filament\Widgets\SuscriptionPerPlanChart;
 use Filament\Actions\Action;
 use Filament\Http\Middleware\Authenticate;
@@ -66,7 +67,8 @@ class AdminPanelProvider extends PanelProvider
                 PendingSuscriptions::class,
                 CustomerPerProvinceChart::class,
                 CustomerPerRegimenChart::class,
-                IncomePerWeekChart::class
+                IncomePerWeekChart::class,
+                SuscriptionPerMonthChart::class
             ])
             ->middleware([
                 EncryptCookies::class,

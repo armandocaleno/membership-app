@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExpiringSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 8;
+    protected static ?int $sort = 9;
     protected int | string | array $columnSpan = 2;
     public ?string $filter = 'one_month';
     
@@ -23,7 +23,6 @@ class ExpiringSuscriptions extends TableWidget
         $check_date = Carbon::now()->addMonth();
         return $table
             ->query(fn (): Builder => Suscription::query()
-                        // ->where('status', 'active')
                         ->where('end_date', '<=', $check_date))
             ->columns([
                 TextColumn::make('number')
