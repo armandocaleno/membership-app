@@ -11,6 +11,7 @@ use App\Models\Customer;
 use App\Models\PaymentMethod;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
@@ -52,6 +53,8 @@ class IncomesTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('paymentMethod.name')
                     ->label('F. Pago'),
+                TextColumn::make('incomeable.customer_id')
+                    ->label('Id cliente'),
                 TextColumn::make('incomeable.customer.name')
                     ->label('Cliente')
                     ->url(fn($record): string => CustomerResource::getUrl('view', ['record' => $record->incomeable->customer])),
@@ -143,6 +146,22 @@ class IncomesTable
                                 fn(Builder $query) => $query->whereDate('date', '<=', $data['date_until'])
                             );
                     }),
+                Filter::make('customer')
+                ->label('Cliente')
+                ->schema([
+                    Select::make('customer_id')
+                    ->label('Cliente')
+                    ->options(Customer::where('status', 'active')->pluck('name', 'id'))
+                    ->searchable()
+                ])
+                ->query(function(Builder $query, array $data){
+                    if (empty($data['customer_id'])) {
+                        return $query;
+                    }
+                    return $query->whereHasMorph('incomeable', [Suscription::class, Support::class], function (Builder $morphQuery) use($data) {
+                        $morphQuery->where('customer_id', $data['customer_id']);
+                    });
+                })
             ])
             ->recordActions([
                 DeleteAction::make()
