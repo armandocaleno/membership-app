@@ -52,7 +52,7 @@ class SuscriptionForm
                     ->autosize()
                     ->rows(1),
                 Select::make('status')
-                    ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
+                    ->options(['active' => 'Activa', 'inactive' => 'Vencida'])
                     ->default('active')
                     ->required()
                     ->label('Estado')

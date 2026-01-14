@@ -57,9 +57,9 @@ class ExpiringSuscriptions extends TableWidget
                     })
                     ->formatStateUsing(function ($state) {
                         if ($state == 'active') {
-                            return 'Activo';
+                            return 'Activa';
                         }else {
-                            return 'Inactivo';
+                            return 'Vencida';
                         }
                     }),
                 TextColumn::make('payment_status')

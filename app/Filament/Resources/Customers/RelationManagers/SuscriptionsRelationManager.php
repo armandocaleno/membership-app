@@ -59,7 +59,7 @@ class SuscriptionsRelationManager extends RelationManager
                     ->autosize()
                     ->rows(1),
                 Select::make('status')
-                    ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
+                    ->options(['active' => 'Activa', 'inactive' => 'Vencida'])
                     ->default('active')
                     ->required()
                     ->label('Estado')
@@ -116,9 +116,9 @@ class SuscriptionsRelationManager extends RelationManager
                     })
                     ->formatStateUsing(function ($state) {
                         if ($state == 'active') {
-                            return 'Activo';
+                            return 'Activa';
                         }else {
-                            return 'Inactivo';
+                            return 'Vencida';
                         }
                     }),
                 TextColumn::make('payment_status')

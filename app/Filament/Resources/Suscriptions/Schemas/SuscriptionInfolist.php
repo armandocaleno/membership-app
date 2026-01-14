@@ -60,9 +60,9 @@ class SuscriptionInfolist
                                 ->label('Estado')
                                 ->formatStateUsing(function ($state) {
                                     if ($state == 'active') {
-                                        return 'Activo';
+                                        return 'Activa';
                                     }else {
-                                        return 'Inactivo';
+                                        return 'Vencida';
                                     }
                                 })
                                 ->color(fn (string $state): string => match ($state) {
