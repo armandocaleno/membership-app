@@ -53,8 +53,6 @@ class IncomesTable
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('paymentMethod.name')
                     ->label('F. Pago'),
-                TextColumn::make('incomeable.customer_id')
-                    ->label('Id cliente'),
                 TextColumn::make('incomeable.customer.name')
                     ->label('Cliente')
                     // ->searchable()
@@ -165,9 +163,12 @@ class IncomesTable
                 })
                 ->indicateUsing(function (array $data): array{
                     $indicators =[];
-                    // $customer = Customer::findOrFail($data['customer_id'])->value('name');
+                    $customer = '';
+                    $customer_id = $data['customer_id'];
+                    
                     if (filled($data['customer_id'] ?? null)) {
-                        $indicators[] = 'Cliente: ' ;
+                        $customer = Customer::find($customer_id)->name;
+                        $indicators[] = 'Cliente: ' . $customer;
                     }
                     return $indicators;
                 })
