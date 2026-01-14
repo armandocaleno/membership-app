@@ -116,8 +116,8 @@ class SuscriptionPerMonthChart extends ChartWidget
         };
     }
 
-    // public static function canView(): bool
-    // {
-    //     return auth()->user()->can('View:SuscriptionPerMonthChart');
-    // }
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:SuscriptionPerMonthChart');
+    }
 }
