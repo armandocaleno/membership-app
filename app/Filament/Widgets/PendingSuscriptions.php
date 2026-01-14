@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PendingSuscriptions extends TableWidget
 {
-    protected static ?int $sort = 9;
+    protected static ?int $sort = 10;
     protected int | string | array $columnSpan = 2;
 
     public function table(Table $table): Table
@@ -97,5 +97,10 @@ class PendingSuscriptions extends TableWidget
     protected function getTableHeading(): string
     {
         return 'Suscripciones pendientes de cobro'; // Aquí va el nuevo título
+    }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:PendingSuscriptions');
     }
 }

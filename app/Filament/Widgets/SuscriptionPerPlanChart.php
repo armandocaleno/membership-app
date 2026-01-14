@@ -11,7 +11,7 @@ use Filament\Widgets\ChartWidget;
 class SuscriptionPerPlanChart extends ChartWidget
 {
     protected ?string $heading = 'Ingresos por plan';
-    protected static ?int $sort = 4;
+    protected static ?int $sort = 5;
     public ?string $filter = 'this_year';
 
     protected function getData(): array
@@ -102,5 +102,10 @@ class SuscriptionPerPlanChart extends ChartWidget
                 'end' => now()
             ]
         };
+    }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:SuscriptionPerPlanChart');
     }
 }

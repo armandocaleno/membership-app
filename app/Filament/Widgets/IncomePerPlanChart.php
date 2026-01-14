@@ -10,7 +10,7 @@ use Filament\Widgets\ChartWidget;
 class IncomePerPlanChart extends ChartWidget
 {
     protected ?string $heading = 'Planes vendidos';
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 6;
     public ?string $filter = 'this_year';
 
     protected function getData(): array
@@ -92,5 +92,10 @@ class IncomePerPlanChart extends ChartWidget
                 'end' => now()
             ]
         };
+    }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:IncomePerPlanChart');
     }
 }

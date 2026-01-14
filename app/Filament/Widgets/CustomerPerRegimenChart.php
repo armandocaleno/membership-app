@@ -10,7 +10,7 @@ use Filament\Widgets\ChartWidget;
 class CustomerPerRegimenChart extends ChartWidget
 {
     protected ?string $heading = 'Clientes por régimen SRI';
-    protected static ?int $sort = 7;
+    protected static ?int $sort = 8;
 
     protected ?array $options = [
         'plugins' => [
@@ -43,7 +43,6 @@ class CustomerPerRegimenChart extends ChartWidget
                 [
                     'label' => 'Total clientes',
                     'data' => $totals,
-                    // 'borderColor' => '#9BD0F5',
                     'backgroundColor' => [
                         Color::Sky['900'],
                         Color::Orange['400'],
@@ -58,5 +57,10 @@ class CustomerPerRegimenChart extends ChartWidget
     protected function getType(): string
     {
         return 'polarArea';
+    }
+
+    public static function canView(): bool
+    {
+        return auth()->user()->can('View:CustomerPerRegimenChart');
     }
 }

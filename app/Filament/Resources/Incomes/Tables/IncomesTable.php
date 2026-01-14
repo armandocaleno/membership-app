@@ -11,8 +11,6 @@ use App\Models\Customer;
 use App\Models\PaymentMethod;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Utilities\Get;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
@@ -28,7 +26,7 @@ class IncomesTable
         return $table
             ->columns([
                 TextColumn::make('number')
-                    // ->searchable()
+                    ->searchable()
                     ->label('Número'),
                 TextColumn::make('date')
                     ->date()
@@ -53,14 +51,9 @@ class IncomesTable
                     ->openUrlInNewTab()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('paymentMethod.name')
-                    ->searchable()
                     ->label('F. Pago'),
-                TextColumn::make('incomeable_id')
+                TextColumn::make('incomeable.customer.name')
                     ->label('Cliente')
-                    ->state(function($record){
-                        return $record->incomeable->customer->name;
-                    })
-                    ->searchable()
                     ->url(fn($record): string => CustomerResource::getUrl('view', ['record' => $record->incomeable->customer])),
                 TextColumn::make('incomeable')
                     ->label('Recurso')
@@ -103,6 +96,7 @@ class IncomesTable
                     ->label('Modificado')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->searchPlaceholder('Buscar por (número, descripción)')
             ->filters([
                 SelectFilter::make('payment_method_id')
                     ->label('F. de pago')
@@ -111,7 +105,7 @@ class IncomesTable
                     ->native(false),
                 SelectFilter::make('incomeable_type')
                     ->label('Recurso')
-                    ->options(['App\Models\Suscription' => 'Suscripción', 'App\Models\Support' => 'Soporte'])
+                    ->options([Suscription::class => 'Suscripción', Support::class => 'Soporte'])
                     ->preload()
                     ->native(false),
                 Filter::make('date_range')
@@ -148,7 +142,7 @@ class IncomesTable
                                 filled($data['date_until'] ?? null),
                                 fn(Builder $query) => $query->whereDate('date', '<=', $data['date_until'])
                             );
-                    })
+                    }),
             ])
             ->recordActions([
                 DeleteAction::make()
