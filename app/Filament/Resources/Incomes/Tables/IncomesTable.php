@@ -165,9 +165,13 @@ class IncomesTable
                 })
                 ->indicateUsing(function (array $data): array{
                     $indicators =[];
-                    // $customer = Customer::findOrFail($data['customer_id'])->value('name');
+                    $customer = '';
+                    if ($data['customer_id']) {
+                        $customer = Customer::findOrFail($data['customer_id'])->value('name');
+                    }
+                    
                     if (filled($data['customer_id'] ?? null)) {
-                        $indicators[] = 'Cliente: ' ;
+                        $indicators[] = 'Cliente: ' . $customer;
                     }
                     return $indicators;
                 })
