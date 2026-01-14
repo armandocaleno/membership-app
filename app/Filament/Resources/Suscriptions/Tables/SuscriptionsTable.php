@@ -69,9 +69,9 @@ class SuscriptionsTable
                     })
                     ->formatStateUsing(function ($state) {
                         if ($state == 'active') {
-                            return 'Activo';
+                            return 'Activa';
                         }else {
-                            return 'Inactivo';
+                            return 'Vencida';
                         }
                     }),
                 TextColumn::make('payment_status')
@@ -106,7 +106,7 @@ class SuscriptionsTable
             ->filters([
                SelectFilter::make('status')
                     ->label('Estado de suscripción')
-                    ->options(['active' => 'Activo', 'inactive' => 'Inactivo'])
+                    ->options(['active' => 'Activa', 'inactive' => 'Vencida'])
                     ->indicator('Estado')
                     ->native(false),
                 SelectFilter::make('payment_status')
