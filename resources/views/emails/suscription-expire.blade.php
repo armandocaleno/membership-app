@@ -157,20 +157,35 @@
                                             <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
                                                 Hola <strong>{{ $suscription->customer->name }}</strong>
                                             </p>
-                                            
-                                            <p>tu suscripción {{ $suscription->number }} está por expirar </p>
+
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Reciba un cordial saludos.
+                                            </p>
+
+                                             <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                En <strong>eMarket</strong> queremos agradecerle por la confianza depositada en nosotros y por permitirnos
+                                                acompañarlo durante este periodo con nuestro servicio de soporte.
+                                            </p>
+
                                             @php
                                                 $end_date = \Carbon\Carbon::parse($suscription->end_date);
                                             @endphp
+
+                                            <p>Le informamos que su suscripción correspondiente al plan <strong>{{ $suscription->plan->name }}</strong> 
+                                                está  <strong>próxima a vencer  el {{ $end_date->translatedFormat('d \d\e F \d\e\l Y') }}</strong></p>
+                                           
                                             <p
                                                 style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                                <strong>eMarket</strong> te comunica que el plan 
-                                                <strong>{{ $suscription->plan->name }}</strong> expira el <strong>{{ $end_date->translatedFormat('d \d\e F \d\e\l Y') }}</strong>.
-                                                Comunícate con nosotros para renovar y continuar disfrutando de nuestro servicio.
+                                               A continuación, le compartimos el detalle de su servicio actual: 
                                             </p>
 
                                             <table role="presentation" border="0" cellpadding="0" cellspacing="10"
                                                 style="border-collapse: separate;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Detalle de la suscripción</th>
+                                                        </tr>
+                                                    </thead>
                                                     <tr>
                                                         <td><strong>Plan:</strong></td>
                                                         <td>{{ $suscription->plan->name }}</td>
@@ -180,17 +195,49 @@
                                                         <td>{{ $suscription->plan->devices }}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Tiempo:</strong></td>
+                                                        <td><strong>Duración:</strong></td>
                                                         <td>{{ $suscription->plan->months }} meses</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Total:</strong></td>
-                                                        <td>{{ $suscription->plan->price }}</td>
+                                                        <td><strong>VAlor:</strong></td>
+                                                        <td>$ {{ $suscription->plan->price }}</td>
                                                     </tr>
                                                 </table>
 
-                                            <p style="font-family: sans-serif; font-size: 12px; font-weight: normal; margin: 0; margin-bottom: 15px;color: #999999;">
-                                                Recuerde que puede solicitar soporte técnico comunicándose al teléfono: 099 560 7147 
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Queremos recordarle que la <strong>renovación de este servicio es completamente opcional</strong>.
+                                                En caso de no renovarlo, su sistema continuará funcionando con normalidad; sin embargo, dejará de contar con los beneficios adicionales del plan, tales como: 
+                                            </p>
+
+                                            <div>
+                                                <ul>
+                                                    @foreach ($suscription->plan->products as $product)
+                                                        <li>{{ $product }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Si desea <strong>renovar su suscripción</strong> y continuar disfrutando de estos beneficios, estaremos encantados de asistirle y brindarle el acompañamiento necesario.
+                                            </p>
+
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Nuestro compromiso es seguir ofreciéndole un servicio confiable, cercano y oportuno, enfocado en el correcto funcionamiento y la continuidad de su sistema.
+                                            </p>
+
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Para cualquier consulta o para gestionar su renovación, puede comunicarse con nosotros al <strong>099 560 7147</strong> o visitar nuestra página web <a href="www.emarket.com.ec" target="_blank" rel="noopener noreferrer" style="font-family: sans-serif; font-size: 14px;">www.emarket.com.ec</a>
+                                            </p>
+
+                                             <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Gracias por ser parte de <strong>eMarket</strong>,
+                                            </p>
+
+                                             <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                                Atentamente,
+                                            </p>
+                                            <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 5px;">
+                                                <strong>Equipo eMarket</strong>
                                             </p>
                                         </td>
                                     </tr>
@@ -212,7 +259,7 @@
                                     style="font-family: sans-serif; vertical-align: top; padding-bottom: 10px; padding-top: 10px; color: #999999; font-size: 12px; text-align: center;"
                                     valign="top" align="center">
                                     <span class="apple-link"
-                                        style="color: #999999; font-size: 12px; text-align: center;">eMarket,
+                                        style="color: #999999; font-size: 12px; text-align: center;">
                                         Guayaquil - Ecuador</span>
                                     {{-- <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif" style="text-decoration: underline; color: #999999; font-size: 12px; text-align: center;">Unsubscribe</a>. --}}
                                 </td>
