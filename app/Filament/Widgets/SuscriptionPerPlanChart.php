@@ -2,7 +2,6 @@
 
 namespace App\Filament\Widgets;
 
-use App\Models\Income;
 use App\Models\Plan;
 use App\Models\Suscription;
 use Filament\Support\Colors\Color;
@@ -22,25 +21,27 @@ class SuscriptionPerPlanChart extends ChartWidget
 
         $labels = [];
         $totals = [];
-        // $suscriptionsPerPlan = Suscription::query()
-        //                 ->join('plans', 'suscriptions.plan_id', '=', 'plans.id')
-        //                 ->selectRaw('SUM(plans.price) as totalPlan, plan_id')
-        //                 ->whereBetween('start_date', [$dateRange['start'], $dateRange['end']])
-        //                 ->groupBy('plan_id')
-        //                 ->get()
-        //                 ->keyBy('plan_id');
-        $suscriptionsPerPlan = Income::query()
-                        ->rightjoin('suscriptions', 'incomes.incomeable_id', '=', 'suscriptions.id')
-                        ->join('plans', 'suscriptions.plan_id', '=', 'plans.id')
-                        ->selectRaw('SUM(plans.price) as totalPlan, plan_id, suscriptions.number')
-                        ->whereBetween('incomes.date', [$dateRange['start'], $dateRange['end']])
-                        ->where('incomes.incomeable_type', Suscription::class)
-                        ->groupBy('plan_id', 'suscriptions.number')
-                        ->get()
-                        ->keyBy('plan_id');
+        
+        $suscriptionsPerPlan = Suscription::query()->select('plan_id')
+                                ->withSum('incomes as total', 'total')
+                                ->join('incomes', 'suscriptions.id', '=', 'incomes.incomeable_id')
+                                ->whereBetween('incomes.date', [$dateRange['start'], $dateRange['end']])
+                                ->groupBy('plan_id', 'suscriptions.id')
+                                ->get()->toArray();
+
+        $resultado = [];
+       foreach ($suscriptionsPerPlan as $item) {
+            $planId = $item['plan_id'];
+            $total = $item['total'];
+
+            if (!isset($resultado[$planId])) {
+                $resultado[$planId] = 0;
+            }
+            $resultado[$planId] += $total;
+        }
 
         foreach ($plans as $plan) {
-            $totals[] =  $suscriptionsPerPlan->get($plan->id)?->totalPlan ?? 0;
+            $totals[] =  $resultado[$plan->id] ?? 0;
             $labels[] = $plan->name;
         }
 
